@@ -49,7 +49,8 @@
             return fd.get('a');
         }
         $(document).ready(function () {
-            
+            let excelFiles = [];
+
             $('#submit').click(async function (e) {
                 e.preventDefault();
                 // var formData = new FormData( $('#form')[0]);
@@ -72,7 +73,6 @@
                 var blob = new Blob([wbout], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                 var formData = new FormData();
 
-
                 const wbValues = [];
                 var index = 0;
                 //Store workbook values into wbValues array
@@ -92,19 +92,51 @@
                 //Pass JSON object array
                 formData.append('excelValues', wbValuesJson)
 
-                $.ajax({
-                        url: '/importFile',  
-                        type: 'POST',
-                        data: formData,
-                        success:function(data){
-                            console.log(data);
-                        },
-                        cache: false,
-                        contentType: false,
-                        processData: false
-                });
+                excelFiles.push(wbValues);
 
-                $('#alert').text("File Submitted!");
+                console.log("FILES = " + excelFiles);
+                
+                const comparisonArray = [...excelFiles];
+                console.log("comparison array=" +comparisonArray);
+                let isDuplicate = false;
+                
+                for(let i = 0; i < comparisonArray.length; i++) {
+                    let comparison = excelFiles[i]
+                    for(let j = 1; j < comparisonArray.length; j++) {
+                        if(JSON.stringify(comparison) === JSON.stringify(excelFiles[j])) {
+                            isDuplicate = true;
+                            break;
+                        }
+                        console.log("comparison = " + comparison);
+                        console.log("this is j = " + j);
+                        console.log("compared to = " + excelFiles[j]);
+                    }
+                    comparisonArray.splice(i, 1);
+
+                    console.log("length = " + comparisonArray.length);
+                    console.log("isDuplicate = " + isDuplicate);
+
+                    console.log("this is i = " + i);
+                    console.log(excelFiles[i]);
+                }
+
+                if(isDuplicate = true) {
+                    console.log("Cannot import duplicate entries")
+                } else {
+                    $.ajax({
+                            url: '/importFile',  
+                            type: 'POST',
+                            data: formData,
+                            success:function(data){
+                                console.log(data);
+                            },
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                    });
+
+                    $('#alert').text("File Submitted!");
+                }
             });
         });
     </script>

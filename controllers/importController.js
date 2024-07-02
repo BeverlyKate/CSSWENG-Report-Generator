@@ -19,7 +19,7 @@ async function insertRepair(excelValues) {
     //Iterate of the length of excel values. Starts from 1 because of an additional automatic entry and excelValuesLength - 1
     //because of another additional automatic entry
     for(i = 1; i < excelValuesLength - 1; i += 24){
-        console.log('help ' + excelValues[i]);
+        // console.log('help ' + excelValues[i]);
 
         //If all of the inputs in a row = "NULL", do not enter into DB. Otherwise, insert into DB
         if((excelValues[i] && excelValues[i+1] && excelValues[i+2] && excelValues[i+3] && excelValues[i+4] 
@@ -39,7 +39,7 @@ async function insertRepair(excelValues) {
             const newRepairId = new repairIdModel();
             
             await newRepairId.save().then(newRepairId => {
-                console.log(newRepairId);
+                // console.log(newRepairId);
             }).catch(error => {
                 console.log("Repair ID creation error: " + error);
             });
@@ -83,7 +83,7 @@ async function insertRepair(excelValues) {
     
     //Insert new repair model into DB
     await repairModel.insertMany(dataToSave).then(insertedData => {
-        console.log(insertedData);
+        // console.log(insertedData);
     }).catch(error => {
         console.log("Data insertion error: " + error);
     });
