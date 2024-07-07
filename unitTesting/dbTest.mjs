@@ -1,6 +1,5 @@
 import { default as test, describe, it } from "node:test";
 import mongoose, { Mongoose } from 'mongoose';
-// const chai = require('chai');
 import { expect } from 'chai';
 
 describe('MongoDB connection', () => {
