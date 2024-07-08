@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dbTest": "node unitTesting/dbTest.mjs",
-    "routeTest": "node unitTesting/importTest.mjs"
+    "routeTest": "node unitTesting/routeConnectionTest.mjs"
   },
   "keywords": [],
   "author": "",

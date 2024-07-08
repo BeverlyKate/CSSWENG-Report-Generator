@@ -62,7 +62,7 @@ async function insertRepair(excelValues) {
                 }
                 const newRepair = {
                     repairId: newRepairId.idCounter,
-                    repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toDateString().split(" ").slice(1),
+                    repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
                     // repairDate: addDays('1900-01-01', excelValues[i]?['Date']),
                     repairPLNumber: parseInt(excelValues[i+1]) ,//parseInt(excelValues[i+1]) 
                     repairCustomer: excelValues[i+2],
@@ -75,7 +75,7 @@ async function insertRepair(excelValues) {
                     repairCategory2: parseInt(excelValues[i+9]),
                     repairSerialNumber: parseInt(excelValues[i+10]), //commented out because can't be null entries
                     repairJobOrderNumber: parseInt(excelValues[i+11]), //commented out because can't be null entries
-                    repairDateStarted: new Date(Math.round((excelValues[i+12] - 25569)*86400*1000)).toDateString().split(" ").slice(1),
+                    repairDateStarted: new Date(Math.round((excelValues[i+12] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
                     repairDateFinished: repairDateFinished,
                     repairTechnician1: excelValues[i+14],
                     repairTechnician2: excelValues[i+15],

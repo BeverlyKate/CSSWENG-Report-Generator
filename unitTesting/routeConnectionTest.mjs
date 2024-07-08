@@ -31,6 +31,7 @@ describe('Routes', () => {
     it('Is connected to Repair Controller', function() {
         const repairRoutes = [
             { path: '/table', method: 'get' },
+            { path: '/PTPMpost', method: 'post' },
         ];
 
         repairRoutes.forEach(route => {
