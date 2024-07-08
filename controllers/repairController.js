@@ -50,6 +50,105 @@ const repairController = {
         });
     },
 
+    getTotalItemQuantityPerItemModel: async function(req, res) {
+        console.log(req.body.dateFrom);
+        console.log("length" + req.body.dateFrom.length);
+        console.log(req.body.dateTo);
+        if(req.body.dateFrom.length = 4){
+            var dateFrom = new Date(req.body.dateFrom);
+            var newDateTo = new Date(req.body.dateFrom);
+            var dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
+        } else {
+            var dateFrom = new Date(req.body.dateFrom);
+            var newDateTo = new Date(req.body.dateFrom);
+            var dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
+        }
+
+        var category1 = req.body.category1;
+
+        console.log("date from: " + dateFrom);
+        console.log("date to: "+ dateTo);
+    
+        console.log(req.body);
+        // console.log(dateFrom +" "+ dateTo +" "+category1);
+        let repair;
+        if(category1 == "default") {
+            //Find all unique repair item models
+            await repairModel.find({}).distinct('repairItemModel').then(async repairItemModel => {
+                console.log(repairItemModel);
+                var repairTalliedQuantities = [];
+                
+                //Find all repairs associated with each unique repair item model with repairDate greater than dateFrom and 
+                //repairDate less than dateTo parameters
+                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lt: dateTo}}).then(repair => {
+                    repair = repair;
+                    var tempInt = 0;
+                    // console.log(repair);
+                    // console.log("rep tech length = " + repairItemModel.length)
+                    // console.log("rep length = " + repair.length)
+                
+                    //Iterate over the array of unique repair item models
+                    for(i = 0; i < repairItemModel.length; i++) {
+                        //Reset temporary int
+                        tempInt = 0;
+
+                        //Iterate over the array of repairs associated with each unique repair item model
+                        for(j = 0; j < repair.length; j++) {
+                            //If repair item model in array of unique repair item models == repair technician in array of repairs
+                            //associated with each unique repair item model, add its repair quantity value to temporary int
+                            if(repairItemModel[i] == repair[j].repairItemModel) {
+                                // console.log("hatdog");
+                                tempInt += repair[j].repairQuantity;
+                            };
+                        };
+                        //Store temporary int to repairTalliedQuantities
+                        repairTalliedQuantities[i] = tempInt;
+                    };
+                });
+                console.log("tallied = " + repairTalliedQuantities);
+                //Send to hbs template used
+                res.render('IQPM', {quart: quarterVal, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+            });
+        } else {
+            //Find all unique repair item models
+            await repairModel.find({}).distinct('repairItemModel').then(async repairItemModel => {
+                // console.log(repairItemModel);
+                var repairTalliedQuantities = [];
+                
+                //Find all repairs associated with each unique repair item model and the category1 parameter with repairDate 
+                //greater than dateFrom and repairDate less than dateTo parameters
+                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lt: dateTo}, repairCategory1: category1}).then(repair => {
+                    repair = repair;
+                    var tempInt = 0;
+                    // console.log(repair);
+                    // console.log("rep tech length = " + repairItemModel.length)
+                    // console.log("rep length = " + repair.length)
+                
+                    //Iterate over the array of unique repair item models
+                    for(i = 0; i < repairItemModel.length; i++) {
+                        //Reset temporary int
+                        tempInt = 0;
+
+                        //Iterate over the array of repairs associated with each unique repair item model
+                        for(j = 0; j < repair.length; j++) {
+                            //If repair item model in array of unique repair item models == repair technician in array of repairs
+                            //associated with each unique repair item model, add its repair quantity value to temporary int
+                            if(repairItemModel[i] == repair[j].repairItemModel) {
+                                // console.log("hatdog");
+                                tempInt += repair[j].repairQuantity;
+                            };
+                        };
+                        //Store temporary int to repairTalliedQuantities
+                        repairTalliedQuantities[i] = tempInt;
+                    };
+                });
+                console.log("tallied = " + repairTalliedQuantities);
+                //Send to hbs template used
+                res.render('IQPM', {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+            });
+        };
+    },
+
     getTopDefectsPerItemModel: async function(req, res) {
         console.log(req.body.dateFrom);
         console.log("length" + req.body.dateFrom.length);

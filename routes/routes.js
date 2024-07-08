@@ -8,6 +8,8 @@ const repairController = require('../controllers/repairController.js');
 app.get('/', mainController.login);
 //Open Home
 app.post('/login', mainController.getMain);
+//Item Quantity Per Model
+app.post('/IQPMpost', repairController.getTotalItemQuantityPerItemModel);
 //Top Defects per Model
 app.post('/TDPMpost', repairController.getTopDefectsPerItemModel);
 //Pending Tasks per Model
