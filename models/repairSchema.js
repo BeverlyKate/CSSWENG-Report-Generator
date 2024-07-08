@@ -9,7 +9,7 @@ const repairSchema = new Schema({
         unique: true
     },
     repairDate: {
-        type: String,
+        type: Date,
         required: true
     },
     repairPLNumber: {
@@ -55,11 +55,11 @@ const repairSchema = new Schema({
         required: true
     },
     repairDateStarted: {
-        type: String,
+        type: Date,
         required: true
     },
     repairDateFinished: {
-        type: String
+        type: Date
     },
     repairTechnician1: {
         type: String
@@ -83,7 +83,7 @@ const repairSchema = new Schema({
         type: Number
     },
     repairDateReturned: {
-        type: String
+        type: Date
     },
     repairStatus: {
         type: String,
