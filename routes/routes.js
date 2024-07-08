@@ -8,6 +8,8 @@ const repairController = require('../controllers/repairController.js');
 app.get('/', mainController.login);
 //Open Home
 app.post('/login', mainController.getMain);
+//Top Defects per Model
+app.post('/TDPMpost', repairController.getTopDefectsPerItemModel);
 //Pending Tasks per Model
 app.post('/PTPMpost', repairController.getPendingStatusPerItemModel);
 //Import file and insert into DB
