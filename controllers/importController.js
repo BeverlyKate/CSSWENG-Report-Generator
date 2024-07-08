@@ -31,11 +31,15 @@ async function insertRepair(excelValues) {
             console.log("no input");
         } else {
             // console.log("pl no = " + excelValues[i+1]);
-            // console.log(parseInt(excelValues[i+1]));
+            // console.log(parseInt(excelValues[i+1]))
             // console.log(typeof parseInt(excelValues[i+1]));
-            // var repairDate = new Date(Math.round((dbNum - 25569)*86400*1000));
-            // console.log("help me" + repairDate);
-            //Create new repair model
+            // var repairDate = new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toDateString().split(" ").slice(1);
+            // // formattedRepairDate.slice[1];
+            // // console.log(Array.isArray(formattedRepairDate))
+            // // console.log("formatted repair date " + formattedRepairDate);
+            // // var repairDate =;
+            // console.log("repair date" + repairDate);
+            // //Create new repair model
             const newRepairId = new repairIdModel();
             
             await newRepairId.save().then(newRepairId => {
@@ -45,9 +49,20 @@ async function insertRepair(excelValues) {
             });
 
             try {
+                var repairDateFinished;
+                var repairDateReturned;
+                if(excelValues[i+13] != "NULL") {
+                    repairDateFinished = new Date(Math.round((excelValues[i+13] - 25569)*86400*1000)).toLocaleDateString();
+                    console.log("repair date finished = " + repairDateFinished);
+                }
+
+                if(excelValues[i+21] != "NULL") {
+                    repairDateReturned = new Date(Math.round((excelValues[i+21] - 25569)*86400*1000)).toLocaleDateString();
+                    console.log("repair date returned = " + repairDateReturned);
+                }
                 const newRepair = {
                     repairId: newRepairId.idCounter,
-                    repairDate: parseInt(excelValues[i]),
+                    repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toDateString().split(" ").slice(1),
                     // repairDate: addDays('1900-01-01', excelValues[i]?['Date']),
                     repairPLNumber: parseInt(excelValues[i+1]) ,//parseInt(excelValues[i+1]) 
                     repairCustomer: excelValues[i+2],
@@ -60,8 +75,8 @@ async function insertRepair(excelValues) {
                     repairCategory2: parseInt(excelValues[i+9]),
                     repairSerialNumber: parseInt(excelValues[i+10]), //commented out because can't be null entries
                     repairJobOrderNumber: parseInt(excelValues[i+11]), //commented out because can't be null entries
-                    repairDateStarted: parseInt(excelValues[i+12]),
-                    repairDateFinished: parseInt(excelValues[i+13]),
+                    repairDateStarted: new Date(Math.round((excelValues[i+12] - 25569)*86400*1000)).toDateString().split(" ").slice(1),
+                    repairDateFinished: repairDateFinished,
                     repairTechnician1: excelValues[i+14],
                     repairTechnician2: excelValues[i+15],
                     repairItemStatus: excelValues[i+16],
@@ -69,7 +84,7 @@ async function insertRepair(excelValues) {
                     repairRemarks: excelValues[i+18],
                     repairCost: parseInt(excelValues[i+19]), //commented out because can't be null entries
                     repairReturnFormNumber: parseInt(excelValues[i+20]), //commented out because can't be null entries
-                    repairDateReturned: parseInt(excelValues[i+21]),
+                    repairDateReturned: repairDateReturned,
                     repairStatus: excelValues[i+22],
                     repairDefect: excelValues[i+23]
                 };
