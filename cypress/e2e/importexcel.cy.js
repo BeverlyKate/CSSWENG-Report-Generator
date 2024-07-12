@@ -21,14 +21,14 @@ describe('User should be able to use the import function', () => {
   cy.wait(480000); // Wait for 8 minutes
   });
   
-  it.skip('All of the records should be inserted properly', () => {
+  it('All of the records should be inserted properly', () => {
       cy.get('#CompanyLogo > img').click()
       cy.get('.Btn-table > a > img').click()
       cy.get('tbody') 
         .children()
         .should('have.length', 2001); // Each row has 2 length
   });
-  it.skip('All of the records should be inserted correctly', () => {
+  it('All of the records should be inserted correctly', () => {
     cy.get('#CompanyLogo > img').click()
     cy.get('.Btn-table > a > img').click()
     cy.get(':nth-child(2000) > :nth-child(1) > .col > strong > .idNum').should('exist')
