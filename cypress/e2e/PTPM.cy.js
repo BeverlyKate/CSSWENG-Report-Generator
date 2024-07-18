@@ -1,4 +1,4 @@
-describe('20-PS_PerModel_ItemInv', () => {
+describe('Pending Tasks Per Model (PTPM) reports.', () => {
 
   beforeEach(() => {
     cy.visit('http://localhost:3000/')
