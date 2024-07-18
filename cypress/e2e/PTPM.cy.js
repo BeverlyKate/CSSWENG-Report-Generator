@@ -200,7 +200,7 @@ describe('20-PS_PerModel_ItemInv', () => {
     cy.get('.btn-generate-report').click()
   })
 
-  it('24 | Filter by year -> by task type (RETURN) -> by category', () => {
+  it('24 | Filter by year -> by task type (QA) -> by category', () => {
     cy.get('.date_range > :nth-child(3)').click()
     cy.get('.selection > .btn-dropdown-mock').select('2024')
     cy.get('.report-specifics-holder > .taskType > :nth-child(4)').click()
@@ -208,7 +208,7 @@ describe('20-PS_PerModel_ItemInv', () => {
     cy.get('.btn-generate-report').click()
   })
 
-  it('Immediately click "generate report" without inputting anything else', () => {
+  it('25 | Immediately click "generate report" without inputting anything else', () => {
     cy.get('.btn-generate-report').click()
   })
 
