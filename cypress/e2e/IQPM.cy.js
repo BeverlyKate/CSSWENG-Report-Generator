@@ -1,4 +1,4 @@
-describe('template spec', () => {  
+describe('Test cases for Report Generation in Item Quantity per Model', () => {  
   beforeEach(() => {
     cy.login('Admin', '12345678')
     cy.get('#CompanyLogo > img').click()
@@ -10,8 +10,6 @@ describe('template spec', () => {
     cy.get('#dateFrom').clear().type('2024-04')
     cy.get('.centered > .btn-dropdown-mock').select("AGR/MIRACLE 8 ITEM")
     cy.get('.btn-generate-report').click()
-    //cy.get(':nth-child(2) > span')
-    //cy.get(':nth-child(3) > span')
   });
 
   it('Should be able create a report (Item Quantity per Model) based on the quarter', () => {
@@ -39,7 +37,28 @@ describe('template spec', () => {
     cy.get('[data-report="IQPM"]').click()
     cy.get('.centered > .btn-dropdown-mock').select("AGR/MIRACLE 8 ITEM")
     cy.get('.btn-generate-report').click()
-    //cy.get(':nth-child(2) > span')
-    //cy.get(':nth-child(3) > span')
+    cy.url().then((currentUrl) => {
+      cy.get('.btn-generate-report').click();
+      cy.url().should('eq', currentUrl);
+    });
   });
-})
+    it('Should not be able create a report (Item Quantity per Model) without a category parameter', () => {
+      cy.get('[data-report="IQPM"]').click()
+      cy.get(':nth-child(3) > span').click()
+      cy.get('.selection > .btn-dropdown-mock').select("2024")
+      cy.get('.centered > .btn-dropdown-mock').select("AGR/MIRACLE 8 ITEM")
+      cy.get('.btn-generate-report').click()
+      cy.url().then((currentUrl) => {
+        cy.get('.btn-generate-report').click();
+        cy.url().should('eq', currentUrl);
+      });
+    }); 
+    it('Should not be able create a report (Item Quantity per Model) without any parameters', () => {
+      cy.get('[data-report="IQPM"]').click()
+      cy.get('.btn-generate-report').click()
+      cy.url().then((currentUrl) => {
+        cy.get('.btn-generate-report').click();
+        cy.url().should('eq', currentUrl);
+      });
+    }); 
+});
