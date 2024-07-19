@@ -46,7 +46,8 @@ const repairController = {
             //Send to hbs template used
             res.render('table', {repair: repair});
         }).catch(error => {
-            console.log("Getting all repairs error: " + error);
+            console.log("Getting all repairs error: " + error);//Copy this logic
+            res.render('table', {error: error});//Copy this logic
         });
     },
 
@@ -104,10 +105,14 @@ const repairController = {
                         //Store temporary int to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempInt;
                     };
+                }).catch(error => {
+                    console.log("Cannot find Repair Item Model error: " + error);
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render('IQPM', {date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+            }).catch(error => {
+                console.log("Cannot find all Repair Item Models error: " + error);
             });
         } else {
             //Find all unique repair item models
@@ -141,10 +146,14 @@ const repairController = {
                         //Store temporary int to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempInt;
                     };
+                }).catch(error => {
+                    console.log("Cannot find Repair Item Model error: " + error);
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render('IQPM', {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+            }).catch(error => {
+                console.log("Cannot find all Repair Item Models error: " + error);
             });
         };
     },
@@ -225,6 +234,8 @@ const repairController = {
                             //Store temporary array to repairTalliedQuantities
                             repairTalliedQuantities[i] = tempArray
                         };
+                    }).catch(error => {
+                        console.log(error);
                     });
                     
                     console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
@@ -236,7 +247,11 @@ const repairController = {
                     // console.log("tallied agagin = " + repairTalliedQuantities)
                     //Send to hbs template used
                     res.render('TDPM', {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities), repairTalliedQuantitiesArray: repairTalliedQuantities});
+                }).catch(error => {
+                    console.log(error);
                 });
+            }).catch(error => {
+                console.log(error);
             });
         } else if(category1 == "default") {
             //Find all unique repair item models
@@ -284,13 +299,19 @@ const repairController = {
                             repairTalliedQuantities[i] = tempArray
                             };
                         };
+                    }).catch(error => {
+                        console.log(error);
                     }); 
                     //Sort repairTalliedQuantities in descending order
                     repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
                     console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
                     //Send to hbs template used
                     res.render('TDPM', {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities)});
+                }).catch(error => {
+                    console.log(error);
                 });
+            }).catch(error => {
+                console.log(error);
             });
         };
     },
@@ -345,10 +366,14 @@ const repairController = {
                         repairTalliedQuantities[i] = tempArray;
                         console.log("hi2: "+ i);
                     };
+                }).catch(error => {
+                    console.log(error);
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render('PTPM', {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+            }).catch(error => {
+                console.log(error);
             });
         } else if(category1 == "default") {
             //Find all unique repair item models
@@ -373,10 +398,14 @@ const repairController = {
                         //Store temporary array to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempArray;
                     };
+                }).catch(error => {
+                    console.log(error);
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render('PTPM', {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+            }).catch(error => {
+                console.log(error);
             });
         };
     },
