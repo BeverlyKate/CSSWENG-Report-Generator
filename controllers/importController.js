@@ -1,10 +1,8 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true })); 
-const port = 3000
+app.use(bodyParser.urlencoded({ extended: true }));
 const formidable = require('formidable');
-const fs = require('fs');
 const repairModel = require('../models/repairSchema.js');
 const repairIdModel = require('../models/repairIdSchema.js');
 
@@ -14,13 +12,11 @@ async function insertRepair(excelValues) {
     console.log("this is the final value ", excelValues);
     const excelValuesLength = excelValues.length;
     console.log("this is json length = ", excelValuesLength);
-    var dataToSave = new Array();
+    let dataToSave = new Array();
     
     //Iterate of the length of excel values. Starts from 1 because of an additional automatic entry and excelValuesLength - 1
     //because of another additional automatic entry
-    for(i = 1; i < excelValuesLength - 1; i += 24){
-        // console.log('help ' + excelValues[i]);
-
+    for(let i = 1; i < excelValuesLength - 1; i += 24){
         //If all of the inputs in a row = "NULL", do not enter into DB. Otherwise, insert into DB
         if((excelValues[i] && excelValues[i+1] && excelValues[i+2] && excelValues[i+3] && excelValues[i+4] 
             && excelValues[i+5] && excelValues[i+6] && excelValues[i+7] && excelValues[i+8] && excelValues[i+9] 
@@ -30,15 +26,6 @@ async function insertRepair(excelValues) {
             && excelValues[i+22] && excelValues[i+23]) == "NULL") {
             console.log("no input");
         } else {
-            // console.log("pl no = " + excelValues[i+1]);
-            // console.log(parseInt(excelValues[i+1]))
-            // console.log(typeof parseInt(excelValues[i+1]));
-            // var repairDate = new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toDateString().split(" ").slice(1);
-            // // formattedRepairDate.slice[1];
-            // // console.log(Array.isArray(formattedRepairDate))
-            // // console.log("formatted repair date " + formattedRepairDate);
-            // // var repairDate =;
-            // console.log("repair date" + repairDate);
             // //Create new repair model
             const newRepairId = new repairIdModel();
             
@@ -49,8 +36,8 @@ async function insertRepair(excelValues) {
             });
 
             try {
-                var repairDateFinished;
-                var repairDateReturned;
+                let repairDateFinished;
+                let repairDateReturned;
                 if(excelValues[i+13] != "NULL") {
                     repairDateFinished = new Date(Math.round((excelValues[i+13] - 25569)*86400*1000)).toLocaleDateString();
                     console.log("repair date finished = " + repairDateFinished);
@@ -63,18 +50,17 @@ async function insertRepair(excelValues) {
                 const newRepair = {
                     repairId: newRepairId.idCounter,
                     repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
-                    // repairDate: addDays('1900-01-01', excelValues[i]?['Date']),
-                    repairPLNumber: parseInt(excelValues[i+1]) ,//parseInt(excelValues[i+1]) 
+                    repairPLNumber: parseInt(excelValues[i+1]) ,
                     repairCustomer: excelValues[i+2],
                     repairItemModel: excelValues[i+3],
                     repairDescription: excelValues[i+4],
-                    repairQuantity: parseInt(excelValues[i+5]),//parseInt(excelValues[i+5])
+                    repairQuantity: parseInt(excelValues[i+5]),
                     repairUOM: excelValues[i+6],
                     repairPullOutBy: excelValues[i+7],
                     repairCategory1: excelValues[i+8],
                     repairCategory2: parseInt(excelValues[i+9]),
-                    repairSerialNumber: parseInt(excelValues[i+10]), //commented out because can't be null entries
-                    repairJobOrderNumber: parseInt(excelValues[i+11]), //commented out because can't be null entries
+                    repairSerialNumber: parseInt(excelValues[i+10]),
+                    repairJobOrderNumber: parseInt(excelValues[i+11]),
                     repairDateStarted: new Date(Math.round((excelValues[i+12] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
                     repairDateFinished: repairDateFinished,
                     repairTechnician1: excelValues[i+14],
@@ -82,8 +68,8 @@ async function insertRepair(excelValues) {
                     repairItemStatus: excelValues[i+16],
                     repairDeliveryStatus: excelValues[i+17],
                     repairRemarks: excelValues[i+18],
-                    repairCost: parseInt(excelValues[i+19]), //commented out because can't be null entries
-                    repairReturnFormNumber: parseInt(excelValues[i+20]), //commented out because can't be null entries
+                    repairCost: parseInt(excelValues[i+19]),
+                    repairReturnFormNumber: parseInt(excelValues[i+20]),
                     repairDateReturned: repairDateReturned,
                     repairStatus: excelValues[i+22],
                     repairDefect: excelValues[i+23]
@@ -113,11 +99,11 @@ const importController = {
     //Import file into database
     importFile: async function(req, res) {
         console.log("post called");
-        var form = new formidable.IncomingForm();
+        let form = new formidable.IncomingForm();
         try {
             form.parse(req, async function (err, fields, files) {
                 //Parse passed JSON object
-                var excelValues = JSON.parse(fields.excelValues);
+                let excelValues = JSON.parse(fields.excelValues);
                 insertRepair(excelValues);
             });
         } catch(error) {

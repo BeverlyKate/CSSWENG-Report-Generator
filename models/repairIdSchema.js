@@ -2,7 +2,6 @@ const mongoose = require(`mongoose`);
 const Schema = mongoose.Schema;
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-
 //Contains unique ID for each entry
 const repairIdSchema = new Schema({
     idCounter: {

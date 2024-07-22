@@ -25,5 +25,4 @@ app.get('/home', mainController.getHome);
 
 // app.get('/IQPM', mainController.generateIQPM(reportParameters));
 
-
 module.exports = app;
