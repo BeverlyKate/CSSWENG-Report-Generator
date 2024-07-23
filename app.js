@@ -16,6 +16,11 @@ const path = require('path');
 // const os = require('os');
 const http = require("http");
 const repairModel = require('./models/repairSchema.js');
+const cors = require('cors') //CORS stands for cross-origin resource sharing
+
+const corsOptions= require('./config/corsOptions')
+
+appExp.use(cors(corsOptions))
 
 //Just checking max size of header that can be sent
 let size = http.maxHeaderSize;

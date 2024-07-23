@@ -1,4 +1,5 @@
 const repairModel = require('../models/repairSchema.js');
+const asyncHandler = require('express-async-handler')
 // const repairIdModel = require('../models/repairIdSchema.js');
 
 //Returns the compared values in descending order
@@ -150,7 +151,9 @@ const repairController = {
             console.log(repair);
             
             //Send to hbs template used
-            res.render('table', {repair: repair});
+            // res.render('table', {repair: repair});
+            // res.status(200).send(repair)
+            res.json(repair)
         }).catch(error => {
             console.log("Getting all repairs error: " + error);
         });
