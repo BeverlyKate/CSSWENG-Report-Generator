@@ -5,12 +5,16 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dbTest": "node unitTesting/dbTest.mjs",
-    "routeTest": "node unitTesting/routeConnectionTest.mjs"
+    "trial": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "dbTest": "node unitTesting/dbTest.js",
+    "routeTest": "node unitTesting/routeConnectionTest.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "env": {
+    "jest": true
+  },
   "dependencies": {
     "body-parser": "^1.20.2",
     "chai": "^5.1.1",
@@ -25,5 +29,11 @@
     "mongoose": "^8.2.3",
     "mongoose-sequence": "^6.0.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.24.7",
+    "@babel/preset-env": "^7.24.8",
+    "@jest-mock/express": "^2.1.0",
+    "jest": "^29.7.0"
   }
 }

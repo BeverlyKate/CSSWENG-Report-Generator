@@ -1,8 +1,26 @@
 const express = require('express');
 const app = express.Router();
-const importController = require('../controllers/importController.js');
+// const { default: importController } = await import('../controllers/importController.mjs');
+// const importController = await import(importControllerPath);
+async function dynamicImport() {
+    try {
+      // Dynamically import the module
+        const { default: importController } = await import('../controllers/importController.mjs');
+  
+      // Now you can use the methods from importController
+    //   importController.getFile
+        app.post('/importFile', importController.importFile);
+      // ... other logic ...
+  
+    } catch (error) {
+      console.error('Error importing importController:', error);
+    };
+};
+  
+dynamicImport();
 const mainController = require('../controllers/mainController.js');
 const repairController = require('../controllers/repairController.js');
+mainController.log
 
 //Open Login
 app.get('/', mainController.login);
@@ -14,8 +32,8 @@ app.post('/IQPMpost', repairController.getTotalItemQuantityPerItemModel);
 app.post('/TDPMpost', repairController.getTopDefectsPerItemModel);
 //Pending Tasks per Model
 app.post('/PTPMpost', repairController.getPendingStatusPerItemModel);
-//Import file and insert into DB
-app.post('/importFile', importController.importFile);
+// //Import file and insert into DB
+// app.post('/importFile', importController.getFile);
 // app.get('/insertRepair/:excelValues', repairController.insertRepair);
 app.get('/table', repairController.getAllRepairs);
 
