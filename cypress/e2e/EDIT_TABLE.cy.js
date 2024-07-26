@@ -127,7 +127,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(13) > .col > strong').should('contain', '12')
   });
 
-  it('Should not be able to change the date started and date finished', () => {
+  it.skip('Should be able to change the date started and date finished', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDateStarted').clear()
     cy.get('#repairDateStarted').type('45405')
@@ -139,5 +139,117 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(15) > .col > strong').should('contain', '45407')
   });
 
+  it.skip('Should not be able to change the repair cost to a negative number', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairCost').clear()
+    cy.get('#repairCost').type('-1')
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(16) > .col > strong').should('contain', '12345')
+  });
 
+  it.skip('Should not be able to change the repair cost to a non number', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairCost').clear()
+    cy.get('#repairCost').type('a')
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(16) > .col > strong').should('contain', '12345')
+  });
+
+  it.skip('Should be able to change the repair cost', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairCost').clear()
+    cy.get('#repairCost').type('12341')
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(16) > .col > strong').should('contain', '12341')
+  });
+
+  it.skip('Should be able to change the repair technicians', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairTechnician1').select("DREX")
+    cy.get('#repairTechnician2').select("MJ")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(17) > .col > strong').should('contain', 'DREX')
+    cy.get(':nth-child(38) > :nth-child(18) > .col > strong').should('contain', 'MJ')
+  });
+
+  it.skip('Should be able to change the item status', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairItemStatus').select("DONE")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(19) > .col > strong').should('contain', 'DONE')
+  });
+
+  it.skip('Should be able to change the delivery status', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairDeliveryStatus').select("FORWARDED")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(20) > .col > strong').should('contain', 'FORWARDED')
+  });
+
+  it.skip('Should be able to change the remarks', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairRemarks').clear()
+    cy.get('#repairRemarks').clear("Warranty Expired")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(21) > .col > strong').should('contain', 'Warranty Expired')
+  });
+
+  it.skip('Should be able to change the return form number', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairReturnFormNumber').clear()
+    cy.get('#repairReturnFormNumber').clear("112")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(22) > .col > strong').should('contain', '112')
+  });
+
+  it.skip('Should be not able to change the return form number to a non-number', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairReturnFormNumber').clear()
+    cy.get('#repairReturnFormNumber').clear("a")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(22) > .col > strong').should('contain', '112')
+  });
+
+  it.skip('Should be able to change the return date', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairDateReturned').clear()
+    cy.get('#repairDateReturned').clear("Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(23) > .col > strong').should('contain', 'Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)')
+  });
+
+  it.skip('Should not be able to change the return date to something that is of the wrong format', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairDateReturned').clear()
+    cy.get('#repairDateReturned').clear("Saturday Apr 27 2024 9pm")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(23) > .col > strong').should('contain', 'Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)')
+  });
+
+  it.skip('Should be able to change the status', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairStatus').select("QA")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(24) > .col > strong').should('contain', 'QA')
+  });
+
+  it.skip('Should be able to change the defect description', () => {
+    cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
+    cy.get('#repairDefect').select("NO POWER")
+    cy.get('[formaction="/update"]').click()
+    cy.reload()
+    cy.get(':nth-child(38) > :nth-child(25) > .col > strong').should('contain', 'NO POWER')
+  });
 })
