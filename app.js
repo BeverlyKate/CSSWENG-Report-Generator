@@ -1,41 +1,42 @@
 // const xl = require('excel4node');
-const dotenv = require('dotenv');
-const express = require('express');
-const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require(`body-parser`);
-const routes = require('./routes/routes.js');
-const exphbs = require('express-handlebars');
-const hbs = require('hbs');
-const connect = require('./public/database/server.js');
+const routes = require("./routes/routes.js");
+const exphbs = require("express-handlebars");
+const hbs = require("hbs");
+const connect = require("./public/database/server.js");
 // const { app, protocol, BrowserWindow, ipcMain } = require('electron');
 // const axios = require('axios');
 const appExp = express();
-const path = require('path');
+const path = require("path");
 // const url = require('url');
 // const fs = require('fs');
 // const os = require('os');
 const http = require("http");
-const repairModel = require('./models/repairSchema.js');
-const cors = require('cors') //CORS stands for cross-origin resource sharing
+const repairModel = require("./models/repairSchema.js");
+const cors = require("cors"); //CORS stands for cross-origin resource sharing
 
-const corsOptions= require('./config/corsOptions')
+const corsOptions = require("./config/corsOptions");
 
-appExp.use(cors(corsOptions))
+appExp.use(cors(corsOptions));
 
 //Just checking max size of header that can be sent
 let size = http.maxHeaderSize;
-console.log('Max HTTP Header size is', size);
+console.log("Max HTTP Header size is", size);
 dotenv.config();
 
 //Set hbs as view engine
 appExp.set(`view engine`, `hbs`);
-appExp.set('views', path.join(__dirname, 'views'));
+appExp.set("views", path.join(__dirname, "views"));
 // hbs.registerPartials(__dirname + `/views/partials`)
+appExp.use(express.json());
 
-appExp.use(bodyParser.json())
-appExp.use(bodyParser.urlencoded( {extended: true } ))
+appExp.use(bodyParser.json());
+appExp.use(bodyParser.urlencoded({ extended: true }));
 //Set static directory
-appExp.use(express.static(__dirname + '/public'));
+appExp.use(express.static(__dirname + "/public"));
 //User a router for controllers
 appExp.use(`/`, routes);
 
@@ -71,7 +72,7 @@ appExp.use(`/`, routes);
 //         //Find all unique repair defects
 //         await repairModel.find({}).distinct('repairDefect').then(async repairDefect => {
 //             console.log(repairDefect)
-//             //Find all repairs associated with each unique repair item model, each unique repair defect and the 
+//             //Find all repairs associated with each unique repair item model, each unique repair defect and the
 //             //category1 parameter with repairDate greater than dateFrom and repairDate less than dateTo parameters
 //             await repairModel.find({repairItemModel: repairItemModel, repairDefect: repairDefect, repairDate: {$gte: dateFrom, $lte: dateTo}, repairStatus: status, repairCategory1: category1}).then(repair => {
 //                 var tempArray = {};
@@ -81,7 +82,7 @@ appExp.use(`/`, routes);
 //                 console.log(repair);
 //                 // console.log("rep tech length = " + repairItemModel.length)
 //                 // console.log("rep length = " + repair.length)
-            
+
 //                 //Iterate over the array of unique repair item models
 //                 for(i = 0; i < repairItemModel.length; i++) {
 //                     //Reset temporary array 2
@@ -95,7 +96,7 @@ appExp.use(`/`, routes);
 //                         //Iterate over the array of repairs associated with each unique repair item model and each unique
 //                         //repair defect
 //                         for(k = 0; k < repair.length; k++) {
-//                             //If repair item model in array of unique repair item models == repair item model in array of 
+//                             //If repair item model in array of unique repair item models == repair item model in array of
 //                             //repairs associated with each unique repair item model and repair defect in array of unique
 //                             //repair defects == repair defect in array of repairs associated with each unique repair
 //                             //defect, increment the temporary int to count its occurence
@@ -119,10 +120,10 @@ appExp.use(`/`, routes);
 //                     //Store temporary array 2 to repairTalliedQuantities
 //                     repairTalliedQuantities[i] = tempArray2
 //                 };
-//             }); 
+//             });
 //         })
 //         //Iterate over the repair item models and Sort repairTalliedQuantities in descending order
-//         for(i = 0; i < repairItemModel.length; i++) { 
+//         for(i = 0; i < repairItemModel.length; i++) {
 //           repairTalliedQuantities[i] = repairTalliedQuantities[i].sort(compareNumbers);
 //         }
 //         console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
@@ -138,7 +139,7 @@ appExp.use(`/`, routes);
 //         //Find all unique repair defects
 //         await repairModel.find({}).distinct('repairDefect').then(async repairDefect => {
 //             console.log(repairDefect)
-//             //Find all repairs associated with the itemModel parameter and each unique repair defect with repairDate 
+//             //Find all repairs associated with the itemModel parameter and each unique repair defect with repairDate
 //             //greater than dateFrom and repairDate less than dateTo parameters
 //             await repairModel.find({repairItemModel: itemModel, repairDefect: repairDefect, repairDate: {$gte: dateFrom, $lte: dateTo}, repairStatus: status}).then(repair => {
 //                 var tempArray = {};
@@ -147,7 +148,7 @@ appExp.use(`/`, routes);
 //                 // console.log(repair);
 //                 // console.log("rep tech length = " + repairItemModel.length)
 //                 // console.log("rep length = " + repair.length)
-            
+
 //                 //Iterate over the array of unique repair item models
 //                 for(i = 0; i < repairItemModel.length; i++) {
 //                     //Iterate over the array of unique repair defects
@@ -159,7 +160,7 @@ appExp.use(`/`, routes);
 //                         //Iterate over the array of repairs associated with each unique repair item model and each unique
 //                         //repair defect
 //                         for(k = 0; k < repair.length; k++) {
-//                             //If repair item model in array of unique repair item models == repair item model in array of 
+//                             //If repair item model in array of unique repair item models == repair item model in array of
 //                             //repairs associated with each unique repair item model and repair defect in array of unique
 //                             //repair defects == repair defect in array of repairs associated with each unique repair
 //                             //defect, increment the temporary int to count its occurence
@@ -181,7 +182,7 @@ appExp.use(`/`, routes);
 //                         jLoopCounter++;
 //                     };
 //                 };
-//             }); 
+//             });
 //         });
 //         //Sort repairTalliedQuantities in descending order
 //         repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
@@ -199,13 +200,13 @@ appExp.use(`/`, routes);
 // 		console.log(cleaned2);
 
 //Run on Local Host and connect to Mongo DB
-appExp.listen(process.env.SERVER_PORT, async function(){
+appExp.listen(process.env.SERVER_PORT, async function () {
   console.log("Running on port: " + process.env.SERVER_PORT);
-  try{
-      await connect();
-      console.log("connected to database!");
-  }catch(err){
-      console.error(err);
-      console.log("Failed to connect to database");
+  try {
+    await connect();
+    console.log("connected to database!");
+  } catch (err) {
+    console.error(err);
+    console.log("Failed to connect to database");
   }
 });
