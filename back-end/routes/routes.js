@@ -37,6 +37,8 @@ app.post("/TIQPMPTpost", repairController.getTotalItemQuantityPerItemModelPerTec
 app.post("/AWDPTpost", repairController.getAverageWorkingDaysPerTechnician);
 //Update from db
 app.post('/update', dbController.update);
+//Delete from db
+app.post('/delete', dbController.delete);
 
 app.get("/table", repairController.getAllRepairs);
 

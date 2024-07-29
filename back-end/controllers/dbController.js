@@ -88,6 +88,20 @@ const dbController = {
 
         res.redirect(`/table`);
     },
+
+    //Delete from database
+    delete: async function(req, res) {
+        const repairId = req.body.repairId;
+        console.log(repairId);
+
+        await repairModel.deleteOne({repairId: repairId}).then(repair => {
+            console.log(repair)
+        }).catch(error => {
+            console.log("delete error: " + error);
+        });
+         
+        res.redirect(`/table`);
+    },
 };
 
 //Export dbController to be used
