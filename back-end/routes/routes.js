@@ -20,7 +20,6 @@ async function dynamicImport() {
 dynamicImport();
 const mainController = require('../controllers/mainController.js');
 const repairController = require('../controllers/repairController.js');
-mainController.log
 
 //Open Login
 app.get('/', mainController.login);
@@ -43,4 +42,4 @@ app.get('/home', mainController.getHome);
 
 // app.get('/IQPM', mainController.generateIQPM(reportParameters));
 
-module.exports = app;
+module.exports = { app, dynamicImport };

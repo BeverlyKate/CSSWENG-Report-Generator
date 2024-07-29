@@ -1,6 +1,7 @@
 import { default as test, describe, it } from "node:test";
 import { expect } from 'chai';
-import app from '../routes/routes.js';
+import { app, dynamicImport } from '../routes/routes.js';
+// import dynamicImport from "../routes/routes.js";
 
 describe('Routes', () => {
     it('Is connected to Main Controller', function() {
@@ -12,21 +13,29 @@ describe('Routes', () => {
         ];
 
         mainRoutes.forEach(route => {
-            expect(app.stack.some((s) => Object.keys(s.route.methods).includes(route.method))).to.equal(true);
-            expect(app.stack.some((s) => s.route.path === route.path)).to.equal(true);
+            const routeExists = app.stack.some((layer) => {
+                return layer.route && layer.route.path === route.path && layer.route.methods[route.method];
+            });
+
+            expect(routeExists).to.equal(true);
         });
     }),
 
-    it('Is connected to Import Controller', function() {
+    it('Is connected to Import Controller', async function() {
         const importRoutes = [
             { path: '/importFile', method: 'post' },
         ];
 
+        await dynamicImport();
+
         importRoutes.forEach(route => {
-            expect(app.stack.some((s) => Object.keys(s.route.methods).includes(route.method))).to.equal(true);
-            expect(app.stack.some((s) => s.route.path === route.path)).to.equal(true);
+            const routeExists = app.stack.some((layer) => {
+                return layer.route && layer.route.path === route.path && layer.route.methods[route.method];
+            });
+
+            expect(routeExists).to.equal(true);
         });
-    }),
+    })
 
     it('Is connected to Repair Controller', function() {
         const repairRoutes = [
@@ -37,8 +46,11 @@ describe('Routes', () => {
         ];
 
         repairRoutes.forEach(route => {
-            expect(app.stack.some((s) => Object.keys(s.route.methods).includes(route.method))).to.equal(true);
-            expect(app.stack.some((s) => s.route.path === route.path)).to.equal(true);
+            const routeExists = app.stack.some((layer) => {
+                return layer.route && layer.route.path === route.path && layer.route.methods[route.method];
+            });
+
+            expect(routeExists).to.equal(true);
         });
     })
 });

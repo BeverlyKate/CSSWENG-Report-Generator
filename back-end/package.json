@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "functionalTest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "dbTest": "node unitTesting/dbTest.js",
-    "routeConnectionTest": "node unitTesting/routeConnectionTest.js"
+    "dbTest": "node unitTesting/dbTest.mjs",
+    "routeConnectionTest": "node unitTesting/routeConnectionTest.mjs"
   },
   "keywords": [],
   "author": "",
