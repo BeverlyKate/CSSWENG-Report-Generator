@@ -52,16 +52,15 @@ const repairController = {
 
     //Get Total Item Quantity Per Technician TIQPT
     getTotalItemQuantityPerTechnician: async function(req, res) {
-        let category1 = req.body.category1;
         let dateFrom = new Date(req.body.dateFrom);
         let newDateTo = new Date(req.body.dateFrom);
         let dateTo;
-        var repairTalliedQuantities = [];
+        let repairTalliedQuantities = [];
         let technician = req.body.technician
         let technicianArray = [];
-        var technicianCount = 0;
+        let technicianCount = 0;
         let distinctArray = [];
-        var tempInt = 0;
+        let tempInt = 0;
         console.log(req.body);
 
         if(req.body.dateFrom.length = 4){
@@ -158,19 +157,60 @@ const repairController = {
         };
     },
 
+    //Get Total Item Quantity Per Item Model Per Technician TIQPMPT
+    getTotalItemQuantityPerItemModelPerTechnician: async function(req, res) {
+        let dateFrom = new Date(req.body.dateFrom);
+        let newDateTo = new Date(req.body.dateFrom);
+        let dateTo;
+        let repairTalliedQuantities = [];
+        let technician = req.body.technician
+        let status = req.body.taskType;
+        let itemModel = req.body.category1;
+        let tempInt = 0;
+        console.log(req.body);
+
+        if(req.body.dateFrom.length = 4){
+            dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
+        } else {
+            dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
+        }
+
+        //Find all repairs associated with the required inputs taken from the request parameters with repairDate greater than 
+        //dateFrom and repairDate less than dateTo parameters
+        await repairModel.find({ $or:[{repairTechnician1: technician}, {repairTechnician2: technician}], repairItemModel: itemModel, repairStatus: status, repairDate: {$gte: dateFrom, $lte: dateTo}}).then(repair => {
+            // console.log(repair);
+            //Iterate over the array of repairs associated with the required inputs taken from the request parameters
+            for(i = 0; i < repair.length; i++) {
+                //If technician parameter == repair technician in array of repairs associated with the required inputs taken from
+                //the request parameters and itemModel parameter == repair item model in array of repairs associated with the
+                //required inputs taken from the request parameters, add its repair quantity value to temporary int
+                if((technician == repair[i].repairTechnician1 && itemModel == repair[i].repairItemModel) ||
+                technician == repair[i].repairTechnician2 && itemModel == repair[i].repairItemModel) {
+                    // console.log("repair quantity =" + repair[i].repairQuantity);
+                    tempInt += repair[i].repairQuantity;
+                };
+            };
+            //Store temporary integer to repairTalliedQuantities
+            repairTalliedQuantities[0] = tempInt;
+            console.log("tallied = " + repairTalliedQuantities);
+            //Send to hbs template used
+            res.render('TIQPMPT', {date: req.body.dateFrom, repairTechnician: technician, repairItemModel: itemModel, repairTalliedQuantities: repairTalliedQuantities});
+        }); 
+    },
+
     //Get Average Working Days Per Technician AWDPT
     getAverageWorkingDaysPerTechnician: async function(req, res) {
         let dateFrom = new Date(req.body.dateFrom);
         let newDateTo = new Date(req.body.dateFrom);
         let dateTo;
-        var repairAverageWorkingDays = [];
+        let repairAverageWorkingDays = [];
         let technician = req.body.technician
         let technicianArray = [];
-        var technicianCount = 0;
+        let technicianCount = 0;
         let distinctArray = [];
-        var tempInt1 = 0;
-        var tempInt2 = 0;
-        var averageWorkingDays = 0;
+        let tempInt1 = 0;
+        let tempInt2 = 0;
+        let averageWorkingDays = 0;
 
         if(req.body.dateFrom.length = 4){
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
@@ -184,7 +224,7 @@ const repairController = {
                 // console.log(repairTechnician1);
                 //Add repairTechnician1 to technician array
                 for(i = 0; i < repairTechnician1.length; i++) {
-                    technician[technicianCount] = repairTechnician1[i];
+                    technicianArray[technicianCount] = repairTechnician1[i];
                     technicianCount++;
                 }
                 
@@ -192,12 +232,12 @@ const repairController = {
                     // console.log(repairTechnician2);
                     //Add repairTechnician2 to technician array
                     for(i = 0; i < repairTechnician2.length; i++) {
-                        technician[technicianCount] = repairTechnician2[i];
+                        technicianArray[technicianCount] = repairTechnician2[i];
                         technicianCount++;
                     }
                 
                     //Clear all duplicate entries in technician array
-                    distinctArray = clearDuplicates(technician);
+                    distinctArray = clearDuplicates(technicianArray);
                     console.log("distinct array = " + distinctArray);
                 
                     //Find all repairs associated with each unique repair technician with repairDate greater than dateFrom and 
