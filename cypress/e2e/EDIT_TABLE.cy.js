@@ -228,7 +228,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(8) > :nth-child(23) > .col > strong').should('contain', 'Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)')
   });
 
-  it.only('Should not be able to change the return date to something that is of the wrong format', () => {
+  it('Should not be able to change the return date to something that is of the wrong format', () => {
     cy.get(':nth-child(8) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDateReturned').clear()
     cy.get('#repairDateReturned').type("Friday Apr 27 2024 9pm")
