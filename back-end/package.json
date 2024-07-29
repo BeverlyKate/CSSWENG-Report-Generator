@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "functionalTest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dbTest": "node unitTesting/dbTest.mjs",
     "routeConnectionTest": "node unitTesting/routeConnectionTest.mjs"
@@ -16,6 +16,7 @@
     "jest": true
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "chai": "^5.1.1",
     "cypress-file-upload": "^5.0.8",
@@ -28,6 +29,7 @@
     "http": "^0.0.1-security",
     "mongoose": "^8.2.3",
     "mongoose-sequence": "^6.0.1",
+    "nodemon": "^3.1.4",
     "path": "^0.12.7"
   },
   "devDependencies": {

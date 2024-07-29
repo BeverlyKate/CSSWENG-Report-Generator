@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Forgot Password</title>
+</head>
+<body>
+    <form class="table btnCenter" action="/recovery" method="post" name="forgotPasswordForm">
+        <div class="upperbox">
+            <img src="/images/FullKevlerLogo.png" alt="">
+        </div>    
+        <div class="lowerbox">
+            <label for="email" class="text-1">Email: </label>
+            <input class="input-box" type="email" id="email" name="email" required>
+            
+            <label for="username" class="text-1">Username: </label>
+            <input class="input-box" type="text" id="username" name="username" required>
+            
+            <label for="password" class="text-1">New Password: </label>
+            <input class="input-box" type="password" id="password" name="password" required>
+            
+            <label for="retypePassword" class="text-1">Retype Password: </label>
+            <input class="input-box" type="password" id="retypePassword" name="retypePassword" required>
+            
+             <b><p type = 'error' id = 'recoveryError'>{{error}}</p></b>
+            
+            <button type="submit" id="resetPassword" class="btn-login">Reset Password</button>
+        </div>
+    </form>
+    </body>
+    </html>

@@ -46,4 +46,12 @@ app.get("/import", mainController.getImport);
 
 app.get("/home", mainController.getHome);
 
+app.get('/passwordRecovery', mainController.getRecovery);
+
+app.post('/recovery', mainController.postRecovery);
+
+app.get('/registerUser',mainController.getRegister);
+
+app.post('/newUser',mainController.postRegister);
+
 module.exports = { app, dynamicImport };
