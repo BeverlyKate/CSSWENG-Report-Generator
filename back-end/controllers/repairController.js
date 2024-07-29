@@ -44,8 +44,9 @@ const repairController = {
             //Send to hbs template used
             res.render("table", {repair: repair});
         }).catch(error => {
-            console.log("Getting all repairs error: " + error);//Copy this logic
-            res.render("table", {error: error});//Copy this logic
+            console.log("Getting all repairs error: " + error);//Copy this logic\
+            const errorMessage = "Getting all repairs error";
+            res.render("table", {error: errorMessage});//Copy this logic
         });
     },
 
@@ -116,7 +117,9 @@ const repairController = {
                             repairTalliedQuantities[i] = tempInt;
                         };
                     }).catch(error => {
-                        console.log(error);
+                        console.log("Finding repairModel repairTechnician 1 repairTechnician 2 error: " + error);
+                        const errorMessage = "Finding repairModel repairTechnician 1 repairTechnician 2 error";
+                        res.render("TIQPT", {error: errorMessage});
                     });             
                     console.log("tallied = " + repairTalliedQuantities);
                     console.log("repairTech1 = "  + repairTechnician1);
@@ -126,9 +129,13 @@ const repairController = {
                     res.render("TIQPT", {date: req.body.dateFrom, repairTechnician1: repairTechnician1, repairTechnician2: repairTechnician2, repairTalliedQuantities: repairTalliedQuantities, distinctArray: distinctArray, notDefault: false});
                 }).catch(error => {
                     console.log("Finding repairModel repairTechnician 2 error: " + error);
+                    const errorMessage = "Finding repairModel repairTechnician 2 error";
+                    res.render("TIQPT", {error: errorMessage});
                 });
             }).catch(error => {
                 console.log("Finding repairModel repairTechnician 1 error: " + error);
+                const errorMessage = "Finding repairModel repairTechnician 1 error";
+                res.render("TIQPT", {error: errorMessage});
             });
         } else {
             //Find all repairs associated with the technician parameter with repairDate greater than dateFrom and repairDate 
@@ -151,7 +158,9 @@ const repairController = {
                 //Send to hbs template used
                 res.render("TIQPT", {date: req.body.dateFrom, repairTechnician: technician, repairTalliedQuantities: repairTalliedQuantities, notDefault: true});
             }).catch(error => {
-                console.log(error);
+                console.log("Finding repairModel repairTechnician 1 or repairTechnician 2 error" + error);
+                const errorMessage = "Finding repairModel repairTechnician 1 or repairTechnician 2 error";    
+                res.render("TIQPT", {error: errorMessage});
             });
         };
     },
@@ -353,12 +362,16 @@ const repairController = {
                     };
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model error: " + error);
+                    const errorMessage = "Cannot find Repair Item Model error";    
+                    res.render("IQPM", {error: errorMessage});
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render("IQPM", {date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
                 console.log("Cannot find all Repair Item Models error: " + error);
+                const errorMessage = "Cannot find all Repair Item Models error";    
+                res.render("IQPM", {error: errorMessage});
             });
         } else {
             //Find all unique repair item models
@@ -386,12 +399,16 @@ const repairController = {
                     };
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model error: " + error);
+                    const errorMessage = "Cannot find Repair Item Model error";    
+                    res.render("IQPM", {error: errorMessage});
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render("IQPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
                 console.log("Cannot find all Repair Item Models error: " + error);
+                const errorMessage = "Cannot find all Repair Item Models error";    
+                res.render("IQPM", {error: errorMessage});
             });
         };
     },
@@ -457,7 +474,9 @@ const repairController = {
                             repairTalliedQuantities[i] = tempArray
                         };
                     }).catch(error => {
-                        console.log(error);
+                        console.log("Cannot find Repair Item Model defect, date, status, and category error: " + error);
+                        const errorMessage = "Cannot find Repair Item Model defect, date, status, and category error";    
+                        res.render("TDPM", {error: errorMessage});
                     });
                     //Iterate over the repair item models and Sort repairTalliedQuantities in descending order
                     repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
@@ -465,10 +484,14 @@ const repairController = {
                     //Send to hbs template used
                     res.render("TDPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities), repairTalliedQuantitiesArray: repairTalliedQuantities});
                 }).catch(error => {
-                    console.log(error);
+                    console.log("Cannot find all Repair Defects error: " + error);
+                    const errorMessage = "Cannot find all Repair Defects error";    
+                    res.render("TDPM", {error: errorMessage});
                 });
             }).catch(error => {
-                console.log(error);
+                console.log("Cannot find all Repair Item Models error: " + error);
+                const errorMessage = "Cannot find all Repair Item Models error";    
+                res.render("TDPM", {error: errorMessage});
             });
         } else if(category1 == "default") {
             //Find all unique repair item models
@@ -510,7 +533,9 @@ const repairController = {
                             };
                         };
                     }).catch(error => {
-                        console.log(error);
+                        console.log("Cannot find Repair Item Model defect, date, and status error: " + error);
+                        const errorMessage = "Cannot find Repair Item Model defect, date, status error";    
+                        res.render("TDPM", {error: errorMessage});
                     }); 
                     //Sort repairTalliedQuantities in descending order
                     repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
@@ -518,10 +543,14 @@ const repairController = {
                     //Send to hbs template used
                     res.render("TDPM", {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities)});
                 }).catch(error => {
-                    console.log(error);
+                    console.log("Cannot find all Repair Defects error: " + error);
+                    const errorMessage = "Cannot find all Repair Defects error";    
+                    res.render("TDPM", {error: errorMessage});
                 });
             }).catch(error => {
-                console.log(error);
+                console.log("Cannot find all Repair Item Models error: " + error);
+                const errorMessage = "Cannot find all Repair Item Models error";    
+                res.render("TDPM", {error: errorMessage});
             });
         };
     },
@@ -566,13 +595,17 @@ const repairController = {
                         console.log("hi2: "+ i);
                     };
                 }).catch(error => {
-                    console.log(error);
+                    console.log("Cannot find Repair Item Model with date, status, and category error: " + error);
+                    const errorMessage = "Cannot find Repair Item Model with date, status, and category error";    
+                    res.render("PTPM", {error: errorMessage});
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render("PTPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
-                console.log(error);
+                console.log("Cannot find all Repair Item Models error: " + error);
+                const errorMessage = "Cannot find all Repair Item Models error";    
+                res.render("PTPM", {error: errorMessage});
             });
         } else if(category1 == "default") {
             //Find all unique repair item models
@@ -593,13 +626,17 @@ const repairController = {
                         repairTalliedQuantities[i] = tempArray;
                     };
                 }).catch(error => {
-                    console.log(error);
+                    console.log("Cannot find Repair Item Model with date, and status error: " + error);
+                    const errorMessage = "Cannot find Repair Item Model with date, and status error";    
+                    res.render("PTPM", {error: errorMessage});
                 });
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render("PTPM", {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
-                console.log(error);
+                console.log("Cannot find all Repair Item Models error: " + error);
+                const errorMessage = "Cannot find all Repair Item Models error";    
+                res.render("PTPM", {error: errorMessage});
             });
         };
     },

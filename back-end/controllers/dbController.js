@@ -84,9 +84,11 @@ const dbController = {
             // console.log(repair);
         }).catch(error => {
             console.log("update error: " + error);
+            const errorMessage = "update error";
+            res.render("table", {error: errorMessage});
         });
 
-        res.redirect(`/table`);
+        res.render("table");
     },
 
     //Delete from database
@@ -98,9 +100,11 @@ const dbController = {
             console.log(repair)
         }).catch(error => {
             console.log("delete error: " + error);
+            const errorMessage = "delete error";
+            res.render("table", {error: errorMessage});
         });
          
-        res.redirect(`/table`);
+        res.render("table");
     },
 };
 

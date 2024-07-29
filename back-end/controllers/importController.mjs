@@ -31,6 +31,8 @@ export async function insertRepair(excelValues) {
                 // console.log(newRepairId);
             }).catch(error => {
                 console.log("Repair ID creation error: " + error);
+                const errorMessage = "Repair ID creation error";
+                res.render("import", {error: errorMessage});
             });
 
             try {
@@ -74,7 +76,9 @@ export async function insertRepair(excelValues) {
                 };
                 dataToSave.push(newRepair);
             } catch(error) {
-                console.log(error);
+                console.log("Data to array insertion error: " + error);
+                const errorMessage = "Data to array insertion error";
+                res.render("import", {error: errorMessage});
             };
         };
     };
@@ -84,6 +88,8 @@ export async function insertRepair(excelValues) {
         // console.log(insertedData);
     }).catch(error => {
         console.log("Data insertion error: " + error);
+        const errorMessage = "Data insertion error";
+        res.render("import", {error: errorMessage});
     });
 }
 
@@ -99,7 +105,9 @@ const importController = {
                 insertRepair(excelValues);
             });
         } catch(error) {
-            console.log(error);
+            console.log("Import file error: " + error);
+            const errorMessage = "Import file error";
+            res.render("import", {error: errorMessage});
         };
     },
 };
