@@ -1,46 +1,36 @@
-const express = require("express");
-const app = express.Router();
+const express = require('express');
+const router = express.Router();
+
+const mainController = require('../controllers/mainController.js');
+const repairController = require('../controllers/repairController.js');
+
+// Define routes first
+router.get('/', mainController.login);
+router.post('/login', mainController.getMain);
+router.post('/IQPMpost', repairController.getTotalItemQuantityPerItemModel);
+router.post('/TDPMpost', repairController.getTopDefectsPerItemModel);
+router.post('/PTPMpost', repairController.getPendingStatusPerItemModel);
+router.post('/TIQPTpost', repairController.getTotalItemQuantityPerTechnician);
+router.post('/TIQPMPTpost', repairController.getTotalItemQuantityPerItemModelPerTechnician);
+router.post('/AWDPTpost', repairController.getAverageWorkingDaysPerTechnician);
+router.get('/table', repairController.getAllRepairs);
+router.get('/import', mainController.getImport);
+router.get('/home', mainController.getHome);
+router.get('/', mainController.getRecovery);
+router.post('/recovery', mainController.postRecovery);
+
+// Dynamic import example (if needed)
+// This method should be avoided for route definitions
 async function dynamicImport() {
     try {
-      // Dynamically import the module
-        const { default: importController } = await import("../controllers/importController.mjs");
-  
-      // Now you can use the methods from importController
-    //   importController.getFile
-        app.post("/importFile", importController.importFile);
-      // ... other logic ...
-  
+        const { default: importController } = await import('../controllers/importController.mjs');
+        router.post('/importFile', importController.importFile);
     } catch (error) {
-      console.error("Error importing importController:", error);
-    };
-};
+        console.error('Error importing importController:', error);
+    }
+}
+
+// Invoke dynamicImport if needed in specific situations
 dynamicImport();
-const mainController = require("../controllers/mainController.js");
-const repairController = require("../controllers/repairController.js");
 
-//Open Login
-app.get("/", mainController.login);
-//Open Home
-app.post("/login", mainController.getMain);
-//Item Quantity Per Model
-app.post("/IQPMpost", repairController.getTotalItemQuantityPerItemModel);
-//Top Defects per Model
-app.post("/TDPMpost", repairController.getTopDefectsPerItemModel);
-//Pending Tasks per Model
-app.post("/PTPMpost", repairController.getPendingStatusPerItemModel);
-//Total Item Quantity Per Technician
-app.post("/TIQPTpost", repairController.getTotalItemQuantityPerTechnician);
-//Total item quantity per model per technician
-app.post("/TIQPMPTpost", repairController.getTotalItemQuantityPerItemModelPerTechnician);
-//Average working days per technician
-app.post("/AWDPTpost", repairController.getAverageWorkingDaysPerTechnician);
-
-app.get("/table", repairController.getAllRepairs);
-
-app.get("/import", mainController.getImport);
-
-app.get("/home", mainController.getHome);
-
-// app.get("/IQPM", mainController.generateIQPM(reportParameters));
-
-module.exports = { app, dynamicImport };
+module.exports = router;
