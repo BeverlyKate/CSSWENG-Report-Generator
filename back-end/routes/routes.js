@@ -33,6 +33,8 @@ app.post('/TDPMpost', repairController.getTopDefectsPerItemModel);
 app.post('/PTPMpost', repairController.getPendingStatusPerItemModel);
 //Total Item Quantity Per Technician
 app.post('/TIQPTpost', repairController.getTotalItemQuantityPerTechnician);
+//Average working days per technician
+app.post('/AWDPTpost', repairController.getAverageWorkingDaysPerTechnician);
 
 app.get('/table', repairController.getAllRepairs);
 
