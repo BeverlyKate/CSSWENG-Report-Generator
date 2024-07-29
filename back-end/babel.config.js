@@ -1,4 +1,9 @@
+// babel.config.js
 module.exports = {
-    presets: ["@babel/preset-env"],
-    plugins: ["@babel/plugin-transform-react-jsx"],
+    // "transform": {
+    //     "\\.[m]js?$": "babel-jest",
+    //     // "\\.css$": "some-css-transformer",
+    // },
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-transform-react-jsx'],
 };

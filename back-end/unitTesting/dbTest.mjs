@@ -1,9 +1,9 @@
 import { default as test, describe, it } from "node:test";
-import mongoose, { Mongoose } from "mongoose";
-import { expect } from "chai";
+import mongoose, { Mongoose } from 'mongoose';
+import { expect } from 'chai';
 
-describe("MongoDB connection", () => {
-    it("Should connect to MongoDB", async function() {
+describe('MongoDB connection', () => {
+    it('Should connect to MongoDB', async function() {
         let connection;
         async function connect(){
             console.log("Connecting to MongoDB");
@@ -12,6 +12,7 @@ describe("MongoDB connection", () => {
         };
 
         connection = await connect();
+        
         expect(connection).to.equal(1);
     });
 });

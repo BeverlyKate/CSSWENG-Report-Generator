@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 const app = express();
-import bodyParser from "body-parser";
+import bodyParser from 'body-parser';
 app.use(bodyParser.urlencoded({ extended: true }));
 import { IncomingForm } from "formidable";
-import repairModel from "../models/repairSchema.js";
-import repairIdModel from "../models/repairIdSchema.js";
+import repairModel from '../models/repairSchema.js';
+import repairIdModel from '../models/repairIdSchema.js';
 
 export async function insertRepair(excelValues) {
     const excelValuesLength = excelValues.length;
@@ -20,18 +20,18 @@ export async function insertRepair(excelValues) {
             console.log("no input");
         } else {
             const newRepairId = new repairIdModel();
-            await newRepairId.save();
+            await newRepairId.save()
 
             try {
                 let repairDateFinished;
                 let repairDateReturned;
                 if(excelValues[i+13] != "NULL") {
                     repairDateFinished = new Date(Math.round((excelValues[i+13] - 25569)*86400*1000)).toLocaleDateString();
-                };
+                }
 
                 if(excelValues[i+21] != "NULL") {
                     repairDateReturned = new Date(Math.round((excelValues[i+21] - 25569)*86400*1000)).toLocaleDateString();
-                };
+                }
                 const newRepair = {
                     repairId: newRepairId.idCounter,
                     repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
@@ -65,8 +65,8 @@ export async function insertRepair(excelValues) {
             };
         };
     };
-    await repairModel.insertMany(dataToSave);
-};
+    await repairModel.insertMany(dataToSave)
+}
 
 const importController = {
     importFile: async function(req, res) {
