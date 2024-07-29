@@ -1,18 +1,18 @@
 const express = require("express");
 const app = express.Router();
 async function dynamicImport() {
-    try {
-      // Dynamically import the module
-        const { default: importController } = await import("../controllers/importController.mjs");
-  
-      // Now you can use the methods from importController
-    //   importController.getFile
-        app.post("/importFile", importController.importFile);
-      // ... other logic ...
-  
-    } catch (error) {
-      console.error("Error importing importController:", error);
-    };
+  try {
+    // Dynamically import the module
+      const { default: importController } = await import("../controllers/importController.mjs");
+
+    // Now you can use the methods from importController
+  //   importController.getFile
+      app.post("/importFile", importController.importFile);
+    // ... other logic ...
+
+  } catch (error) {
+    console.error("Error importing importController:", error);
+  };
 };
 dynamicImport();
 const mainController = require("../controllers/mainController.js");

@@ -34,7 +34,7 @@ describe("Routes", () => {
 
             expect(routeExists).to.equal(true);
         });
-    })
+    }),
 
     it("Is connected to Repair Controller", function() {
         const repairRoutes = [
@@ -48,6 +48,21 @@ describe("Routes", () => {
         ];
 
         repairRoutes.forEach(route => {
+            const routeExists = app.stack.some((layer) => {
+                return layer.route && layer.route.path === route.path && layer.route.methods[route.method];
+            });
+
+            expect(routeExists).to.equal(true);
+        });
+    }),
+
+    it("Is connected to Db Controller", function() {
+        const dbRoutes= [
+            { path: "/update", method: "post" },
+            { path: "/delete", method: "post" },
+        ];
+
+        dbRoutes.forEach(route => {
             const routeExists = app.stack.some((layer) => {
                 return layer.route && layer.route.path === route.path && layer.route.methods[route.method];
             });
