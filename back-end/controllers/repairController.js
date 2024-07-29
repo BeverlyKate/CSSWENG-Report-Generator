@@ -50,125 +50,21 @@ const repairController = {
         });
     },
 
-    //Get Total Item Quantity Per Technician TIQPT
-    getTotalItemQuantityPerTechnician: async function(req, res) {
-        let category1 = req.body.category1;
-        let dateFrom = new Date(req.body.dateFrom);
-        let newDateTo = new Date(req.body.dateFrom);
-        let dateTo;
-        var repairTalliedQuantities = [];
-        let technician = req.body.technician
-        let technicianArray = [];
-        var technicianCount = 0;
-        let distinctArray = [];
-        var tempInt = 0;
-        console.log(req.body);
-
-        if(req.body.dateFrom.length = 4){
-            dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
-        } else {
-            dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
-        }
-
-        if(technician == "default") {
-            //Find all unique repair technicians
-            await repairModel.find({}).distinct('repairTechnician1').then(async repairTechnician1 => {
-                // console.log(repairTechnician1);
-                //Add repairTechnician1 to technician array
-                for(i = 0; i < repairTechnician1.length; i++) {
-                    technicianArray[technicianCount] = repairTechnician1[i];
-                    technicianCount++;
-                }
-            
-                await repairModel.find({}).distinct('repairTechnician2').then(async repairTechnician2 => {
-                    // console.log(repairTechnician2);
-                    //Add repairTechnician2 to technician array
-                    for(i = 0; i < repairTechnician2.length; i++) {
-                        technicianArray[technicianCount] = repairTechnician2[i];
-                        technicianCount++;
-                    }
-
-                    //Clear all duplicate entries in technician array
-                    distinctArray = clearDuplicates(technicianArray);
-                    console.log("distinct array = " + distinctArray);
-
-                    //Find all repairs associated with each unique repair technician with repairDate greater than dateFrom and 
-                    //repairDate less than dateTo parameters
-                    await repairModel.find({repairTechnician1: repairTechnician1, repairTechnician2: repairTechnician2, repairDate: {$gte: dateFrom, $lte: dateTo}}).then(repair => {
-                        // console.log(repair);
-                        // console.log("rep tech length = " + repairTechnician.length)
-                        // console.log("rep length = " + repair.length)
-                
-                        //Iterate over the array of unique repair technicians
-                        for(i = 0; i < distinctArray.length; i++) {
-                            //Reset temporary int
-                            tempInt = 0;
-                            //Iterate over the array of repairs associated with each unique repair technician
-                            for(j = 0; j < repair.length; j++) {
-                                //If repair technician in array of unique repair technicians == repair technician in array of 
-                                //repairs associated with each unique repair technician, add its repair quantity value to 
-                                //temporary int
-                                if((distinctArray[i] == repair[j].repairTechnician1) || (distinctArray[i] == repair[j].repairTechnician2)) {
-                                    console.log("hatdog");
-                                    tempInt += repair[j].repairQuantity;
-                                };
-                            };
-                            
-                            //Store temporary int to repairTalliedQuantities
-                            repairTalliedQuantities[i] = tempInt;
-                        };
-                    }).catch(error => {
-                        console.log(error);
-                    });             
-                    console.log("tallied = " + repairTalliedQuantities);
-                    console.log("repairTech1 = "  + repairTechnician1);
-                    console.log("repairTech2 = "  + repairTechnician2);
-                    console.log("unique technicains = " + distinctArray);
-                    //Send to hbs template used
-                    res.render('TIQPT', {date: req.body.dateFrom, repairTechnician1: repairTechnician1, repairTechnician2: repairTechnician2, repairTalliedQuantities: repairTalliedQuantities, distinctArray: distinctArray, notDefault: false});
-                }).catch(error => {
-                    console.log("Finding repairModel repairTechnician 2 error: " + error);
-                });
-            }).catch(error => {
-                console.log("Finding repairModel repairTechnician 1 error: " + error);
-            });
-        } else {
-            //Find all repairs associated with the technician parameter with repairDate greater than dateFrom and repairDate 
-            //less than dateTo parameters
-            await repairModel.find({ $or:[{repairTechnician1: technician}, {repairTechnician2: technician}], repairDate: {$gte: dateFrom, $lte: dateTo}}).then(repair => {
-                //Iterate over the array of repairs associated with each unique repair technician
-                for(i = 0; i < repair.length; i++) {
-                    //If repair technician in array of unique repair technicians == repair technician in array of repairs
-                    //associated with each unique repair technician, add its repair quantity value to temporary int
-                    if((technician == repair[i].repairTechnician1) || (technician == repair[i].repairTechnician2)) {
-                        console.log("hatdog");
-                        tempInt += repair[i].repairQuantity;
-                    };
-                };
-
-                //Store temporary int to repairTalliedQuantities
-                repairTalliedQuantities = tempInt;
-
-                console.log("tallied = " + repairTalliedQuantities);
-                //Send to hbs template used
-                res.render('TIQPT', {date: req.body.dateFrom, repairTechnician: technician, repairTalliedQuantities: repairTalliedQuantities, notDefault: true});
-            }).catch(error => {
-                console.log(error);
-            });
-        };
-    },
-
     getTotalItemQuantityPerItemModel: async function(req, res) {
         let category1 = req.body.category1;
-        let dateFrom = new Date(req.body.dateFrom);
-        let newDateTo = new Date(req.body.dateFrom);
+        let dateFrom;
         let dateTo;
+        let newDateTo;
         let repairTalliedQuantities = [];
         let tempInt = 0;
 
         if(req.body.dateFrom.length = 4){
+            dateFrom = new Date(req.body.dateFrom);
+            newDateTo = new Date(req.body.dateFrom);
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
+            dateFrom = new Date(req.body.dateFrom);
+            newDateTo = new Date(req.body.dateFrom);
             dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
         }
 
@@ -256,16 +152,20 @@ const repairController = {
         let status = req.body.taskType;
         let itemModel = req.body.itemModel;
         let category1 = req.body.category1;
-        let dateFrom = new Date(req.body.dateFrom);
-        let newDateTo = new Date(req.body.dateFrom);
+        let dateFrom;
+        let newDateTo;
         let dateTo;
         let repairTalliedQuantities = [];
         let tempInt = 0;
         let tempArray = [];
 
         if(req.body.dateFrom.length = 4){
+            dateFrom = new Date(req.body.dateFrom);
+            newDateTo = new Date(req.body.dateFrom);
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
+            dateFrom = new Date(req.body.dateFrom);
+            newDateTo = new Date(req.body.dateFrom);
             dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
         }
 
@@ -404,16 +304,20 @@ const repairController = {
         let status = req.body.taskType;
         let itemModel = req.body.itemModel;
         let category1 = req.body.category1;
-        let dateFrom = new Date(req.body.dateFrom);
-        let newDateTo = new Date(req.body.dateFrom);
+        let dateFrom;
+        let newDateTo;
         let dateTo;
         let repairTalliedQuantities = [];
         let repairModel;
         let tempArray = [];
 
         if(req.body.dateFrom.length = 4){
+            dateFrom = new Date(req.body.dateFrom);
+            newDateTo = new Date(req.body.dateFrom);
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
+            dateFrom = new Date(req.body.dateFrom);
+            newDateTo = new Date(req.body.dateFrom);
             dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
         }
         console.log("date from: " + dateFrom);

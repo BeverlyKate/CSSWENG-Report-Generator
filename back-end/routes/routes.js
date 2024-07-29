@@ -31,9 +31,9 @@ app.post('/IQPMpost', repairController.getTotalItemQuantityPerItemModel);
 app.post('/TDPMpost', repairController.getTopDefectsPerItemModel);
 //Pending Tasks per Model
 app.post('/PTPMpost', repairController.getPendingStatusPerItemModel);
-//Total Item Quantity Per Technician
-app.post('/TIQPTpost', repairController.getTotalItemQuantityPerTechnician);
-
+// //Import file and insert into DB
+// app.post('/importFile', importController.getFile);
+// app.get('/insertRepair/:excelValues', repairController.insertRepair);
 app.get('/table', repairController.getAllRepairs);
 
 app.get('/import', mainController.getImport);
