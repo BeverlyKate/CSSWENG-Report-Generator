@@ -1,7 +1,7 @@
 const mainController = {
     //Login feature
     login: async function(req, res) {
-        res.render('login');    
+        res.render("login");    
     },
 
     //Load Home Page
@@ -11,23 +11,23 @@ const mainController = {
 
         if(username == "Admin") { 
             if(password == 12345678) {
-                res.render('home');
+                res.render("home");
             } else {
                 const error = "Invalid username or password";
-                res.render('login', {error: error});
+                res.render("login", {error: error});
             }
         } else {
             const error = "Invalid username or password";
-            res.render('login', {error: error});
+            res.render("login", {error: error});
         };
     },
 
     getImport: async function(req, res) {
-        res.render('import');
+        res.render("import");
     },
 
     getHome: async function(req, res) {
-        res.render('home');
+        res.render("home");
     }
 };
 
