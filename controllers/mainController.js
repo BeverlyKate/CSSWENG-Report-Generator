@@ -6,8 +6,8 @@ const mainController = {
 
     //Load Home Page
     getMain: async function(req, res) {
-        username = req.body.username;
-        password = req.body.password;
+        let username = req.body.username;
+        let password = req.body.password;
 
         if(username == "Admin") { 
             if(password == 12345678) {
@@ -29,7 +29,6 @@ const mainController = {
     getHome: async function(req, res) {
         res.render('home');
     }
-
 };
 
 //Export mainController to be used
