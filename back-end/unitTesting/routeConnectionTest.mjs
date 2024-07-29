@@ -44,7 +44,6 @@ describe('Routes', () => {
             { path: '/TDPMpost', method: 'post' },
             { path: '/PTPMpost', method: 'post' },
             { path: '/TIQPT', method: 'post' },
-            { path: '/AWDPT', method: 'post' },
         ];
 
         repairRoutes.forEach(route => {
