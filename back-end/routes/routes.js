@@ -18,6 +18,8 @@ router.get('/import', mainController.getImport);
 router.get('/home', mainController.getHome);
 router.get('/passwordRecovery', mainController.getRecovery);
 router.post('/recovery', mainController.postRecovery);
+router.get('/registerUser',mainController.getRegister);
+router.post('/newUser',mainController.postRegister);
 
 // Dynamic import example (if needed)
 // This method should be avoided for route definitions

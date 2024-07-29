@@ -76,8 +76,48 @@ const mainController = {
             console.error('Error during password recovery:', error);
             res.status(500).send('Internal Server Error');
         }
-    }
+    },
 
+    getRegister: async function(req, res) {
+        res.render("register");
+    },
+
+    postRegister: async function(req, res) {
+        const { email, username, password, retypePassword, role } = req.body;
+
+        if (password !== retypePassword) {
+            return res.render('register', { error: 'Passwords do not match' });
+        }
+
+        try {
+            const existingUser = await User.findOne({ userName: username });
+            if (existingUser) {
+                return res.render('register', { error: 'Username already exists' });
+            }
+
+            const existingEmail = await User.findOne({ email: email });
+            if (existingEmail) {
+                return res.render('register', { error: 'Email already in use' });
+            }
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+            const newUser = new User({
+                email: email,
+                userName: username,
+                passwordHash: hashedPassword,
+                role: role
+            });
+
+            await newUser.save();
+
+            res.render('login', { error: 'Registration successful! Please login.' });
+        } catch (error) {
+            console.error('Error during registration:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
 };
 
 //Export mainController to be used
