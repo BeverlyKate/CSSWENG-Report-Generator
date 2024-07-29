@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "trial": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "functionalTest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dbTest": "node unitTesting/dbTest.js",
-    "routeTest": "node unitTesting/routeConnectionTest.js"
+    "routeConnectionTest": "node unitTesting/routeConnectionTest.js"
   },
   "keywords": [],
   "author": "",
