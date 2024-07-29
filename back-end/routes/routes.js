@@ -17,6 +17,7 @@ async function dynamicImport() {
 dynamicImport();
 const mainController = require("../controllers/mainController.js");
 const repairController = require("../controllers/repairController.js");
+const dbController = require("../controllers/dbController.js");
 
 //Open Login
 app.get("/", mainController.login);
@@ -34,13 +35,13 @@ app.post("/TIQPTpost", repairController.getTotalItemQuantityPerTechnician);
 app.post("/TIQPMPTpost", repairController.getTotalItemQuantityPerItemModelPerTechnician);
 //Average working days per technician
 app.post("/AWDPTpost", repairController.getAverageWorkingDaysPerTechnician);
+//Update from db
+app.post('/update', dbController.update);
 
 app.get("/table", repairController.getAllRepairs);
 
 app.get("/import", mainController.getImport);
 
 app.get("/home", mainController.getHome);
-
-// app.get("/IQPM", mainController.generateIQPM(reportParameters));
 
 module.exports = { app, dynamicImport };
