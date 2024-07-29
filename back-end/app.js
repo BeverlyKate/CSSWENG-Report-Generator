@@ -18,7 +18,7 @@ appExp.use(bodyParser.urlencoded( {extended: true } ))
 //Set static directory
 appExp.use(express.static(__dirname + "/public"));
 //User a router for controllers
-appExp.use("/", routes);
+appExp.use("/", routes.app);
 
 //Run on Local Host and connect to Mongo DB
 appExp.listen(process.env.SERVER_PORT, async function(){
