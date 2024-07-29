@@ -1,32 +1,31 @@
-import { expect, jest, test, describe, it } from '@jest/globals';
-// import { default as test, describe, it } from "node:test";
-import importController, { insertRepair } from '../controllers/functionalTestController.mjs';
-import mainController from '../controllers/mainController.js';
-import repairModel from '../models/repairSchema.js';
-import repairIdModel from '../models/repairIdSchema.js';
-import { IncomingForm } from 'formidable';
+import { expect, jest, test, describe, it } from "@jest/globals";
+import importController, { insertRepair } from "../controllers/functionalTestController.mjs";
+import mainController from "../controllers/mainController.js";
+import repairModel from "../models/repairSchema.js";
+import repairIdModel from "../models/repairIdSchema.js";
+import { IncomingForm } from "formidable";
 
-describe('Import Controller', () => {
-    it('should save repair data', async function() {
+describe("Import Controller", () => {
+    it("should save repair data", async function() {
         const mockSave = jest.fn();
         const mockInsertMany = jest.fn();
 
         // Mock the repairIdModel save method
-        jest.spyOn(repairIdModel.prototype, 'save').mockImplementation(mockSave);
+        jest.spyOn(repairIdModel.prototype, "save").mockImplementation(mockSave);
         // Mock the repairModel inserMany method
-        jest.spyOn(repairModel, 'insertMany').mockImplementation(mockInsertMany);
+        jest.spyOn(repairModel, "insertMany").mockImplementation(mockInsertMany);
 
         // Mock any necessary data or input
         const excelValues = [
-            null,                  '45391',         '1',
-            'Alice',               'FRAME EZ-112A', 'NULL',
-            '1',                   'pc',            'mj',
-            'ACCESSORIES',         '3',             '12108030',
-            '2',                   '45399',         '45400',
-            'DANIEL',              'CHRISTIAN',     'DONE',
-            'FORWARDED',           'NULL',          '1234',
-            '112',                 '45408',         'Repair',
-            'NO SOUND / NO AUDIO'
+            null,                  "45391",         "1",
+            "Alice",               "FRAME EZ-112A", "NULL",
+            "1",                   "pc",            "mj",
+            "ACCESSORIES",         "3",             "12108030",
+            "2",                   "45399",         "45400",
+            "DANIEL",              "CHRISTIAN",     "DONE",
+            "FORWARDED",           "NULL",          "1234",
+            "112",                 "45408",         "Repair",
+            "NO SOUND / NO AUDIO"
         ];
 
         // Call the insertRepair function
@@ -38,11 +37,11 @@ describe('Import Controller', () => {
         });
     }),
 
-    it('should import file', async function() {
+    it("should import file", async function() {
         const mockParse = jest.fn();
 
         // Mock the formidable parse method
-        jest.spyOn(IncomingForm.prototype, 'parse').mockImplementation(mockParse);
+        jest.spyOn(IncomingForm.prototype, "parse").mockImplementation(mockParse);
 
         // Create a mock request object
         const mockReq = { 
@@ -75,9 +74,9 @@ describe('Import Controller', () => {
     });
 }),
 
-describe('Main Controller', () => {
-    describe('Login', () => {
-        it('should render login', async function() {
+describe("Main Controller", () => {
+    describe("Login", () => {
+        it("should render login", async function() {
             // Create a mock response object
             const mockRes = { render: jest.fn() };
 
@@ -112,8 +111,8 @@ describe('Main Controller', () => {
         });
     }),
 
-    describe('Home', () => {
-        it('should render home if username and password is correct', async function() {
+    describe("Home", () => {
+        it("should render home if username and password is correct", async function() {
             // Create a mock response object
             const mockRes = { render: jest.fn() };
 
@@ -148,7 +147,7 @@ describe('Main Controller', () => {
             });
         }),
 
-        it('should render login if username is incorrect', async function() {
+        it("should render login if username is incorrect", async function() {
             // Create a mock response object
             const mockRes = { render: jest.fn() };
 
@@ -185,7 +184,7 @@ describe('Main Controller', () => {
             });
         }),
 
-        it('should render login if password is incorrect', async function() {
+        it("should render login if password is incorrect", async function() {
             // Create a mock response object
             const mockRes = { render: jest.fn() }
 
@@ -223,8 +222,8 @@ describe('Main Controller', () => {
         });
     }),
 
-    describe('Import', () => {
-        it('should render import', async function() {
+    describe("Import", () => {
+        it("should render import", async function() {
             // Create a mock response object
             const mockRes = { render: jest.fn() };
 
@@ -259,9 +258,8 @@ describe('Main Controller', () => {
         });
     }),
     
-
-    describe('Home', () => {
-        it('should render home', async function() {
+    describe("Home", () => {
+        it("should render home", async function() {
             // Create a mock response object
             const mockRes = { render: jest.fn() };
 

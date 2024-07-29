@@ -1,14 +1,12 @@
-import express from 'express';
+import express from "express";
 const app = express();
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 app.use(bodyParser.urlencoded({ extended: true }));
 import { IncomingForm } from "formidable";
-import repairModel from '../models/repairSchema.js';
-import repairIdModel from '../models/repairIdSchema.js';
+import repairModel from "../models/repairSchema.js";
+import repairIdModel from "../models/repairIdSchema.js";
 
 export async function insertRepair(excelValues) {
-    // const hatdog = parseInt(excelValues[1]);
-    // console.log(hatdog);
     console.log("this is the final value ", excelValues);
     const excelValuesLength = excelValues.length;
     console.log("this is json length = ", excelValuesLength);
@@ -26,7 +24,7 @@ export async function insertRepair(excelValues) {
             && excelValues[i+22] && excelValues[i+23]) == "NULL") {
             console.log("no input");
         } else {
-            // //Create new repair model
+            // Create new repair model
             const newRepairId = new repairIdModel();
             
             await newRepairId.save().then(newRepairId => {
@@ -41,12 +39,12 @@ export async function insertRepair(excelValues) {
                 if(excelValues[i+13] != "NULL") {
                     repairDateFinished = new Date(Math.round((excelValues[i+13] - 25569)*86400*1000)).toLocaleDateString();
                     console.log("repair date finished = " + repairDateFinished);
-                }
+                };
 
                 if(excelValues[i+21] != "NULL") {
                     repairDateReturned = new Date(Math.round((excelValues[i+21] - 25569)*86400*1000)).toLocaleDateString();
                     console.log("repair date returned = " + repairDateReturned);
-                }
+                };
                 const newRepair = {
                     repairId: newRepairId.idCounter,
                     repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
@@ -74,7 +72,6 @@ export async function insertRepair(excelValues) {
                     repairStatus: excelValues[i+22],
                     repairDefect: excelValues[i+23]
                 };
-
                 dataToSave.push(newRepair);
             } catch(error) {
                 console.log(error);
@@ -105,12 +102,7 @@ const importController = {
             console.log(error);
         };
     },
-
-    // add: function(one, two) {
-    //     return one + two;
-    // }
 };
 
 //Export importController to be used
 export default importController;
-// export default insertRepair;

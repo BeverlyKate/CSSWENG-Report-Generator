@@ -1,15 +1,14 @@
 import { default as test, describe, it } from "node:test";
-import { expect } from 'chai';
-import { app, dynamicImport } from '../routes/routes.js';
-// import dynamicImport from "../routes/routes.js";
+import { expect } from "chai";
+import { app, dynamicImport } from "../routes/routes.js";
 
-describe('Routes', () => {
-    it('Is connected to Main Controller', function() {
+describe("Routes", () => {
+    it("Is connected to Main Controller", function() {
         const mainRoutes = [
-            { path: '/', method: 'get' },
-            { path: '/login', method: 'post' },
-            { path: '/import', method: 'get' },
-            { path: '/home', method: 'get' },
+            { path: "/", method: "get" },
+            { path: "/login", method: "post" },
+            { path: "/import", method: "get" },
+            { path: "/home", method: "get" },
         ];
 
         mainRoutes.forEach(route => {
@@ -21,9 +20,9 @@ describe('Routes', () => {
         });
     }),
 
-    it('Is connected to Import Controller', async function() {
+    it("Is connected to Import Controller", async function() {
         const importRoutes = [
-            { path: '/importFile', method: 'post' },
+            { path: "/importFile", method: "post" },
         ];
 
         await dynamicImport();
@@ -37,15 +36,15 @@ describe('Routes', () => {
         });
     })
 
-    it('Is connected to Repair Controller', function() {
+    it("Is connected to Repair Controller", function() {
         const repairRoutes = [
-            { path: '/table', method: 'get' },
-            { path: '/IQPMpost', method: 'post' },
-            { path: '/TDPMpost', method: 'post' },
-            { path: '/PTPMpost', method: 'post' },
-            { path: '/TIQPTpost', method: 'post' },
-            { path: '/TIQPMPTpost', metho: 'post' },
-            { path: '/AWDPTpsot', method: 'post' },
+            { path: "/table", method: "get" },
+            { path: "/IQPMpost", method: "post" },
+            { path: "/TDPMpost", method: "post" },
+            { path: "/PTPMpost", method: "post" },
+            { path: "/TIQPTpost", method: "post" },
+            { path: "/TIQPMPTpost", metho: "post" },
+            { path: "/AWDPTpsot", method: "post" },
         ];
 
         repairRoutes.forEach(route => {
