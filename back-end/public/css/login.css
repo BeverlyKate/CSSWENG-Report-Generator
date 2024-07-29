@@ -52,3 +52,10 @@
 .input-box{
     border-radius: 2vh;
 }
+
+.recovery{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}

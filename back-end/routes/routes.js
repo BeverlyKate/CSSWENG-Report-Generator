@@ -16,7 +16,7 @@ router.post('/AWDPTpost', repairController.getAverageWorkingDaysPerTechnician);
 router.get('/table', repairController.getAllRepairs);
 router.get('/import', mainController.getImport);
 router.get('/home', mainController.getHome);
-router.get('/', mainController.getRecovery);
+router.get('/passwordRecovery', mainController.getRecovery);
 router.post('/recovery', mainController.postRecovery);
 
 // Dynamic import example (if needed)

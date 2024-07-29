@@ -8,7 +8,7 @@
     <title>Forgot Password</title>
 </head>
 <body>
-    <form class="table btnCenter" action="/forgot-password" method="post" name="forgotPasswordForm">
+    <form class="table btnCenter" action="/recovery" method="post" name="forgotPasswordForm">
         <div class="upperbox">
             <img src="/images/FullKevlerLogo.png" alt="">
         </div>    
@@ -25,9 +25,9 @@
             <label for="retypePassword" class="text-1">Retype Password: </label>
             <input class="input-box" type="password" id="retypePassword" name="retypePassword" required>
             
-            <b><p id="forgotPasswordError"><%= error %></p></b>
+             <b><p type = 'error' id = 'recoveryError'>{{error}}</p></b>
             
-            <button type="submit" id="resetPassword" class="btn-reset-password">Reset Password</button>
+            <button type="submit" id="resetPassword" class="btn-login">Reset Password</button>
         </div>
     </form>
     </body>

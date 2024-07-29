@@ -17,8 +17,9 @@
             <input class="input-box" type="password" id="password" name="password">
             <b><p type = 'error' id = 'loginError'>{{error}}</p></b>
             <button type="submit" id="login" class="btn-login">Login</button>
-            <button type="button" id="forgotPassword" class="btn-login">Forgot Password</button>
         </div>
     </form>
-      <script src="/back-end/public/src/passwordRecovery.js"></script>
+    <form class="recovery" action="/passwordRecovery" method="get" name="Recovery">
+        <button type="submit" id="forgotPassword" class="btn-login">Forgot Password</button>
+    </form>
 </body>
