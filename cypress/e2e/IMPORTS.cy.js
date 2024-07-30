@@ -26,13 +26,14 @@ describe('User should be able to use the import function', () => {
       cy.get('.Btn-table > a > img').click()
       cy.get('tbody') 
         .children()
-        .should('have.length', 2001); // Each row has 2 length
+        .should('have.length', 2049); // Each row has 2 length
   });
   it('All of the records should be inserted correctly', () => {
     cy.get('#CompanyLogo > img').click()
     cy.get('.Btn-table > a > img').click()
-    cy.get(':nth-child(2000) > :nth-child(1) > .col > strong > .idNum').should('exist')
-    cy.get(':nth-child(2000) > :nth-child(4) > .col > strong').should('contain', 'Liam')
+    cy.get(':nth-child(2048) > :nth-child(1) > .col > strong > .idNum').should('exist')
+    cy.get(':nth-child(2048) > :nth-child(4) > .col > strong').should('contain', 'Liam')
+    cy.get(':nth-child(2048) > :nth-child(5) > .col > strong').should('contain','FRAME V12A')
   });
 
 
@@ -49,7 +50,7 @@ it('should not be able import a not .xlsx file', () => {
     })
     cy.get('#submit').click()
     //This still fails, no error occurs
-    cy.get('#alert').should('contain','File Submitted!')
+    cy.get('#alert').should('contain','File format is incorrect!')
   })
   
 })
