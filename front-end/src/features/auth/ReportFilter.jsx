@@ -41,7 +41,7 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
         
         //console.log(dateRange)
 
-        if(id == "TDPM" || id == "PTPM"){
+        if(id === "TDPM" || id === "PTPM"){
             if(repairStatus==="") return console.log("please select status")
 
             formData.status = repairStatus
@@ -49,21 +49,39 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
             formData.model = modelCategory
         }
 
-        if(itemCategory != "default" && modelCategory != "default") return console.log("Select 1 category only")
+        if(itemCategory !== "default" && modelCategory != "default") return console.log("Select 1 category only")
 
         formData.item = itemCategory
 
         console.log(formData)
 
         apiClient
-        .post(`/${formData.overlay}post`, formData)
+        .post(`/${formData.overlay}post`, {
+            headers: {
+              'Content-Type': 'application/json',
+              // Add any other headers you need
+            }
+        })
         .then(
-            
+            // (response) => {
+            // console.log(response.data)
+            // navigate("/dash/report", {state: response.data})
+            // }
             navigate("/dash/report", {state: formData})
         )
         .catch((error)=>{
-            console.error("Can't generate data!", error);
+            console.error("Can't generate data!", error.message);
         })
+
+        // apiClient
+        // .post(`/${formData.overlay}post`, formData)
+        // .then(response => {
+        //     console.log(response.data)
+        //     navigate("/dash/report", {state: response.data})
+        // })
+        // .catch((error)=>{
+        //     console.error("Can't generate data!", error);
+        // })
 
         
     }
