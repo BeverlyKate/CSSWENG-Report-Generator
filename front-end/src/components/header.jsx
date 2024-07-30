@@ -10,6 +10,15 @@ export function Header() {
   if (currentUrl.includes('/table')) {
     dynamicTitle = "View table";
   }
+  if (currentUrl.includes('/report')) {
+    dynamicTitle = "Report";
+  }
+  if (currentUrl.includes('/import')) {
+    dynamicTitle = "Import excel file";
+  }
+  if (currentUrl.includes('/user')) {
+    dynamicTitle = "Profile";
+  }
 
   return (
     <div className="header">
