@@ -1,5 +1,9 @@
 const express = require("express");
 const app = express.Router();
+// const verifyJWT = require("../middleware/verifyJWT");
+const loginLimiter = require("../middleware/loginLimiter");
+// app.use(verifyJWT);
+
 async function dynamicImport() {
   try {
     // Dynamically import the module
@@ -33,7 +37,10 @@ app.post("/PTPMpost", repairController.getPendingStatusPerItemModel);
 //Total Item Quantity Per Technician
 app.post("/TIQPTpost", repairController.getTotalItemQuantityPerTechnician);
 //Total item quantity per model per technician
-app.post("/TIQPMPTpost", repairController.getTotalItemQuantityPerItemModelPerTechnician);
+app.post(
+  "/TIQPMPTpost",
+  repairController.getTotalItemQuantityPerItemModelPerTechnician
+);
 //Average working days per technician
 app.post("/AWDPTpost", repairController.getAverageWorkingDaysPerTechnician);
 

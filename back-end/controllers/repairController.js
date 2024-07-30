@@ -117,17 +117,17 @@ const repairController = {
                             //Store temporary int to repairTalliedQuantities
                             repairTalliedQuantities[i] = tempInt;
                         };
+                        console.log("tallied = " + repairTalliedQuantities);
+                        console.log("repairTech1 = "  + repairTechnician1);
+                        console.log("repairTech2 = "  + repairTechnician2);
+                        console.log("unique technicains = " + distinctArray);
+                        //Send to hbs template used
+                        res.render("TIQPT", {date: req.body.dateFrom, repairTechnician1: repairTechnician1, repairTechnician2: repairTechnician2, repairTalliedQuantities: repairTalliedQuantities, distinctArray: distinctArray, notDefault: false});
                     }).catch(error => {
                         console.log("Finding repairModel repairTechnician 1 repairTechnician 2 error: " + error);
                         const errorMessage = "Finding repairModel repairTechnician 1 repairTechnician 2 error";
                         res.render("TIQPT", {error: errorMessage});
-                    });             
-                    console.log("tallied = " + repairTalliedQuantities);
-                    console.log("repairTech1 = "  + repairTechnician1);
-                    console.log("repairTech2 = "  + repairTechnician2);
-                    console.log("unique technicains = " + distinctArray);
-                    //Send to hbs template used
-                    res.render("TIQPT", {date: req.body.dateFrom, repairTechnician1: repairTechnician1, repairTechnician2: repairTechnician2, repairTalliedQuantities: repairTalliedQuantities, distinctArray: distinctArray, notDefault: false});
+                    });
                 }).catch(error => {
                     console.log("Finding repairModel repairTechnician 2 error: " + error);
                     const errorMessage = "Finding repairModel repairTechnician 2 error";
@@ -204,6 +204,10 @@ const repairController = {
 
             //Send to hbs template used
             res.render("TIQPMPT", {date: req.body.dateFrom, repairTechnician: technician, repairItemModel: itemModel, repairTalliedQuantities: repairTalliedQuantities});
+        }).catch(error => {
+            console.log("Finding repairModel repairTechnician 1 or repairTechnician 2 with item model, status, and date error: " + error);
+            const errorMessage = "Finding repairModel repairTechnician 1 or repairTechnician 2 with item model, status, and date error";    
+            res.render("TIQPMPT", {error: errorMessage});
         }); 
     },
 
@@ -280,11 +284,23 @@ const repairController = {
                             //Store averageWorkingDays to repairAverageWorkingDays
                             repairAverageWorkingDays[i] = averageWorkingDays;
                         };
+                    }).catch(error => {
+                        console.log("Finding repairModel repair technician 1, repair technician 2, and repair date error: " + error);
+                        const errorMessage = "Finding repairModel repair technician 1, repair technician 2, and repair date error";    
+                        res.render("AWDPT", {error: errorMessage});
                     });
+                }).catch(error => {
+                    console.log("Finding repairModel repair technician 2 error: " + error);
+                    const errorMessage = "Finding repairModel repair technician 2 error";    
+                    res.render("AWDPT", {error: errorMessage});
                 });
                 console.log("tallied = " + repairAverageWorkingDays);
                 //Send to hbs template used
                 res.render("AWDPT", {date: req.body.dateFrom, repairTechnician: distinctArray, repairAverageWorkingDays: repairAverageWorkingDays, notDefault: false});
+            }).catch(error => {
+                console.log("Finding repairModel repair technician 1 error: " + error);
+                const errorMessage = "Finding repairModel repair technician 1 error";    
+                res.render("AWDPT", {error: errorMessage});
             });
         } else {
             //Find all repairs associated with each unique repair technician with repairDate greater than dateFrom and 
@@ -317,6 +333,10 @@ const repairController = {
                 // console.log("tallied = " + repairAverageWorkingDays);
                 //Send to hbs template used
                 res.render("AWDPT", {date: req.body.dateFrom, repairTechnician: technician, repairAverageWorkingDays: repairAverageWorkingDays, notDefault: true});
+            }).catch(error => {
+                console.log("Finding repairModel repairTechnician 1 or repairTechnician 2 with date error: " + error);
+                const errorMessage = "Finding repairModel repairTechnician 1 or repairTechnician 2 with date error";    
+                res.render("AWDPT", {error: errorMessage});
             });
         };
     },
@@ -328,6 +348,7 @@ const repairController = {
         let dateTo;
         let repairTalliedQuantities = [];
         let tempInt = 0;
+        console.log("I am in tiqpm" + req.body.category1)
 
         if(req.body.dateFrom.length = 4){
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
@@ -343,9 +364,8 @@ const repairController = {
                 console.log(repairItemModel);
                 //Find all repairs associated with each unique repair item model with repairDate greater than dateFrom and 
                 //repairDate less than dateTo parameters
-                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lt: dateTo}}).then(repair => {
-                    repair = repair;
-                    // console.log(repair);
+                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lte: dateTo}}).then(repair => {
+                    console.log(repair);
                     //Iterate over the array of unique repair item models
                     for(let i = 0; i < repairItemModel.length; i++) {
                         //Reset temporary int
@@ -355,16 +375,17 @@ const repairController = {
                             //If repair item model in array of unique repair item models == repair technician in array of repairs
                             //associated with each unique repair item model, add its repair quantity value to temporary int
                             if(repairItemModel[i] == repair[j].repairItemModel) {
+                              console.log("true")
                                 tempInt += repair[j].repairQuantity;
                             };
                         };
                         //Store temporary int to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempInt;
-                        
-                        console.log("tallied = " + repairTalliedQuantities);
-                        //Send to hbs template used
-                        res.render("IQPM", {date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                     };
+
+                    console.log("tallied = " + repairTalliedQuantities);
+                    //Send to hbs template used
+                    res.render("IQPM", {date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model error: " + error);
                     const errorMessage = "Cannot find Repair Item Model error";    
@@ -378,12 +399,14 @@ const repairController = {
         } else {
             //Find all unique repair item models
             await repairModel.find({}).distinct("repairItemModel").then(async repairItemModel => {
-                // console.log(repairItemModel);
+                console.log(repairItemModel);
                 //Find all repairs associated with each unique repair item model and the category1 parameter with repairDate 
                 //greater than dateFrom and repairDate less than dateTo parameters
-                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lt: dateTo}, repairCategory1: category1}).then(repair => {
-                    repair = repair;
-                    // console.log(repair);
+                console.log(dateFrom)
+                console.log(dateTo)
+                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lte: dateTo}, repairCategory1: category1}).then(repair => {
+                    // repair = repair;
+                    console.log(repair);
                     //Iterate over the array of unique repair item models
                     for(let i = 0; i < repairItemModel.length; i++) {
                         //Reset temporary int
@@ -393,20 +416,21 @@ const repairController = {
                             //If repair item model in array of unique repair item models == repair technician in array of repairs
                             //associated with each unique repair item model, add its repair quantity value to temporary int
                             if(repairItemModel[i] == repair[j].repairItemModel) {
+                              console.log("true")
                                 tempInt += repair[j].repairQuantity;
                             };
                         };
                         //Store temporary int to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempInt;
                     };
+                    console.log("tallied = " + repairTalliedQuantities);
+                    //Send to hbs template used
+                    res.render("IQPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model error: " + error);
                     const errorMessage = "Cannot find Repair Item Model error";    
                     res.render("IQPM", {error: errorMessage});
                 });
-                console.log("tallied = " + repairTalliedQuantities);
-                //Send to hbs template used
-                res.render("IQPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
                 console.log("Cannot find all Repair Item Models error: " + error);
                 const errorMessage = "Cannot find all Repair Item Models error";    
@@ -445,7 +469,9 @@ const repairController = {
 
                     //Find all repairs associated with each unique repair item model, each unique repair defect and the 
                     //category1 parameter with repairDate greater than dateFrom and repairDate less than dateTo parameters
-                    await repairModel.find({repairItemModel: repairItemModel, repairDefect: repairDefect, repairDate: {$gte: dateFrom, $lt: dateTo}, repairStatus: status, repairCategory1: category1}).then(repair => {
+                    console.log(dateFrom)
+                    console.log(dateTo)
+                    await repairModel.find({repairItemModel: repairItemModel, repairDefect: repairDefect, repairDate: {$gte: dateFrom, $lte: dateTo}, repairStatus: status, repairCategory1: category1}).then(repair => {
                         //Iterate over the array of unique repair item models
                         for(let i = 0; i < repairDefect.length; i++) {
                             //Reset temporary array
@@ -475,16 +501,16 @@ const repairController = {
                             //Store temporary array to repairTalliedQuantities
                             repairTalliedQuantities[i] = tempArray
                         };
+                        //Iterate over the repair item models and Sort repairTalliedQuantities in descending order
+                        repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
+                        console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
+                        //Send to hbs template used
+                        res.render("TDPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities), repairTalliedQuantitiesArray: repairTalliedQuantities});
                     }).catch(error => {
                         console.log("Cannot find Repair Item Model defect, date, status, and category error: " + error);
                         const errorMessage = "Cannot find Repair Item Model defect, date, status, and category error";    
                         res.render("TDPM", {error: errorMessage});
                     });
-                    //Iterate over the repair item models and Sort repairTalliedQuantities in descending order
-                    repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
-                    console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
-                    //Send to hbs template used
-                    res.render("TDPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities), repairTalliedQuantitiesArray: repairTalliedQuantities});
                 }).catch(error => {
                     console.log("Cannot find all Repair Defects error: " + error);
                     const errorMessage = "Cannot find all Repair Defects error";    
@@ -504,7 +530,7 @@ const repairController = {
                     console.log(repairDefect)
                     //Find all repairs associated with the itemModel parameter and each unique repair defect with repairDate 
                     //greater than dateFrom and repairDate less than dateTo parameters
-                    await repairModel.find({repairItemModel: itemModel, repairDefect: repairDefect, repairDate: {$gte: dateFrom, $lt: dateTo}, repairStatus: status}).then(repair => {
+                    await repairModel.find({repairItemModel: itemModel, repairDefect: repairDefect, repairDate: {$gte: dateFrom, $lte: dateTo}, repairStatus: status}).then(repair => {
                         // console.log(repair);
                         //Iterate over the array of unique repair item models
                         for(let i = 0; i < repairDefect.length; i++) {
@@ -534,16 +560,16 @@ const repairController = {
                             repairTalliedQuantities[i] = tempArray
                             };
                         };
+                        //Sort repairTalliedQuantities in descending order
+                        repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
+                        console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
+                        //Send to hbs template used
+                        res.render("TDPM", {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities)});
                     }).catch(error => {
                         console.log("Cannot find Repair Item Model defect, date, and status error: " + error);
                         const errorMessage = "Cannot find Repair Item Model defect, date, status error";    
                         res.render("TDPM", {error: errorMessage});
                     }); 
-                    //Sort repairTalliedQuantities in descending order
-                    repairTalliedQuantities = repairTalliedQuantities.sort(compareNumbers);
-                    console.log("tallied = " + JSON.stringify(repairTalliedQuantities));
-                    //Send to hbs template used
-                    res.render("TDPM", {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairDefect: repairDefect, repairTalliedQuantities: JSON.stringify(repairTalliedQuantities)});
                 }).catch(error => {
                     console.log("Cannot find all Repair Defects error: " + error);
                     const errorMessage = "Cannot find all Repair Defects error";    
@@ -581,7 +607,7 @@ const repairController = {
                 console.log(repairItemModel);
                 //Find all repairs associated with each unique repair item model and the category1 parameter with repairDate 
                 //greater than dateFrom and repairDate less than dateTo parameters
-                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lt: dateTo}, repairStatus: status, repairCategory1: category1}).then(repair => {
+                await repairModel.find({repairItemModel: repairItemModel, repairDate: {$gte: dateFrom, $lte: dateTo}, repairStatus: status, repairCategory1: category1}).then(repair => {
                     // console.log(repair);
                     console.log("rep tech = " + repair)
                     console.log("rep tech length = " + repair.length)
@@ -596,14 +622,14 @@ const repairController = {
                         repairTalliedQuantities[i] = tempArray;
                         console.log("hi2: "+ i);
                     };
+                    console.log("tallied = " + repairTalliedQuantities);
+                    //Send to hbs template used
+                    res.render("PTPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model with date, status, and category error: " + error);
                     const errorMessage = "Cannot find Repair Item Model with date, status, and category error";    
                     res.render("PTPM", {error: errorMessage});
                 });
-                console.log("tallied = " + repairTalliedQuantities);
-                //Send to hbs template used
-                res.render("PTPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
                 console.log("Cannot find all Repair Item Models error: " + error);
                 const errorMessage = "Cannot find all Repair Item Models error";    
@@ -615,7 +641,7 @@ const repairController = {
                 // console.log(repairItemModel);
                 //Find all repairs associated with the itemModel parameter with repairDate greater than dateFrom and repairDate 
                 //less than dateTo parameters
-                await repairModel.find({repairItemModel: itemModel, repairDate: {$gte: dateFrom, $lt: dateTo}, repairStatus: status}).then(repair => {
+                await repairModel.find({repairItemModel: itemModel, repairDate: {$gte: dateFrom, $lte: dateTo}, repairStatus: status}).then(repair => {
                     // console.log(repairModel);
                 
                     //Iterate over the array of repairs associated with each unique repair item model
@@ -627,14 +653,14 @@ const repairController = {
                         //Store temporary array to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempArray;
                     };
+                    console.log("tallied = " + repairTalliedQuantities);
+                    //Send to hbs template used
+                    res.render("PTPM", {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model with date, and status error: " + error);
                     const errorMessage = "Cannot find Repair Item Model with date, and status error";    
                     res.render("PTPM", {error: errorMessage});
                 });
-                console.log("tallied = " + repairTalliedQuantities);
-                //Send to hbs template used
-                res.render("PTPM", {item: itemModel, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
                 console.log("Cannot find all Repair Item Models error: " + error);
                 const errorMessage = "Cannot find all Repair Item Models error";    
