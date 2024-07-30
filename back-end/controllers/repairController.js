@@ -360,15 +360,16 @@ const repairController = {
                         };
                         //Store temporary int to repairTalliedQuantities
                         repairTalliedQuantities[i] = tempInt;
+                        
+                        console.log("tallied = " + repairTalliedQuantities);
+                        //Send to hbs template used
+                        res.render("IQPM", {date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                     };
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model error: " + error);
                     const errorMessage = "Cannot find Repair Item Model error";    
                     res.render("IQPM", {error: errorMessage});
                 });
-                console.log("tallied = " + repairTalliedQuantities);
-                //Send to hbs template used
-                res.render("IQPM", {date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
             }).catch(error => {
                 console.log("Cannot find all Repair Item Models error: " + error);
                 const errorMessage = "Cannot find all Repair Item Models error";    
