@@ -1,0 +1,236 @@
+:root {
+    --primary: #F3B52A;
+    --muted-primary: #FACF70; 
+    --bg: #FFFFFF;
+    --box-bg: #FAF8F8;
+    --nested-box-bg: #DEDEDE; 
+    --near-black: #0B0B0B;
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+
+*{
+	font-family: "Kanit", sans-serif;
+	font-size: 1rem;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+    min-height: 100vh;
+	/* overflow: scroll; */
+}
+
+.header{
+	top: 0;
+	z-index: 2;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+    border-bottom: solid 5px var(--primary);
+    position: sticky;
+    top: 0;
+    height: 15vh;
+    background-color: var(--bg);
+}
+
+.header .left{
+	float: left;
+	display: flex;
+	position: relative;
+	align-items: center;
+}
+
+.header .left #CompanyLogo{
+	width: 15vh;
+	height: 15vh;
+	background-color: var(--primary);
+	background-image:url("../public/Btn_Logo.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	border: none;
+}
+
+.header .left #CompanyLogo:hover{
+	cursor: pointer;
+}
+
+.header .left img{
+	margin: 2vh;
+    width: 11vh;
+	height: 11vh;
+}
+
+.header .left h2{
+	font-size: 10vh;
+	font-weight: bold;
+    margin-left: 1.5vh;
+	color: var(--near-black);
+}
+
+.header .left h3{
+	font-size: 5vh;
+    margin-left: 2vh;
+	color: var(--near-black);
+}
+
+.header .right{
+	float: right;
+	margin-right: 34px;
+}
+
+.header .right .Profile{
+	border: 1vh solid var(--bg);
+	border-radius: 50%;
+	height: 10vh;
+	width: 10vh;
+	background-color: var(--near-black);
+}
+
+.header .right .Profile:hover{
+	border: 1vh solid #FFD36F;
+}
+
+.line1{
+	border: 5px solid var(--primary);
+	margin-bottom: 12px;
+}
+
+.line2{
+	border: 1.5px solid var(--primary);
+}
+
+nav {
+	/* border-top: 5vh solid var(--primary); */
+	width: 15vh;
+	height: 100%;
+	background-color: var(--primary);
+	/* left: -20%; */
+	opacity: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 10px 10px 14px -13px var(--near-black);
+	/* animation: smooth-appear 0.5s ease forwards; */
+	border-radius: 10vh;
+	height: 75vh;
+	padding-top: 4vh;
+	margin-top:2vh;
+	margin-left:1vh;
+  }
+
+nav button{
+	border: none;
+	background-color: #ffffff00;
+	width: 8vh;
+	height: 8vh;
+	border-radius: 1vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2vh;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+nav .Btn-import{
+	background-image: url("../public/icons/importFile.svg");
+}
+
+nav .Btn-table{
+	background-image: url("../public/icons/table.svg");
+}
+
+nav .Btn-generateReport{
+	background-image: url("../public/icons/generateReports.svg");
+}
+
+nav .Btn-profile{
+	background-image: url("../public/icons/profile.svg");
+}
+
+
+
+.navBtn img:hover{
+    filter: contrast(70%) brightness(200%) hue-rotate(-25deg) saturate(0%);
+    transition-duration: 0.3s;
+}
+
+
+.horizTranslate {
+	-webkit-transition: 3s;
+	-moz-transition: 3s;
+	-ms-transition: 3s;
+	-o-transition: 3s;
+	transition: 3s;
+	margin-left: -50% !important;
+  }
+
+/* https://css-tricks.com/controlling-css-animations-transitions-javascript/ */
+
+.mainContent{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 30vh;
+	width: 100%;
+	margin: 3vh;
+	right: 0;
+}
+
+@media screen and (max-width:800px){
+
+    header .left h2{
+        font-size: 6vh;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: var(--near-black);
+}
+
+.text-1{
+	color: var(--near-black);
+	font-weight: 600;
+}
+
+button:hover{
+	cursor: pointer;
+}
+
+.dash-container{
+	display: flex;
+}
+
+.modal-overlay {
+	z-index: 6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.modal-close {
+	float: right;
+	text-align: right;
+    top: 10px;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 16px;
+}
