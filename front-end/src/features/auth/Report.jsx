@@ -16,7 +16,7 @@ export default function Report() {
   const [data, setData] = useState([10, 20, 40, 3, 7])
 
   return (
-    <>
+    <div className="Body">
       <div class="ReportBody">
         <h3>
           {(passedData.item !== "default" && passedData.overlay==="IQPM") && (<span id="categoryChange">{passedData.item}</span>)}
@@ -33,6 +33,6 @@ export default function Report() {
         </div>
       </div>
       <ReportFooter />
-    </>
+    </div>
   )
 }
