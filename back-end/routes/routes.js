@@ -1,5 +1,9 @@
 const express = require("express");
 const app = express.Router();
+const verifyJWT = require("../middleware/verifyJWT");
+const loginLimiter = require("../middleware/loginLimiter");
+app.use(verifyJWT);
+
 async function dynamicImport() {
   try {
     // Dynamically import the module
@@ -21,7 +25,8 @@ const repairController = require("../controllers/repairController.js");
 const dbController = require("../controllers/dbController.js");
 
 //Open Login
-app.get("/", mainController.login);
+app.route("/").post(loginLimiter, mainController.login);
+// app.get("/", mainController.login);
 //Open Home
 app.post("/login", mainController.getMain);
 //Item Quantity Per Model
@@ -58,5 +63,9 @@ app.post("/recovery", mainController.postRecovery);
 app.get("/registerUser", mainController.getRegister);
 
 app.post("/newUser", mainController.postRegister);
+
+app.route("/refresh").get(mainController.refresh);
+
+app.route("/logout").post(mainController.logout);
 
 module.exports = { app, dynamicImport };
