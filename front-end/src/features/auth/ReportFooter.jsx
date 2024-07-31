@@ -9,7 +9,7 @@ export function ReportFooter() {
   return (
     <footer>
         <button className="btn-print" onClick={handlePrint}>Export</button>
-        <Link to="/">
+        <Link to="/dash">
             <button className="btn-return">Generate Another Report</button>
         </Link>
     </footer>

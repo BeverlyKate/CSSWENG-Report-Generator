@@ -16,15 +16,23 @@ export default function Report() {
   const [data, setData] = useState([10, 20, 40, 3, 7])
 
   return (
-    <>
+    <div className="Body">
       <div class="ReportBody">
-        <h3><span id="categoryChange"></span>{passedData.overlay} for <span class="dateChange"></span></h3>
+        <h3>
+          {(passedData.item !== "default" && passedData.overlay==="IQPM") && (<span id="categoryChange">{passedData.item}</span>)}
+          { passedData.overlay==="IQPM"&& ("Item Quantity") 
+            || passedData.overlay==="TDPM" && ("Top Defects") 
+            || passedData.overlay==="PTPM" && ("Pending Tasks")} for 
+          {(passedData.item !== "default" && (passedData.overlay==="TDPM" || passedData.overlay==="PTPM")) && (<span id="categoryChange">{passedData.item} for</span>) ||
+          (passedData.model !== "default" && (passedData.overlay==="TDPM" || passedData.overlay==="PTPM")) && (<span id="categoryChange">{passedData.model} for</span>)}
+          <span class="dateChange">{passedData.date}</span>
+        </h3>
         <div className="graphData">
           <Graph label={label} graphData={data}/>
           <Table />
         </div>
       </div>
       <ReportFooter />
-    </>
+    </div>
   )
 }

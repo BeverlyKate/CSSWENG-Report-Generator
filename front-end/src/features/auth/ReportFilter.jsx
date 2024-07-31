@@ -41,7 +41,7 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
         
         //console.log(dateRange)
 
-        if(id == "TDPM" || id == "PTPM"){
+        if(id === "TDPM" || id === "PTPM"){
             if(repairStatus==="") return console.log("please select status")
 
             formData.status = repairStatus
@@ -49,21 +49,55 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
             formData.model = modelCategory
         }
 
-        if(itemCategory != "default" && modelCategory != "default") return console.log("Select 1 category only")
+        if(itemCategory !== "default" && modelCategory != "default") return console.log("Select 1 category only")
 
         formData.item = itemCategory
 
         console.log(formData)
 
         apiClient
-        .post(`/${formData.overlay}post`, formData)
+        .post(`/${formData.overlay}post`, {
+            headers: {
+                host: 'localhost:3000',
+                connection: 'keep-alive',
+                'content-length': '16852305',
+                'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+                accept: '*/*',
+                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
+                'x-requested-with': 'XMLHttpRequest',
+                'sec-ch-ua-mobile': '?0',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                'sec-ch-ua-platform': '"Windows"',
+                origin: 'http://localhost:3000',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-dest': 'empty',
+                referer: 'http://localhost:3000/import',
+                'accept-encoding': 'gzip, deflate, br, zstd',
+                'accept-language': 'en-US,en;q=0.9,tl;q=0.8',
+              // Add any other headers you need
+            }
+        })
         .then(
-            
-            navigate("/dash/report", {state: formData})
+            (response) => {
+            console.log(response.data)
+            navigate("/dash/report", {state: response.data})
+            }
+            // navigate("/dash/report", {state: formData})
         )
         .catch((error)=>{
-            console.error("Can't generate data!", error);
+            console.error("Can't generate data!", error.message);
         })
+
+        // apiClient
+        // .post(`/${formData.overlay}post`, formData)
+        // .then(response => {
+        //     console.log(response.data)
+        //     navigate("/dash/report", {state: response.data})
+        // })
+        // .catch((error)=>{
+        //     console.error("Can't generate data!", error);
+        // })
 
         
     }

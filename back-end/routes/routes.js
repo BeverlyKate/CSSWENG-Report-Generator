@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express.Router();
 // const verifyJWT = require("../middleware/verifyJWT");
-const loginLimiter = require("../middleware/loginLimiter");
+// const loginLimiter = require("../middleware/loginLimiter");
 // app.use(verifyJWT);
 
 async function dynamicImport() {

@@ -76,6 +76,11 @@ header .right .Profile:hover{
 	border: 1.5px solid #F3B52A;
 } */
 
+.Body{
+	width: 100%;
+	height: 100%;
+}
+
 .ReportBody{
 	display: flex;
 	flex-direction: column;
@@ -90,6 +95,7 @@ header .right .Profile:hover{
 }
 
 footer{
+	margin-top: 10vh;
 	margin-right: 3vh;
 	height:6vh;
 	justify-content: end;
@@ -111,7 +117,7 @@ footer .btn-return, .btn-print {
 	height: 10vh;
 }
 
-footer .btn-return:hover{
+footer .btn-return:hover, .btn-print:hover{
 	background-color: #FFD36F;
 }
 
@@ -177,7 +183,7 @@ td{
 }
 
 @media print{
-	footer, header, .line1, .line2{
+	footer{
 		display: none;
 	}
 
