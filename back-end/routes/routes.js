@@ -45,11 +45,11 @@ app.post(
 app.post("/AWDPTpost", repairController.getAverageWorkingDaysPerTechnician);
 
 //Update from db
-app.patch("/api/tasks/update/:id", dbController.update);
+app.post("/update", dbController.update);
 // app.post('/update', dbController.update);
 
 //Delete from db
-app.delete("/api/tasks/delete/:repairId", dbController.delete);
+app.post("/delete", dbController.delete);
 // app.post("/delete", dbController.delete);
 
 app.get("/table", repairController.getAllRepairs);

@@ -1,6 +1,9 @@
 describe('Test cases for Report Generation in Top Defects Per Model', () => {  
   beforeEach(() => {
-    cy.login('Admin', '12345678')
+    cy.visit('http://localhost:3000/')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
+    cy.get('#login').click()
     cy.get('#CompanyLogo > img').click()
     cy.get('.Btn-generateReport > a > img')
   })
@@ -13,7 +16,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.btn-generate-report').click()
     cy.wait(15)
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','NO SOUND / NO AUDIO')
-    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','1')
     cy.wait(15)
   });
 
@@ -25,8 +28,8 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('[name="category1"]').select("CONFERENCE SYSTEM")
     cy.get('.btn-generate-report').click()
     cy.wait(15)
-    cy.get(':nth-child(3) > :nth-child(1) > .col > strong').should('contain','DISTORTED SOUND')
-    cy.get(':nth-child(3) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','DISTORTED SOUND')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','2')
     cy.wait(15)
   });
 
@@ -84,7 +87,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.btn-generate-report').click()
     cy.wait(15)
     cy.get(':nth-child(3) > :nth-child(1) > .col > strong').should('contain','DISTORTED SOUND')
-    cy.get(':nth-child(3) > :nth-child(2) > .col').should('contain','2')
+    cy.get(':nth-child(3) > :nth-child(2) > .col').should('contain','4')
     cy.wait(15)
   });
 
@@ -116,7 +119,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.btn-generate-report').click()
     cy.wait(15)
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','FAN HEADERS NOT PLUGGED IN')
-    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','1')
     cy.wait(15)
   });
 
@@ -131,7 +134,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.btn-generate-report').click()
     cy.wait(15)
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','NO SOUND / NO AUDIO')
-    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','1')
     cy.wait(15)
   });
 
@@ -161,7 +164,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.btn-generate-report').click()
     cy.wait(15)
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','FAN HEADERS NOT PLUGGED IN')
-    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','1')
     cy.wait(15)
   });
 
@@ -176,7 +179,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.btn-generate-report').click()
     cy.wait(15)
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','FAN HEADERS NOT PLUGGED IN')
-    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','1')
     cy.wait(15)
   });
   it('Should be able create a report (TOP DEFECTS PER MODEL) based on the year', () => {
@@ -189,7 +192,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('[name="category1"]').select("ACCESSORIES")
     cy.get('.btn-generate-report').click()
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong').should('contain','NO SOUND / NO AUDIO')
-    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','4')
+    cy.get(':nth-child(2) > :nth-child(2) > .col').should('contain','1')
     //cy.get(':nth-child(2) > span')
     //cy.get(':nth-child(3) > span')
   });

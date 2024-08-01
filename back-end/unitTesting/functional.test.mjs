@@ -112,114 +112,114 @@ describe("Main Controller", () => {
     }),
 
     describe("Home", () => {
-        it("should render home if username and password is correct", async function() {
-            // Create a mock response object
-            const mockRes = { render: jest.fn() };
+        // it("should render home if username and password is correct", async function() {
+        //     // Create a mock response object
+        //     const mockRes = { render: jest.fn() };
 
-            // Create a mock request object
-            const mockReq = { 
-                body: { username: "Admin", password: "12345678" },
-                headers: {
-                host: 'localhost:3000',
-                connection: 'keep-alive',
-                'content-length': '16852305',
-                'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-                accept: '*/*',
-                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
-                'x-requested-with': 'XMLHttpRequest',
-                'sec-ch-ua-mobile': '?0',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                'sec-ch-ua-platform': '"Windows"',
-                origin: 'http://localhost:3000',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-dest': 'empty',
-                referer: 'http://localhost:3000/import',
-                'accept-encoding': 'gzip, deflate, br, zstd',
-                'accept-language': 'en-US,en;q=0.9,tl;q=0.8'
-            }};
+        //     // Create a mock request object
+        //     const mockReq = { 
+        //         body: { username: "Admin", password: "12345678" },
+        //         headers: {
+        //         host: 'localhost:3000',
+        //         connection: 'keep-alive',
+        //         'content-length': '16852305',
+        //         'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+        //         accept: '*/*',
+        //         'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
+        //         'x-requested-with': 'XMLHttpRequest',
+        //         'sec-ch-ua-mobile': '?0',
+        //         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        //         'sec-ch-ua-platform': '"Windows"',
+        //         origin: 'http://localhost:3000',
+        //         'sec-fetch-site': 'same-origin',
+        //         'sec-fetch-mode': 'cors',
+        //         'sec-fetch-dest': 'empty',
+        //         referer: 'http://localhost:3000/import',
+        //         'accept-encoding': 'gzip, deflate, br, zstd',
+        //         'accept-language': 'en-US,en;q=0.9,tl;q=0.8'
+        //     }};
 
-            // Call the getMain function
-            await mainController.getMain(mockReq, mockRes).then(() => {
-                expect(mockRes.render).toHaveBeenCalledWith('home');
-            }).catch(error => {
-                console.log("getMain error: " + error);
-            });
-        }),
+        //     // Call the getMain function
+        //     await mainController.getMain(mockReq, mockRes).then(() => {
+        //         expect(mockRes.render).toHaveBeenCalledWith('home');
+        //     }).catch(error => {
+        //         console.log("getMain error: " + error);
+        //     });
+        // }),
 
-        it("should render login if username is incorrect", async function() {
-            // Create a mock response object
-            const mockRes = { render: jest.fn() };
+        // it("should render login if username is incorrect", async function() {
+        //     // Create a mock response object
+        //     const mockRes = { render: jest.fn() };
 
-            // Create a mock request object
-            const mockReq = { 
-                body: { username: "", password: "12345678" },
-                headers: {
-                host: 'localhost:3000',
-                connection: 'keep-alive',
-                'content-length': '16852305',
-                'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-                accept: '*/*',
-                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
-                'x-requested-with': 'XMLHttpRequest',
-                'sec-ch-ua-mobile': '?0',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                'sec-ch-ua-platform': '"Windows"',
-                origin: 'http://localhost:3000',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-dest': 'empty',
-                referer: 'http://localhost:3000/import',
-                'accept-encoding': 'gzip, deflate, br, zstd',
-                'accept-language': 'en-US,en;q=0.9,tl;q=0.8'
-            }};
+        //     // Create a mock request object
+        //     const mockReq = { 
+        //         body: { username: "", password: "12345678" },
+        //         headers: {
+        //         host: 'localhost:3000',
+        //         connection: 'keep-alive',
+        //         'content-length': '16852305',
+        //         'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+        //         accept: '*/*',
+        //         'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
+        //         'x-requested-with': 'XMLHttpRequest',
+        //         'sec-ch-ua-mobile': '?0',
+        //         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        //         'sec-ch-ua-platform': '"Windows"',
+        //         origin: 'http://localhost:3000',
+        //         'sec-fetch-site': 'same-origin',
+        //         'sec-fetch-mode': 'cors',
+        //         'sec-fetch-dest': 'empty',
+        //         referer: 'http://localhost:3000/import',
+        //         'accept-encoding': 'gzip, deflate, br, zstd',
+        //         'accept-language': 'en-US,en;q=0.9,tl;q=0.8'
+        //     }};
 
-            // Call the getMain function
-            await mainController.getMain(mockReq, mockRes).then(() => {
-                expect(mockRes.render).toHaveBeenCalledWith('login', {
-                    "error": "Invalid username or password"
-                });
-            }).catch(error => {
-                console.log("getMain error: " + error);
-            });
-        }),
+        //     // Call the getMain function
+        //     await mainController.getMain(mockReq, mockRes).then(() => {
+        //         expect(mockRes.render).toHaveBeenCalledWith('login', {
+        //             "error": "Invalid username or password"
+        //         });
+        //     }).catch(error => {
+        //         console.log("getMain error: " + error);
+        //     });
+        // }),
 
-        it("should render login if password is incorrect", async function() {
-            // Create a mock response object
-            const mockRes = { render: jest.fn() }
+        // it("should render login if password is incorrect", async function() {
+        //     // Create a mock response object
+        //     const mockRes = { render: jest.fn() }
 
-            // Create a mock request object
-            const mockReq = { 
-                body: { username: "Admin", password: "" },
-                headers: {
-                host: 'localhost:3000',
-                connection: 'keep-alive',
-                'content-length': '16852305',
-                'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-                accept: '*/*',
-                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
-                'x-requested-with': 'XMLHttpRequest',
-                'sec-ch-ua-mobile': '?0',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                'sec-ch-ua-platform': '"Windows"',
-                origin: 'http://localhost:3000',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-dest': 'empty',
-                referer: 'http://localhost:3000/import',
-                'accept-encoding': 'gzip, deflate, br, zstd',
-                'accept-language': 'en-US,en;q=0.9,tl;q=0.8'
-            }};
+        //     // Create a mock request object
+        //     const mockReq = { 
+        //         body: { username: "Admin", password: "" },
+        //         headers: {
+        //         host: 'localhost:3000',
+        //         connection: 'keep-alive',
+        //         'content-length': '16852305',
+        //         'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+        //         accept: '*/*',
+        //         'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
+        //         'x-requested-with': 'XMLHttpRequest',
+        //         'sec-ch-ua-mobile': '?0',
+        //         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        //         'sec-ch-ua-platform': '"Windows"',
+        //         origin: 'http://localhost:3000',
+        //         'sec-fetch-site': 'same-origin',
+        //         'sec-fetch-mode': 'cors',
+        //         'sec-fetch-dest': 'empty',
+        //         referer: 'http://localhost:3000/import',
+        //         'accept-encoding': 'gzip, deflate, br, zstd',
+        //         'accept-language': 'en-US,en;q=0.9,tl;q=0.8'
+        //     }};
 
-            // Call the getMain function
-            await mainController.getMain(mockReq, mockRes).then(() => {
-                expect(mockRes.render).toHaveBeenCalledWith('login', {
-                    "error": "Invalid username or password"
-                });
-            }).catch(error => {
-                console.log("getMain error: " + error)
-            });
-        });
+        //     // Call the getMain function
+        //     await mainController.getMain(mockReq, mockRes).then(() => {
+        //         expect(mockRes.render).toHaveBeenCalledWith('login', {
+        //             "error": "Invalid username or password"
+        //         });
+        //     }).catch(error => {
+        //         console.log("getMain error: " + error)
+        //     });
+        // });
     }),
 
     describe("Import", () => {

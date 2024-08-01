@@ -1,7 +1,9 @@
 describe('User should be able to use the import function', () => {
   beforeEach(() => {
-    cy.login('Admin', '12345678')
-    cy.get('#CompanyLogo > img').click()
+    cy.visit('http://localhost:3000/')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
+    cy.get('#login').click()
     cy.get('.Btn-import > a > img').click()
   })
 

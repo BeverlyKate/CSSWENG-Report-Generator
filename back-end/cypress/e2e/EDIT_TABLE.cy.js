@@ -1,6 +1,9 @@
 describe('User should be able to edit the items and these edits should reflect in the website', () => {
   beforeEach(() => {
-    cy.login('Admin', '12345678')
+    cy.visit('http://localhost:3000/')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
+    cy.get('#login').click()
     cy.get('#CompanyLogo > img').click()
     cy.get('.Btn-table > a > img').click()
   })

@@ -1,6 +1,9 @@
 describe('Test cases for Report Generation in Item Quantity per Model', () => {  
   beforeEach(() => {
-    cy.login('Admin', '12345678')
+    cy.visit('http://localhost:3000/')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
+    cy.get('#login').click()
     cy.get('#CompanyLogo > img').click()
     cy.get('.Btn-generateReport > a > img')
   })
@@ -60,5 +63,5 @@ describe('Test cases for Report Generation in Item Quantity per Model', () => {
         cy.get('.btn-generate-report').click();
         cy.url().should('eq', currentUrl);
       });
-    }); 
+    });
 });

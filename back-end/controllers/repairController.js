@@ -39,10 +39,7 @@ const repairController = {
     getAllRepairs: async function(req, res) {
         //Find all repairs
         await repairModel.find({}).then(repair => {
-            console.log(repair);
-
             //Send to hbs template used
-            res.json(repair);
             res.render("table", {repair: repair});
         }).catch(error => {
             console.log("Getting all repairs error: " + error);//Copy this logic\

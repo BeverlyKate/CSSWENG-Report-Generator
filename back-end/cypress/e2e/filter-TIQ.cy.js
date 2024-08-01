@@ -2,8 +2,8 @@ describe('16-TIQ_ItemInv', () => {
 
   beforeEach(() => {
     cy.visit('http://localhost:3000/')
-    cy.get('#username').type('Admin')
-    cy.get('#password').type('12345678')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
     cy.get('#login').click()
     cy.get('[data-report="IQPM"] > :nth-child(1)').click()
   })
