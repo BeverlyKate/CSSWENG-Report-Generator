@@ -1,6 +1,4 @@
 export function Table({ tableData }) {
-
-
   return (
     <div>
         <table class="dataTable">
@@ -8,11 +6,11 @@ export function Table({ tableData }) {
                 <th class="col">Item Model</th>
                 <th class="col">Quantity</th>		
             </tr>
-            {tableData.map(data => {
+            {tableData.map(input => {
               return(
                 <tr >
-                  <td>{data.rowLabel}</td>
-                  <td>{data.rowData}</td>
+                  <td>{input.rowLabel}</td>
+                  <td>{input.rowData}</td>
                 </tr>
               )
             })}
