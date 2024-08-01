@@ -29,186 +29,168 @@ export default function Report() {
     console.log("Table Data: "+ tableData)
   }, [])
 
-  async function assignData(){
-    if(pageContent.overlay==="IQPM"){
-      iqpm()
-    }else if(pageContent.overlay==="TDPM") {
-      tdpm()  
-    }else if(pageContent.overlay==="PTPM") {
-      ptpm()
+  function assignData(){
+    var tempArr
+    var finalArr = []
+
+    if(pageContent.overlay=="IQPM"){
+      setLabel(graphContent.repairItemModel)
+      setData(graphContent.repairTalliedQuantities) 
+
+      console.log(label.length)
+
+      let i
+
+      for(i=0; i<label.length; i++){
+        finalArr.push({rowLabel: graphContent.repairItemModel[i], rowData: graphContent.repairTalliedQuantities[i]})
+      }
+
+      setTableData(finalArr)
+
+    }else if(pageContent.overlay=="TDPM") {
+      // let repairItemModel = graphContent.repairItemModel.split(",")
+		  // let repairDefect = graphContent.repairDefect.split(",")
+
+      let stringifiedData = graphContent.repairTalliedQuantities
+
+		  let cleaned = stringifiedData.split("],[")
+		  let cleaned2 = cleaned[0].replace(/&quot;/g,"\"")
+		  let cleaned3 = cleaned2.replace(/[\[\]]/g,"")
+		  let cleaned4 = cleaned3.replaceAll("},","}+")
+		  let cleaned5 = cleaned4.split("+")
+
+      let repairTalliedQuantities = []
+      let i=0
+      for(i=0; i<cleaned5.length; i++){
+        repairTalliedQuantities.push(JSON.parse(cleaned5[i]))
+      }
+
+		  let labelList=[];
+		  let valueList=[];
+		
+		  let found = false;
+		  let count = 0;
+
+      let j=0
+		  for(i=0; i<repairTalliedQuantities.length;i++){
+			  for(j=0; j<labelList.length; j++){
+				  if(repairTalliedQuantities[i].repairDefect == labelList[j]){
+					  found = true;
+				  }
+			  }
+			  count++
+			  if(count==1 && found == false){
+				  labelList[i]=repairTalliedQuantities[i].repairDefect
+			  }
+
+			  found=false
+			  count=0
+		  }
+
+      for(i=0; i<labelList.length;i++){
+        valueList[i]=0
+        for(j=0; j<repairTalliedQuantities.length; j++){
+          if(labelList[i]==repairTalliedQuantities[j].repairDefect){
+            valueList[i]=valueList[i]+repairTalliedQuantities[j].repairDefectQuantity
+          }
+        }
+      }
+
+      const label = labelList
+      const data = valueList
+
+      for(i=0; i<j; i++){
+        finalArr.push({rowLabel: labelList[i], rowData: valueList[i]})
+      }
+
+      setLabel(labelList)
+      setData(valueList)
+
+      setTableData(finalArr)
+    }else if(pageContent.overlay=="PTPM") {
+      let repairTalliedQuantities = graphContent.repairTalliedQuantities
+
+      let i=0
+
+      let rowNo = repairTalliedQuantities.length/2
+      for(i=0; i<rowNo; i++){
+        finalArr.push({rowLabel: repairTalliedQuantities[i][0], rowData: repairTalliedQuantities[i][1]})
+      }
+
+      console.log("Hi: " + finalArr)
+
+      setTableData(finalArr)
     }else if(pageContent.overlay==="AWDPT"){
-      awdpt()
-    }else if(pageContent.overlay==="TIQPT"){
-      tiqpt ()
-    }else{
-      tiqpmpt ()
-    }
-  }
+      setLabel(graphContent.repairTechnician)
+      setData(graphContent.repairAverageWorkingDays)
 
-  async function iqpm (){
-    var finalArr = []
+      console.log("Label Length: " + label.length)
 
-    let repairItemModel = graphContent.repairItemModel
-    let repairTalliedQuantities = graphContent.repairTalliedQuantities
+      console.log("array content: " + graphContent)
 
-    setLabel(repairItemModel)
-    setData(repairTalliedQuantities) 
+      let i = 0
 
-    //console.log(label.length)
+      for(i=0; i<label.length; i++){
+        finalArr.push({rowLabel: graphContent.repairTechnician[i], rowData: graphContent.repairAverageWorkingDays[i]})
+      }
 
-    var i
+      setTableData(finalArr)
+    }else if(pageContent.overlay=="TIQPT"){
+      let tech
+      if(graphContent.repairTechnician===""){
+        let tech1=graphContent.repairTechnician1
+        let tech2=graphContent.repairTechnician2
+        tech1 = tech1.concat(tech2)
 
-    for(i=0; i<repairItemModel.length; i++){
-      finalArr.push({rowLabel: repairItemModel[i], rowData: repairTalliedQuantities[i]})
-    }
+        tech = [...new Set(tech1)]
+      }else{
+        tech = graphContent.repairTechnician
+        console.log("Tech name: "+ tech)
+      }
+        
+      setLabel(tech)
+      setData(graphContent.repairTalliedQuantities)
 
-    console.log("Current Data: " + finalArr)
+      console.log(label)
+      console.log(graphContent.repairTechnician2)
 
-    setTableData(finalArr)
-  }
+      console.log(graphContent.repairTalliedQuantities)
 
-  function tdpm () {
-    var finalArr = []
+      //console.log("Label Length: " + label.length)
 
-    let stringifiedData = graphContent.repairTalliedQuantities
+      console.log("array content: " + graphContent)
 
-    let cleaned = stringifiedData.split("],[")
-    let cleaned2 = cleaned[0].replace(/&quot;/g,"\"")
-    let cleaned3 = cleaned2.replace(/[\[\]]/g,"")
-    let cleaned4 = cleaned3.replaceAll("},","}+")
-    let cleaned5 = cleaned4.split("+")
+      let i = 0
 
-    let repairTalliedQuantities = []
-    let i=0
-    for(i=0; i<cleaned5.length; i++){
-      repairTalliedQuantities.push(JSON.parse(cleaned5[i]))
-    }
-
-    let labelList=[];
-    let valueList=[];
-  
-    let found = false;
-    let count = 0;
-
-    let j=0
-
-    for(i=0; i<repairTalliedQuantities.length;i++){
-      for(j=0; j<labelList.length; j++){
-        if(repairTalliedQuantities[i].repairDefect == labelList[j]){
-          found = true;
+      if(graphContent.repairTechnician===""){
+        for(i=0; i<tech.length; i++){
+          finalArr.push({rowLabel: tech[i], rowData: graphContent.repairTalliedQuantities[i]})
         }
-      }
-      count++
-      if(count==1 && found == false){
-        labelList[i]=repairTalliedQuantities[i].repairDefect
+      }else{
+        finalArr.push({rowLabel: graphContent.repairTechnician, rowData: graphContent.repairTalliedQuantities})
       }
 
-      found=false
-      count=0
-    }
-
-    for(i=0; i<labelList.length;i++){
-      valueList[i]=0
-      for(j=0; j<repairTalliedQuantities.length; j++){
-        if(labelList[i]==repairTalliedQuantities[j].repairDefect){
-          valueList[i]=valueList[i]+repairTalliedQuantities[j].repairDefectQuantity
-        }
-      }
-    }
-
-    const label = labelList
-    const data = valueList
-
-    for(i=0; i<j; i++){
-      finalArr.push({rowLabel: labelList[i], rowData: valueList[i]})
-    }
-
-    setLabel(labelList)
-    setData(valueList)
-
-    setTableData(finalArr)
-  }
-
-  function ptpm () {
-    var finalArr = []
-
-    let repairTalliedQuantities = graphContent.repairTalliedQuantities
-
-    let i=0
-
-    let rowNo = repairTalliedQuantities.length/2
-    for(i=0; i<rowNo; i++){
-      finalArr.push({rowLabel: repairTalliedQuantities[i][0], rowData: repairTalliedQuantities[i][1]})
-    }
-
-    console.log("Hi: " + finalArr)
-
-    setTableData(finalArr)
-  }
-
-  function awdpt () {
-    var finalArr = []
-    let repairTechnician = graphContent.repairTechnician
-    let repairAverageWorkingDays = graphContent.repairAverageWorkingDays
-
-    let i = 0
-
-    if(Array.isArray(repairTechnician)){
-      for(i=0; i<repairTechnician.length; i++){
-        finalArr.push({rowLabel: repairTechnician[i], rowData: repairAverageWorkingDays[i]})
-      }
+      setTableData(finalArr)
     }else{
-      finalArr.push({rowLabel: repairTechnician, rowData: repairAverageWorkingDays})
+      const repairTechnician = graphContent.repairTechnician
+      const repairItemModel = graphContent.repairItemModel
+		  const repairTalliedQuantities = graphContent.repairTalliedQuantities
+
+      // let i=0
+
+      finalArr.push({rowLabel: repairItemModel, rowData: repairTalliedQuantities})
+      // for(i=0; i<repairItemModel.length; i++){
+        
+      // }
+
+      setLabel(repairItemModel)
+      setData(repairTalliedQuantities)
+      setTableData(finalArr)
     }
-
-    setLabel(repairTechnician)
-    setData(repairAverageWorkingDays)
-
-    setTableData(finalArr)
-  }
-
-  function tiqpt (){
-    var finalArr = []
-
-    var concatRepairTechnician=[]
-    var repairTechnician = graphContent.repairTechnician
-    var repairTalliedQuantities=graphContent.repairTalliedQuantities
-
-    var i = 0
-
-    if(pageContent.technician==="default"){
-      let tech1=graphContent.repairTechnician1
-      let tech2=graphContent.repairTechnician2
-      tech1 = tech1.concat(tech2)
-
-      concatRepairTechnician = [...new Set(tech1)]
-
-      for(i=0; i<concatRepairTechnician.length; i++){
-        finalArr.push({rowLabel: concatRepairTechnician[i], rowData: repairTalliedQuantities[i]})
-      }
-      setLabel(concatRepairTechnician)
-    }else{
-      finalArr.push({rowLabel: repairTechnician, rowData: repairTalliedQuantities})
-      setLabel(repairTechnician)
-    }
-
-    setData(repairTalliedQuantities)
-    setTableData(finalArr)
-  }
-
-  function tiqpmpt () {
-    // const repairTechnician = graphContent.repairTechnician
-    const repairItemModel = graphContent.repairItemModel
-    const repairTalliedQuantities = graphContent.repairTalliedQuantities
     
-    var finalArr = [{rowLabel: repairItemModel, rowData: repairTalliedQuantities}]
 
-    setLabel(repairItemModel)
-    setData(repairTalliedQuantities)
-    setTableData(finalArr)
+    // setTableData(finalArr)
   }
-
-  
 
   return (
     <div className="Body">

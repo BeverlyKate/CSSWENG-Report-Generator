@@ -243,7 +243,7 @@ header .right .Profile:hover{
 }
 
 .reports-menu{
-    display: flex;
+    /* display: flex; */
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
@@ -264,7 +264,7 @@ header .right .Profile:hover{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 3vh 3vh 0vh 3vh;
+    margin: 5vh;
 }
 
 .btn-report-holder div{
