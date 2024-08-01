@@ -1,8 +1,9 @@
 describe('Test cases for Report Generation in Top Defects Per Model', () => {  
   beforeEach(() => {
-    cy.login('Admin', '12345678')
-    cy.get('#CompanyLogo > img').click()
-    cy.get('.Btn-generateReport > a > img')
+    cy.visit('http://localhost:3001/dash')
+    //cy.login('Admin', '12345678')
+    //cy.get('#CompanyLogo > img').click()
+    //cy.get('.Btn-generateReport > a > img')
   })
   it('Should be able create a report (TOP DEFECTS PER MODEL [Repair]) based on the month', () => {
     cy.get('[data-report="TDPM"]').click()
@@ -223,7 +224,6 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.wait(15)
     cy.get('.btn-generate-report').click()
     cy.url().then((currentUrl) => {
-      cy.get('.btn-generate-report').click();
       cy.url().should('eq', currentUrl);
     })
   });

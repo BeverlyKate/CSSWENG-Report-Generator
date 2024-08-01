@@ -27,7 +27,7 @@
 import 'cypress-file-upload';
 
 Cypress.Commands.add('login', (username, password) => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3001/login')
     cy.get('#username').type(username)
     cy.get('#password').type(password)
     cy.get('#login').click()

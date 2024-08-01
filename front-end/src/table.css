@@ -73,6 +73,7 @@ tr:hover {
     height: 10vh;
     width: 96%;
     border-bottom: solid 0.5vh var(--primary);
+    margin-bottom: 2vh;
 }
 
 .editForm .popup-text{
@@ -98,7 +99,6 @@ tr:hover {
 }
 
 .btn-edit{
-    margin-left: 12.5vh;
     width: 20%;
     background-color: var(--primary);
     border-radius: 1vh;
@@ -132,7 +132,7 @@ tr:hover {
     font-size: 2vh;
     background-color: var(--nested-box-bg);
     border-radius: 1vh;
-    height: 4vh;
+    height: 3vh;
     padding-left: 1vh;
     padding-right: 1vh;
 }
@@ -143,8 +143,7 @@ tr:hover {
     font-size: 2vh;
     background-color: var(--nested-box-bg);
     border-radius: 1vh;
-    height: 4vh;
-    padding-left: 1vh;
+    height: 4.3vh;
 }
 
 .editForm-part label{
@@ -194,7 +193,14 @@ tr:hover {
     background-color: var(--primary);
 }
 
-
+.popup-header{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 10vh;
+    width: 96%;
+    border-bottom: solid 0.5vh var(--primary);
+}
 
 
   /* Attribution for styling */
