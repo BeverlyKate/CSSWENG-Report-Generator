@@ -1,10 +1,10 @@
 describe('Pending Tasks Per Model (PTPM) reports.', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:3001/dash')
-    //cy.get('#username').type('Admin')
-    //cy.get('#password').type('12345678')
-    //cy.get('#login').click()
+    cy.visit('http://localhost:3000/')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
+    cy.get('#login').click()
     cy.get('[data-report="PTPM"]').click()
   })
 
