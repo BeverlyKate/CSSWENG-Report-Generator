@@ -83,20 +83,7 @@ describe('User should be able to register', () => {
     })
     //cy.get('.Title').should('contain', 'Generate Report')
   })
-
-  it('Should be not able to register with no username', () => {
-    cy.visit('http://localhost:3000/')
-    cy.get('#registerNew').click()
-    cy.get('#email').type("angel_ancheta@dlsu.edu.ph")
-    cy.get('#password').type('catto')
-    cy.get('#retypePassword').type('catto')
-    cy.get('#register').click()
-    cy.url().then((currentUrl) => {
-      cy.url().should('eq', currentUrl);
-    })
-    //cy.get('.Title').should('contain', 'Generate Report')
-  })
-
+  
   it.skip('Should be able to register as guest', () => {
     cy.visit('http://localhost:3000/')
     cy.get('#registerNew').click()
@@ -141,7 +128,29 @@ describe('User should be able to recover an account', () => {
     cy.get('#resetPassword').click()
     cy.get('#loginError').should('contain','Password reset successful! Please login with your new password.')
   })
-  it.only('Should be able to login with the edited credentials', () => {
+
+  it('Should be not able to change the password of an account with incorrect credentials', () => {
+    cy.visit('http://localhost:3000/')
+    cy.get('#forgotPassword').click()
+    cy.get('#email').type("neko@dlsu.edu.ph")
+    cy.get('#username').type("Angel Ancheta")
+    cy.get('#password').type('alotofcattos')
+    cy.get('#retypePassword').type('alotofcattos')
+    cy.get('#resetPassword').click()
+    cy.get('#recoveryError').should('contain','User not found')
+  })
+
+  it('Should be not able to change the password of an account if the passwords dont match', () => {
+    cy.visit('http://localhost:3000/')
+    cy.get('#forgotPassword').click()
+    cy.get('#email').type("angel_ancheta@dlsu.edu.ph")
+    cy.get('#username').type("Angel Ancheta")
+    cy.get('#password').type('alotofcattos')
+    cy.get('#retypePassword').type('alotofcatto')
+    cy.get('#resetPassword').click()
+    cy.get('#recoveryError').should('contain','Passwords do not match')
+  })
+  it('Should be able to login with the edited credentials', () => {
     cy.visit('http://localhost:3000/')
     cy.get('#username').type("Angel Ancheta")
     cy.get('#password').type('alotofcattos')
