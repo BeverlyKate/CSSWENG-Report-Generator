@@ -4,9 +4,13 @@ const repairModel = require("../models/repairSchema.js");
 function compareNumbers(a, b) {
     return b.repairDefectQuantity - a.repairDefectQuantity;
 };
+    return b.repairDefectQuantity - a.repairDefectQuantity;
+};
 
 //Clears and returns all duplicate technician entries
 function clearDuplicates(technician) {
+    let distinctArray = [];
+    let count = 0;
     let distinctArray = [];
     let count = 0;
 
@@ -22,7 +26,29 @@ function clearDuplicates(technician) {
             };
         };
         count++;
+    // Start only when a repeated value is not encountered
+    let start = false;
+   
+    //Iterate over technician array
+    for(let i = 0; i < technician.length; i++) {
+        //Iterate over distinct array
+        for(let j = 0; j < distinctArray.length; j++) {
+            if (technician[i] == distinctArray[j]) {
+                start = true;
+            };
+        };
+        count++;
 
+        //Push if no duplicates
+        if (count == 1 && start == false) {
+          distinctArray.push(technician[i]);
+        };
+        start = false;
+        count = 0;
+    };
+    console.log(distinctArray);
+    return distinctArray;
+};
         //Push if no duplicates
         if (count == 1 && start == false) {
           distinctArray.push(technician[i]);
@@ -60,7 +86,24 @@ const repairController = {
         let distinctArray = [];
         let tempInt = 0;
         console.log(req.body);
+    //Get Total Item Quantity Per Technician TIQPT
+    getTotalItemQuantityPerTechnician: async function(req, res) {
+        let dateFrom = new Date(req.body.dateFrom);
+        let newDateTo = new Date(req.body.dateFrom);
+        let dateTo;
+        let repairTalliedQuantities = [];
+        let technician = req.body.technician;
+        let technicianArray = [];
+        let technicianCount = 0;
+        let distinctArray = [];
+        let tempInt = 0;
+        console.log(req.body);
 
+        if(req.body.dateFrom.length = 4){
+            dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
+        } else {
+            dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
+        };
         if(req.body.dateFrom.length = 4){
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
@@ -84,7 +127,27 @@ const repairController = {
                         technicianArray[technicianCount] = repairTechnician2[i];
                         technicianCount++;
                     }
+        if(technician == "default") {
+            //Find all unique repair technicians
+            await repairModel.find({}).distinct("repairTechnician1").then(async repairTechnician1 => {
+                // console.log(repairTechnician1);
+                //Add repairTechnician1 to technician array
+                for(i = 0; i < repairTechnician1.length; i++) {
+                    technicianArray[technicianCount] = repairTechnician1[i];
+                    technicianCount++;
+                }
+            
+                await repairModel.find({}).distinct("repairTechnician2").then(async repairTechnician2 => {
+                    // console.log(repairTechnician2);
+                    //Add repairTechnician2 to technician array
+                    for(i = 0; i < repairTechnician2.length; i++) {
+                        technicianArray[technicianCount] = repairTechnician2[i];
+                        technicianCount++;
+                    }
 
+                    //Clear all duplicate entries in technician array
+                    distinctArray = clearDuplicates(technicianArray);
+                    console.log("distinct array = " + distinctArray);
                     //Clear all duplicate entries in technician array
                     distinctArray = clearDuplicates(technicianArray);
                     console.log("distinct array = " + distinctArray);
@@ -151,7 +214,19 @@ const repairController = {
 
                 //Store temporary int to repairTalliedQuantities
                 repairTalliedQuantities = tempInt;
+                //Store temporary int to repairTalliedQuantities
+                repairTalliedQuantities = tempInt;
 
+                console.log("tallied = " + repairTalliedQuantities);
+                //Send to hbs template used
+                res.render("TIQPT", {date: req.body.dateFrom, repairTechnician: technician, repairTalliedQuantities: repairTalliedQuantities, notDefault: true});
+            }).catch(error => {
+                console.log("Finding repairModel repairTechnician 1 or repairTechnician 2 error" + error);
+                const errorMessage = "Finding repairModel repairTechnician 1 or repairTechnician 2 error";    
+                res.render("TIQPT", {error: errorMessage});
+            });
+        };
+    },
                 console.log("tallied = " + repairTalliedQuantities);
                 //Send to hbs template used
                 res.render("TIQPT", {date: req.body.dateFrom, repairTechnician: technician, repairTalliedQuantities: repairTalliedQuantities, notDefault: true});
@@ -174,13 +249,46 @@ const repairController = {
         let itemModel = req.body.category1;
         let tempInt = 0;
         console.log(req.body);
+    //Get Total Item Quantity Per Item Model Per Technician TIQPMPT
+    getTotalItemQuantityPerItemModelPerTechnician: async function(req, res) {
+        let dateFrom = new Date(req.body.dateFrom);
+        let newDateTo = new Date(req.body.dateFrom);
+        let dateTo;
+        let repairTalliedQuantities = [];
+        let technician = req.body.technician;
+        let status = req.body.taskType;
+        let itemModel = req.body.category1;
+        let tempInt = 0;
+        console.log(req.body);
 
         if(req.body.dateFrom.length = 4){
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
             dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
         };
+        if(req.body.dateFrom.length = 4){
+            dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
+        } else {
+            dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
+        };
 
+        //Find all repairs associated with the required inputs taken from the request parameters with repairDate greater than 
+        //dateFrom and repairDate less than dateTo parameters
+        await repairModel.find({ $or:[{repairTechnician1: technician}, {repairTechnician2: technician}], repairItemModel: itemModel, repairStatus: status, repairDate: {$gte: dateFrom, $lte: dateTo}}).then(repair => {
+            // console.log(repair);
+            //Iterate over the array of repairs associated with the required inputs taken from the request parameters
+            for(i = 0; i < repair.length; i++) {
+                //If technician parameter == repair technician in array of repairs associated with the required inputs taken from
+                //the request parameters and itemModel parameter == repair item model in array of repairs associated with the
+                //required inputs taken from the request parameters, add its repair quantity value to temporary int
+                if((technician == repair[i].repairTechnician1 && itemModel == repair[i].repairItemModel) ||
+                technician == repair[i].repairTechnician2 && itemModel == repair[i].repairItemModel) {
+                    tempInt += repair[i].repairQuantity;
+                };
+            };
+            //Store temporary integer to repairTalliedQuantities
+            repairTalliedQuantities[0] = tempInt;
+            console.log("tallied = " + repairTalliedQuantities);
         //Find all repairs associated with the required inputs taken from the request parameters with repairDate greater than 
         //dateFrom and repairDate less than dateTo parameters
         await repairModel.find({ $or:[{repairTechnician1: technician}, {repairTechnician2: technician}], repairItemModel: itemModel, repairStatus: status, repairDate: {$gte: dateFrom, $lte: dateTo}}).then(repair => {
@@ -221,7 +329,25 @@ const repairController = {
         let tempInt1 = 0;
         let tempInt2 = 0;
         let averageWorkingDays = 0;
+    //Get Average Working Days Per Technician AWDPT
+    getAverageWorkingDaysPerTechnician: async function(req, res) {
+        let dateFrom = new Date(req.body.dateFrom);
+        let newDateTo = new Date(req.body.dateFrom);
+        let dateTo;
+        let repairAverageWorkingDays = [];
+        let technician = req.body.technician;
+        let technicianArray = [];
+        let technicianCount = 0;
+        let distinctArray = [];
+        let tempInt1 = 0;
+        let tempInt2 = 0;
+        let averageWorkingDays = 0;
 
+        if(req.body.dateFrom.length = 4){
+            dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
+        } else {
+            dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
+        };
         if(req.body.dateFrom.length = 4){
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
@@ -324,6 +450,8 @@ const repairController = {
                 console.log(tempInt2 - tempInt1)
                 console.log(averageWorkingDays);
 
+                //Store averageWorkingDays to repairAverageWorkingDays
+                repairAverageWorkingDays = averageWorkingDays;
                 //Store averageWorkingDays to repairAverageWorkingDays
                 repairAverageWorkingDays = averageWorkingDays;
 
@@ -446,13 +574,38 @@ const repairController = {
         let repairTalliedQuantities = [];
         let tempInt = 0;
         let tempArray = [];
+    getTopDefectsPerItemModel: async function(req, res) {
+        let status = req.body.taskType;
+        let itemModel = req.body.itemModel;
+        let category1 = req.body.category1;
+        let dateFrom = new Date(req.body.dateFrom);
+        let newDateTo = new Date(req.body.dateFrom);
+        let dateTo;
+        let repairTalliedQuantities = [];
+        let tempInt = 0;
+        let tempArray = [];
 
         if(req.body.dateFrom.length = 4){
             dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
         } else {
             dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
         };
+        if(req.body.dateFrom.length = 4){
+            dateTo = new Date(newDateTo.setFullYear(newDateTo.getFullYear() + 1));
+        } else {
+            dateTo = new Date(newDateTo.setMonth(newDateTo.getMonth() + 1));
+        };
 
+        if(itemModel == "default") {
+            //Find all unique repair item models
+            await repairModel.find({}).distinct("repairItemModel").then(async repairItemModel => {
+                // console.log(repairItemModel);
+                // console.log(repairItemModel.length)
+        
+                //Find all unique repair defects
+                await repairModel.find({}).distinct("repairDefect").then(async repairDefect => {
+                    // console.log(repairDefect);
+                    // console.log(repairDefect.length);
         if(itemModel == "default") {
             //Find all unique repair item models
             await repairModel.find({}).distinct("repairItemModel").then(async repairItemModel => {
