@@ -214,6 +214,7 @@ describe('Test cases for Report Generation in Top Defects Per Model', () => {
     cy.get('.selection > .btn-dropdown-mock').select("2024")
     cy.get('.btn-generate-report').click()
     cy.url().then((currentUrl) => {
+      cy.get('.btn-generate-report').click();
       cy.url().should('eq', currentUrl);
     })
   });
