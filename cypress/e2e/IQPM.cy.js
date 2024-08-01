@@ -1,9 +1,8 @@
 describe('Test cases for Report Generation in Item Quantity per Model', () => {  
   beforeEach(() => {
-    cy.visit('http://localhost:3001/dash')
-    //cy.login('Admin', '12345678')
-    //cy.get('#CompanyLogo > img').click()
-    //cy.get('.Btn-generateReport > a > img')
+    cy.login('Admin', '12345678')
+    cy.get('#CompanyLogo > img').click()
+    cy.get('.Btn-generateReport > a > img')
   })
   it('Should be able create a report (Item Quantity per Model) based on the month', () => {
     cy.get('[data-report="IQPM"]').click()

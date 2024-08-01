@@ -65,60 +65,47 @@ const EditTaskForm = ({ task, handleClose }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="popup-header">
-        <button type="submit" class="btn-edit">
-          Save
-        </button>
-        <button type="button" class="btn-edit" onClick={handleDelete}>
-          Delete
-        </button>
-      </div>
-      <br></br>
-      <div className="editForm-part">
-        <label>Repair ID: </label>
+      <div>
+        <label>Repair ID</label>
         <input
           type="text"
           name="repairId"
-          id="repairId"
-          className="data"
           value={formData.repairId}
           onChange={handleChange}
           readOnly
         />
-        <label>Repair Date: </label>
+      </div>
+      <div>
+        <label>Repair Date</label>
         <input
           type="text"
           name="repairDate"
-          id="repairDate"
-          className="data"
           value={formData.repairDate}
           onChange={handleChange}
         />
-        <label>PL #: </label>
+      </div>
+      <div>
+        <label>PL #</label>
         <input
           type="text"
           name="repairPLNumber"
-          id="repairPLNumber"
-          className="data"
           value={formData.repairPLNumber}
           onChange={handleChange}
         />
-        <label>Customer: </label>
+      </div>
+      <div>
+        <label>Customer</label>
         <input
           type="text"
           name="repairCustomer"
-          id="repairCustomer"
-          className="data"
           value={formData.repairCustomer}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Item Model: </label>
+      <div>
+        <label>Item Model</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairItemModel"
-          id="repairItemModel"
           value={formData.repairItemModel}
           onChange={handleChange}
         >
@@ -163,12 +150,11 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="XLR (F)">XLR (F)</option>
           <option value="XLR (M)">XLR (M)</option>
         </select>
-
-        <label>Category 1: </label>
+      </div>
+      <div>
+        <label>Category 1</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairCategory1"
-          id="repairCategory1"
           value={formData.repairCategory1}
           onChange={handleChange}
         >
@@ -206,117 +192,102 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="TWEETERS">TWEETERS</option>
         </select>
       </div>
-      <div className="editForm-part">
-        <label>Category 2: </label>
+      <div>
+        <label>Category 2</label>
         <input
           type="text"
           name="repairCategory2"
-          id="repairCategory2"
-          className="data"
           value={formData.repairCategory2}
           onChange={handleChange}
         />
-
-        <label>Quantity: </label>
+      </div>
+      <div>
+        <label>Quantity</label>
         <input
           type="text"
           name="repairQuantity"
-          id="repairQuantity"
-          className="data"
           value={formData.repairQuantity}
           onChange={handleChange}
         />
-
-        <label>UOM: </label>
+      </div>
+      <div>
+        <label>UOM</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairUOM"
-          id="repairUOM"
           value={formData.repairUOM}
           onChange={handleChange}
         >
           <option value="pc">pc</option>
           <option value="set">set</option>
         </select>
-
-        <label>Pull Out By: </label>
+      </div>
+      <div>
+        <label>Pull Out By</label>
         <input
           type="text"
           name="repairPullOutBy"
-          id="repairPullOutBy"
-          className="data"
           value={formData.repairPullOutBy}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Description: </label>
+      <div>
+        <label>Description</label>
         <input
           type="text"
           name="repairDescription"
-          id="repairDescription"
-          className="data"
           value={formData.repairDescription}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Serial Number: </label>
+      <div>
+        <label>Serial Number</label>
         <input
           type="text"
           name="repairSerialNumber"
-          id="repairSerialNumber"
-          className="data"
           value={formData.repairSerialNumber}
           onChange={handleChange}
         />
-        <label>Job Order Number: </label>
+      </div>
+      <div>
+        <label>Job Order Number</label>
         <input
           type="text"
           name="repairJobOrderNumber"
-          id="repairJobOrderNumber"
-          className="data"
           value={formData.repairJobOrderNumber}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Date Started: </label>
+      <div>
+        <label>Date Started</label>
         <input
           type="text"
           name="repairDateStarted"
-          id="repairDateStarted"
-          className="data"
           value={formData.repairDateStarted}
           onChange={handleChange}
         />
-
-        <label>Date Finished: </label>
+      </div>
+      <div>
+        <label>Date Finished</label>
         <input
           type="text"
           name="repairDateFinished"
-          id="repairDateFinished"
-          className="data"
           value={formData.repairDateFinished}
           onChange={handleChange}
         />
-
-        <label>Cost: </label>
+      </div>
+      <div>
+        <label>Cost</label>
         <input
           type="text"
           name="repairCost"
-          id="repairCost"
-          className="data"
           value={formData.repairCost}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Technician 1: </label>
+      <div>
+        <label>Technician 1</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairTechnician1"
-          id="repairTechnician1"
           value={formData.repairTechnician1}
           onChange={handleChange}
         >
@@ -328,12 +299,10 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="NEIL">NEIL</option>
           <option value="OMER">OMER</option>
         </select>
-
-        <label>Technician 2: </label>
+      </div>
+      <div>
+        <label>Technician 2</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
-          name="repairTechnician2"
-          id="repairTechnician2"
           name="repairTechnician2"
           value={formData.repairTechnician2}
           onChange={handleChange}
@@ -347,24 +316,21 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="OMER">OMER</option>
         </select>
       </div>
-      <div className="editForm-part">
-        <label>Item Status: </label>
+      <div>
+        <label>Item Status</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairItemStatus"
-          id="repairItemStatus"
           value={formData.repairItemStatus}
           onChange={handleChange}
         >
           <option value="DONE">DONE</option>
           <option value="OUT">OUT</option>
         </select>
-
-        <label>Delivery Status: </label>
+      </div>
+      <div>
+        <label>Delivery Status</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairDeliveryStatus"
-          id="repairDeliveryStatus"
           value={formData.repairDeliveryStatus}
           onChange={handleChange}
         >
@@ -372,43 +338,37 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="DELIVERED">DELIVERED</option>
         </select>
       </div>
-      <div className="editForm-part">
-        <label>Remarks: </label>
+      <div>
+        <label>Remarks</label>
         <input
           type="text"
           name="repairRemarks"
-          id="repairRemarks"
-          className="data"
           value={formData.repairRemarks}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Return Form Number: </label>
+      <div>
+        <label>Return Form Number</label>
         <input
           type="text"
           name="repairReturnFormNumber"
-          id="repairReturnFormNumber"
           value={formData.repairReturnFormNumber}
           onChange={handleChange}
         />
-
-        <label>Date Returned: </label>
+      </div>
+      <div>
+        <label>Date Returned</label>
         <input
           type="text"
           name="repairDateReturned"
-          id="repairDateReturned"
-          className="data"
           value={formData.repairDateReturned}
           onChange={handleChange}
         />
       </div>
-      <div className="editForm-part">
-        <label>Status: </label>
+      <div>
+        <label>Status</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
           name="repairStatus"
-          id="repairStatus"
           value={formData.repairStatus}
           onChange={handleChange}
         >
@@ -417,11 +377,10 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="Return">Return</option>
           <option value="QA">QA</option>
         </select>
-
-        <label>Defect: </label>
+      </div>
+      <div>
+        <label>Defect</label>
         <select
-          className="btn-dropdown-mock dropdown-selection data"
-          id="repairDefect"
           name="repairDefect"
           value={formData.repairDefect}
           onChange={handleChange}
@@ -437,6 +396,10 @@ const EditTaskForm = ({ task, handleClose }) => {
           <option value="NO COMPLAINT WRITTEN">NO COMPLAINT WRITTEN</option>
         </select>
       </div>
+      <button type="submit">Save</button>
+      <button type="button" onClick={handleDelete}>
+        Delete
+      </button>
     </form>
   );
 };

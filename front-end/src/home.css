@@ -43,7 +43,6 @@
     height: 10vh;
     width: 96%;
     border-bottom: solid 0.5vh var(--primary);
-    margin-bottom: 2vh;
 }
 
 .popup .popup-text{
@@ -152,7 +151,6 @@
 
 select{
     border: none;
-    font-Size: 100vh;
 }
 
 .dropdown-selection{
