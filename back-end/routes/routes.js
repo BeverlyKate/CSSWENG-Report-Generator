@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express.Router();
-// const verifyJWT = require("../middleware/verifyJWT");
-// const loginLimiter = require("../middleware/loginLimiter");
-// app.use(verifyJWT);
+const verifyJWT = require("../middleware/verifyJWT");
+const loginLimiter = require("../middleware/loginLimiter");
 
 async function dynamicImport() {
   try {
@@ -24,8 +23,20 @@ const mainController = require("../controllers/mainController.js");
 const repairController = require("../controllers/repairController.js");
 const dbController = require("../controllers/dbController.js");
 
+app.post("/auth", loginLimiter, mainController.getMain);
+
+// Refresh Token
+app.route("/refresh").get(mainController.refresh);
+
+// Logout
+app.route("/logout").post(mainController.logout);
+
+app.use(verifyJWT);
+
+
 //Open Login
-app.get("/", mainController.login);
+app.route("/").post(loginLimiter, mainController.login);
+// app.get("/", mainController.login);
 //Open Home
 app.post("/login", mainController.getMain);
 //Item Quantity Per Model
@@ -65,5 +76,9 @@ app.post("/recovery", mainController.postRecovery);
 app.get("/registerUser", mainController.getRegister);
 
 app.post("/newUser", mainController.postRegister);
+
+app.route("/refresh").get(mainController.refresh);
+
+app.route("/logout").post(mainController.logout);
 
 module.exports = { app, dynamicImport };

@@ -56,24 +56,18 @@ const Login = () => {
   const errClass = errMsg ? "errmsg" : "offscreen";
 
   if (isLoading) return <p>Loading...</p>;
-
   const content = (
-    <form
-      class="table btnCenter"
-      action="/login"
-      method="post"
-      name="loginForm"
-    >
-      <div class="upperbox">
+    <>
+      <div className="upperbox">
         <img src={FullLogo} alt="" />
       </div>
-      <div class="lowerbox">
+      <div className="lowerbox">
         <form className="form" onSubmit={handleSubmit}>
-          <label for="username" htmlFor="username" class="text-1">
+          <label htmlFor="username" className="text-1">
             username:
           </label>
           <input
-            class="input-box"
+            className="input-box"
             type="text"
             id="username"
             name="username"
@@ -83,11 +77,11 @@ const Login = () => {
             autoComplete="off"
             required
           />
-          <label for="password" htmlFor="password" class="text-1">
+          <label htmlFor="password" className="text-1">
             password:
           </label>
           <input
-            class="input-box"
+            className="input-box"
             type="password"
             id="password"
             name="password"
@@ -106,13 +100,14 @@ const Login = () => {
               {errMsg}
             </p>
           </b>
-          <button type="submit" id="login" class="btn-login">
+          <button type="submit" id="login" className="btn-login">
             Login
           </button>
         </form>
       </div>
-    </form>
+    </>
   );
+  
   return content;
 };
 

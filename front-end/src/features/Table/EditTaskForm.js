@@ -334,7 +334,6 @@ const EditTaskForm = ({ task, handleClose }) => {
           className="btn-dropdown-mock dropdown-selection data"
           name="repairTechnician2"
           id="repairTechnician2"
-          name="repairTechnician2"
           value={formData.repairTechnician2}
           onChange={handleChange}
         >
