@@ -15,10 +15,10 @@ export default function Report() {
 
   const pageContent = passedData.content
 
-  const label = graphContent.repairItemModel
+  const [label, setLabel] = useState([])
 
-  const data = graphContent.repairTalliedQuantities
-
+  const [data, setData] = useState([])
+  
   const [tableData, setTableData] = useState([])
 
   useEffect(()=> {
@@ -29,12 +29,79 @@ export default function Report() {
   function assignData(){
     var tempArr
     var finalArr = [];
-    console.log(label.length)
-    const j = label.length
-    let i
-    for(i=0; i<j; i++){
-      finalArr.push({rowLabel: label[i], rowData: data[i]})
+
+    if(pageContent.overlay==="IQPM"){
+      setLabel(graphContent.repairItemModel)
+      setData(graphContent.repairTalliedQuantities) 
+
+      console.log(label.length)
+      const j = label.length
+      let i
+      for(i=0; i<j; i++){
+        finalArr.push({rowLabel: label[i], rowData: data[i]})
+      }
+    }else if(pageContent.overlay==="TDPM") {
+      // let repairItemModel = graphContent.repairItemModel.split(",")
+		  // let repairDefect = graphContent.repairDefect.split(",")
+
+      let stringifiedData = graphContent.repairTalliedQuantities
+
+		  let cleaned = stringifiedData.split("],[")
+		  let cleaned2 = cleaned[0].replace(/&quot;/g,"\"")
+		  let cleaned3 = cleaned2.replace(/[\[\]]/g,"")
+		  let cleaned4 = cleaned3.replaceAll("},","}+")
+		  let cleaned5 = cleaned4.split("+")
+
+      const repairTalliedQuantities = []
+      let i=0
+      for(i=0; i<cleaned5.length; i++){
+        repairTalliedQuantities[i] = JSON.parse(cleaned5[i])
+      }
+
+		  let labelList=[];
+		  let valueList=[];
+		
+		  let found = false;
+		  let count = 0;
+
+      let j=0
+		  for(i=0; i<repairTalliedQuantities.length;i++){
+			  for(j=0; j<labelList.length; j++){
+				  if(repairTalliedQuantities[i].repairDefect == labelList[j]){
+					  found = true;
+				  }
+			  }
+			  count++
+			  if(count==1 && found == false){
+				  labelList[i]=repairTalliedQuantities[i].repairDefect
+			  }
+
+			  found=false
+			  count=0
+		  }
+
+      for(i=0; i<labelList.length;i++){
+        valueList[i]=0
+        for(j=0; j<repairTalliedQuantities.length; j++){
+          if(labelList[i]==repairTalliedQuantities[j].repairDefect){
+            valueList[i]=valueList[i]+repairTalliedQuantities[j].repairDefectQuantity
+          }
+        }
+      }
+
+      const label = labelList
+      const data = valueList
+
+      for(i=0; i<j; i++){
+        finalArr.push({rowLabel: labelList[i], rowData: valueList[i]})
+      }
+
+      setLabel(labelList)
+      setData(valueList)
+    }else if(pageContent.overlay==="PTPM") {
+
     }
+      
 
     setTableData(finalArr)
   }
@@ -52,7 +119,7 @@ export default function Report() {
           <span class="dateChange">{pageContent.dateFrom}</span>
         </h3>
         <div className="graphData">
-        {(pageContent.overlay==="TDPM" || pageContent.overlay==="IQPM") && (<Graph label={label} graphData={data}/>)}
+        {(pageContent.overlay!=="PTPM") && (<Graph label={label} graphData={data}/>)}
           <Table tableData={tableData}/>
         </div>
       </div>

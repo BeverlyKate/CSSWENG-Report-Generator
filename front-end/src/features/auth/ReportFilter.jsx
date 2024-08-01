@@ -3,6 +3,8 @@ import closeIcon from "./close.svg"
 import { DateSelect } from "./DateSelect"
 import { FormIQPM } from "./FormIQPM"
 import { FormTDAndPTPM } from "./FormTDAndPTPM"
+import { FormTIQAndAWDPT } from "./FormTIQAndAWDPT"
+import { FormTIQPMPT } from "./FormTIQPMPT"
 import { useNavigate } from "react-router-dom"
 import apiClient from "../../app/api/apiClient"
 
@@ -11,7 +13,8 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
     const [repairStatus, setRepairStatus] = useState("")
     const [itemCategory, setItemCategory] = useState("default")
     const [modelCategory, setModelCategory] = useState("default")
-    const [formData, setFormData] = useState({overlay: id, dateFrom: "", category1: ""})
+    const [techCategory, setTechCategory] = useState("default")
+    const [formData, setFormData] = useState({overlay: id, dateFrom: ""})
     const navigate = useNavigate()
 
     function getDate(date) {
@@ -30,6 +33,10 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
         setModelCategory(model)
     }
 
+    function getTechCategory(technician){
+        setTechCategory(technician)
+    }
+
     function generateReport(e) {
         e.preventDefault()
 
@@ -37,21 +44,28 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
 
         if(dateRange === "") return console.log("invalid date")
         
-        formData.dateFrom = dateRange
-        
         //console.log(dateRange)
-
-        if(id === "TDPM" || id === "PTPM"){
+        if(id === "TIQPMPT" || id === "TDPM" || id === "PTPM"){
             if(repairStatus==="") return console.log("please select status")
-
-            formData.taskType = repairStatus
-
-            formData.itemModel = modelCategory
+        }
+        
+        if(id === "TIQPMPT" || id === "TDPM"){
+            if(itemCategory !== "default" && modelCategory !== "default") return console.log("Select 1 category only")
         }
 
-        if(itemCategory !== "default" && modelCategory != "default") return console.log("Select 1 category only")
+        if(id === "TIQPMPT" && itemCategory === "default") return console.log("Choose a category!")
+
+        if(id === "TIQPMPT" && techCategory === "default") return console.log("Choose a technician!")
+
+        formData.dateFrom = dateRange
+
+        formData.taskType = repairStatus
+
+        formData.itemModel = modelCategory
 
         formData.category1 = itemCategory
+
+        formData.technician = techCategory
 
         //console.log(formData)
 
@@ -126,10 +140,15 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
                         </div>
                         <DateSelect getDate={getDate}/>
                         <div className="report-specifics-holder">
-                            {reportName === "Item Quantity Per Model" && (<FormIQPM getItemCategory={getItemCategory}/>) 
-                            || (<FormTDAndPTPM getRepairStatus={getRepairStatus} 
+                            {(id === "IQPM") && (<FormIQPM getItemCategory={getItemCategory}/>) 
+                            || (id === "TDPM" || id === "PTPM") && (<FormTDAndPTPM getRepairStatus={getRepairStatus} 
                                                 getItemCategory={getItemCategory} 
-                                                getModelCategory={getModelCategory}/>)}
+                                                getModelCategory={getModelCategory}/>)
+                            || (id === "TIQPT" || id === "AWDPT") && (<FormTIQAndAWDPT getTechCategory={getTechCategory}/>)
+                            || (<FormTIQPMPT getRepairStatus={getRepairStatus} 
+                                getItemCategory={getItemCategory} 
+                                getTechCategory={getTechCategory}/>)
+                            }
                         </div>
                         <button type="submit" className="btn-generate-report">
                             Generate Report
