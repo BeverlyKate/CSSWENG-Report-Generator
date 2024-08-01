@@ -1,50 +1,58 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { setCredentials } from '../../features/auth/authSlice'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { setCredentials } from '../../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3000',//change when deploying 
-    credentials: 'include',
+    baseUrl: 'http://localhost:3000', // Change when deploying
+    credentials: 'include', // Important for cookies
     prepareHeaders: (headers, { getState }) => {
-        const token = getState().auth.token
-
+        const token = getState().auth.token;
         if (token) {
-            headers.set("authorization", `Bearer ${token}`)
+            
+            headers.set("Authorization", `Bearer ${token}`);
         }
-        return headers
+        return headers;
     }
-})
+});
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-    // console.log(args) // request url, method, body
-    // console.log(api) // signal, dispatch, getState()
-    // console.log(extraOptions) //custom like {shout: true}
+    console.log(args) // request url, method, body
+    console.log(api) // signal, dispatch, getState()
+    console.log(extraOptions) //custom like {shout: true}
 
-    let result = await baseQuery(args, api, extraOptions)
-
-    // If you want, handle other status codes, too
+    let result = await baseQuery(args, api, extraOptions);
+    console.log('Base query result 1:', result);
+    // If access token has expired and server responds with 403
     if (result?.error?.status === 403) {
-        console.log('sending refresh token')
+        // console.log('Sending refresh token');
+        console.log('Unauthorized, trying to refresh token');
+        
+        try {
+            // Attempt to refresh the token
+            const refreshResult = await baseQuery('/auth/refresh', api, extraOptions);
 
-        // send refresh token to get new access token 
-        const refreshResult = await baseQuery('/auth/refresh', api, extraOptions)
-
-        if (refreshResult?.data) {
-            api.dispatch(setCredentials({ ...refreshResult.data }))
-            result = await baseQuery(args, api, extraOptions)
-        } else {
-
-            if (refreshResult?.error?.status === 403) {
-                refreshResult.error.data.message = "Your login has expired. "
+            if (refreshResult?.data) {
+                // Dispatch new access token to the store
+                api.dispatch(setCredentials({ accessToken: refreshResult.data.accessToken }));
+                // Retry the original request with the new token
+                result = await baseQuery(args, api, extraOptions);
+            } else {
+                if (refreshResult?.error?.status === 403) {
+                    refreshResult.error.data.message = "Your login has expired.";
+                }
+                return refreshResult;
             }
-            return refreshResult
+        } catch (refreshError) {
+            console.error('Failed to refresh token:', refreshError);
+            // Handle the error (e.g., redirect to login)
         }
     }
+    console.log('Base query result:', result);
 
-    return result
-}
+    return result;
+};
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Task'],
     endpoints: builder => ({})
-})
+});

@@ -10,6 +10,7 @@ import UsersList from "./features/users/UsersList";
 import TasksList from "./features/Table/TableList";
 import Report from "./features/auth/Report";
 import Prefetch from "./features/auth/Prefetch";
+import PersistLogin from "./features/auth/PersistLogin";
 
 function App() {
   console.log("App component rendered");
@@ -19,28 +20,30 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
 
-        <Route element={<Prefetch />}>
-          <Route path="dash" element={<DashLayout />}>
-            {/* <Route index element={<Welcome />} /> */}
-            <Route index element={<Home />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<Prefetch />}>
+            <Route path="dash" element={<DashLayout />}>
+              {/* <Route index element={<Welcome />} /> */}
+              <Route index element={<Home />} />
 
-            <Route path="report">
-              <Route index element={<Report />} />
-            </Route>
+              <Route path="report">
+                <Route index element={<Report />} />
+              </Route>
 
-            <Route path="notes">
-              <Route index element={<NotesList />} />
-            </Route>
+              <Route path="notes">
+                <Route index element={<NotesList />} />
+              </Route>
 
-            <Route path="users">
-              <Route index element={<UsersList />} />
-            </Route>
+              <Route path="users">
+                <Route index element={<UsersList />} />
+              </Route>
 
-            <Route path="table">
-              <Route index element={<TasksList />} />
+              <Route path="table">
+                <Route index element={<TasksList />} />
+              </Route>
             </Route>
+            {/* End Dash */}
           </Route>
-          {/* End Dash */}
         </Route>
       </Route>
     </Routes>

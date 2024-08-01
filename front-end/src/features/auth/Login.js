@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 
+import usePersist from '../../hooks/usePersist.js';
+
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
@@ -17,6 +19,8 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [persist, setPersist] = usePersist();
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -99,6 +103,13 @@ const Login = () => {
             >
               {errMsg}
             </p>
+            <label htmlFor="persist">Trust This Device:</label>
+                <input 
+                    type="checkbox" 
+                    id="persist" 
+                    onChange={(e) => setPersist(e.target.checked)} 
+                    checked={persist}
+                />
           </b>
           <button type="submit" id="login" className="btn-login">
             Login

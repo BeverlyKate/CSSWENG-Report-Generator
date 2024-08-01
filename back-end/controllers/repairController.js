@@ -41,8 +41,8 @@ const repairController = {
     await repairModel
       .find({})
       .then((repair) => {
-        console.log(repair);
-
+        // console.log(repair);
+        console.log("table called");
         //Send to hbs template used
         res.json(repair);
         // res.render("table", { repair: repair });

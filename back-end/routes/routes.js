@@ -26,7 +26,7 @@ const dbController = require("../controllers/dbController.js");
 app.post("/auth", loginLimiter, mainController.getMain);
 
 // Refresh Token
-app.route("/refresh").get(mainController.refresh);
+app.route("/auth/refresh").get(mainController.refresh);
 
 // Logout
 app.route("/logout").post(mainController.logout);

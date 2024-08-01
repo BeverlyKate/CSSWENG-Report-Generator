@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt') 
 const User = require('../models/userSchema.js');
 const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
 
 const mainController = {
     //Login feature
@@ -53,62 +54,72 @@ const mainController = {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1m' }//CHANGE UPON DEPLOYMENT
+            { expiresIn: '15m' }//CHANGE UPON DEPLOYMENT
         )
     
         const refreshToken = jwt.sign( //cant be accessed with js 
             { "username": user.userName },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: '7d' }
         )
     
         // Create secure cookie with refresh token 
         res.cookie('jwt', refreshToken, {
             httpOnly: true, //accessible only by web server 
-            secure: false, //https TEMP--CHANGE UPON DEPLOYMENT CUD
+            secure: true, //https TEMP--CHANGE UPON DEPLOYMENT MUST BE TRUE?
             sameSite: 'None', //cross-site cookie 
-            maxAge: 1 * 24 * 60 * 60 * 1000 //cookie expiry: set to match rT
+            maxAge: 7 * 24 * 60 * 60 * 1000 //cookie expiry: set to match rT
         })
-        console.log("accessToken")
+        console.log("cookie: ", res.cookie)
+        console.log("accessToken: ",accessToken)
         // Send accessToken containing username and role 
         res.json({ accessToken })
     },
 
-    refresh: (req, res) => {
-        const cookies = req.cookies
+    refresh: asyncHandler(async (req, res) => {
+ 
+        console.log("refresh called");
+
+        const cookies = req.cookies;
+        if (!cookies?.jwt) {
+            console.log('No JWT cookie found');
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
     
-        if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
-    
-        const refreshToken = cookies.jwt
+        const refreshToken = cookies.jwt;
     
         jwt.verify(
             refreshToken,
             process.env.REFRESH_TOKEN_SECRET,
-            asyncHandler(async (err, decoded) => {
-                if (err) return res.status(403).json({ message: 'Forbidden' })
+            async (err, decoded) => {
+                if (err) {
+                    console.log('JWT verification error:', err);
+                    return res.status(403).json({ message: 'Forbidden' });
+                }
     
-                const user = await User.findOne({ username: decoded.username }).exec()
-    
+                const user = await User.findOne({ username: decoded.username }).exec();
                 if (!user) {
-                    console.log("not a user");
-                    return res.status(401).json({ message: 'Unauthorized' })
+                    console.log('User not found');
+                    return res.status(401).json({ message: 'Unauthorized' });
                 }
     
                 const accessToken = jwt.sign(
                     {
                         "UserInfo": {
-                            "username": user.username,
+                            "username": user.userName,
                             "role": user.role
                         }
                     },
                     process.env.ACCESS_TOKEN_SECRET,
-                    { expiresIn: '1m' } //CHANGE UPON DEPLOYMENT
-                )
+                    { expiresIn: '15m' }
+                );
     
-                res.json({ accessToken })
-            })
-        )
-    },    
+                console.log('New access token issued:', accessToken);
+                res.json({ accessToken });
+            }
+        );
+    }),
+    
 
     logout:(req, res) => {
         const cookies = req.cookies
