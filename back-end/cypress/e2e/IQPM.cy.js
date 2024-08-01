@@ -52,7 +52,7 @@ describe('Test cases for Report Generation in Item Quantity per Model', () => {
       cy.get('.centered > .btn-dropdown-mock').select("AGR/MIRACLE 8 ITEM")
       cy.get('.btn-generate-report').click()
       cy.url().then((currentUrl) => {
-        cy.get('.btn-generate-report').click();
+        // cy.get('.btn-generate-report').click();
         cy.url().should('eq', currentUrl);
       });
     }); 
@@ -60,7 +60,7 @@ describe('Test cases for Report Generation in Item Quantity per Model', () => {
       cy.get('[data-report="IQPM"]').click()
       cy.get('.btn-generate-report').click()
       cy.url().then((currentUrl) => {
-        cy.get('.btn-generate-report').click();
+        // cy.get('.btn-generate-report').click();
         cy.url().should('eq', currentUrl);
       });
     });

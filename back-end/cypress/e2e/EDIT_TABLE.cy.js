@@ -7,7 +7,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get('#CompanyLogo > img').click()
     cy.get('.Btn-table > a > img').click()
   })
-  it.skip('Should be able to change the date', () => {
+  it('Should be able to change the date', () => {
     cy.get(':nth-child(2) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDate').clear()
     cy.get('#repairDate').type("Wed Apr 10 2024 00:00:00 GMT+0800 (Philippine Standard Time)")
@@ -16,7 +16,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(2) > :nth-child(2) > .col > strong').should('contain', 'Wed Apr 10 2024 00:00:00 GMT+0800 (Philippine Standard Time)')
   });
 
-  it.skip('Should be able to change the repair PL number', () => {
+  it('Should be able to change the repair PL number', () => {
     cy.get(':nth-child(96) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairPLNumber').clear()
     cy.get('#repairPLNumber').type(20)
@@ -24,7 +24,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.reload()
     cy.get(':nth-child(96) > :nth-child(3) > .col').should('contain', '20')
   });
-  it.skip('Should be able to change the customer name', () => {
+  it('Should be able to change the customer name', () => {
     cy.get(':nth-child(14) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairCustomer').clear()
     cy.get('#repairCustomer').type('Angel')
@@ -33,7 +33,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(14) > :nth-child(4) > .col > strong').should('contain', 'Angel')
   });
 
-  it.skip('Should be able to change the Item Model', () => {
+  it('Should be able to change the Item Model', () => {
     cy.get(':nth-child(24) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairItemModel').select('FRAME VTX-12')
     cy.get('[formaction="/update"]').click()
@@ -41,7 +41,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(24) > :nth-child(5) > .col > strong').should('contain', 'FRAME VTX-12')
   });
 
-  it.skip('Should be able to change the category', () => {
+  it('Should be able to change the category', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairCategory1').select('PRO WOOFERS')
     cy.get('#repairCategory2').clear()
@@ -53,7 +53,7 @@ describe('User should be able to edit the items and these edits should reflect i
   });
 
   
-  it.skip('Should be able to change the quantity', () => {
+  it('Should be able to change the quantity', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairQuantity').clear()
     cy.get('#repairQuantity').type('11')
@@ -64,7 +64,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(8) > .col').should('contain', 'pc')
   });
 
-  it.skip('Should not be able to change the quantity to a negative value', () => {
+  it('Should not be able to change the quantity to a negative value', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairQuantity').clear()
     cy.get('#repairQuantity').type('-1')
@@ -74,7 +74,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(7) > .col').should('contain', '11')
   });
 
-  it.skip('Should be able to change the repair pull out', () => {
+  it('Should be able to change the repair pull out', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairPullOutBy').clear()
     cy.get('#repairPullOutBy').type('mj')
@@ -83,7 +83,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(9) > .col').should('contain', 'mj')
   });
 
-  it.skip('Should be able to change the repair description', () => {
+  it('Should be able to change the repair description', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDescription').clear()
     cy.get('#repairDescription').type('Waiting for spare parts')
@@ -92,7 +92,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(6) > .col > strong').should('contain', 'Waiting for spare parts')
   });
 
-  it.skip('Should be able to change the repair serial number and the job order number', () => {
+  it('Should be able to change the repair serial number and the job order number', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairSerialNumber').clear()
     cy.get('#repairSerialNumber').type('12345')
@@ -104,7 +104,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(13) > .col > strong').should('contain', '12')
   });
 
-  it.skip('Should not be able to change the repair serial number and the job order to non-numbers', () => {
+  it('Should not be able to change the repair serial number and the job order to non-numbers', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairSerialNumber').clear()
     cy.get('#repairSerialNumber').type('a')
@@ -117,7 +117,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(13) > .col > strong').should('contain', '12')
   });
 
-  it.skip('Should not be able to change the repair serial number and the job order to non-numbers', () => {
+  it('Should not be able to change the repair serial number and the job order to non-numbers', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairSerialNumber').clear()
     cy.get('#repairSerialNumber').type('a')
@@ -130,7 +130,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(13) > .col > strong').should('contain', '12')
   });
 
-  it.skip('Should be able to change the date started and date finished', () => {
+  it('Should be able to change the date started and date finished', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDateStarted').clear()
     cy.get('#repairDateStarted').type('45405')
@@ -142,7 +142,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(15) > .col > strong').should('contain', '45407')
   });
 
-  it.skip('Should not be able to change the repair cost to a negative number', () => {
+  it('Should not be able to change the repair cost to a negative number', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairCost').clear()
     cy.get('#repairCost').type('-1')
@@ -151,7 +151,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(16) > .col > strong').should('contain', '12345')
   });
 
-  it.skip('Should not be able to change the repair cost to a non number', () => {
+  it('Should not be able to change the repair cost to a non number', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairCost').clear()
     cy.get('#repairCost').type('a')
@@ -160,7 +160,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(16) > .col > strong').should('contain', '12345')
   });
 
-  it.skip('Should be able to change the repair cost', () => {
+  it('Should be able to change the repair cost', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairCost').clear()
     cy.get('#repairCost').type('12341')
@@ -169,7 +169,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(16) > .col > strong').should('contain', '12341')
   });
 
-  it.skip('Should be able to change the repair technicians', () => {
+  it('Should be able to change the repair technicians', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairTechnician1').select("DREX")
     cy.get('#repairTechnician2').select("MJ")
@@ -179,7 +179,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(18) > .col > strong').should('contain', 'MJ')
   });
 
-  it.skip('Should be able to change the item status', () => {
+  it('Should be able to change the item status', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairItemStatus').select("DONE")
     cy.get('[formaction="/update"]').click()
@@ -187,7 +187,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(19) > .col > strong').should('contain', 'DONE')
   });
 
-  it.skip('Should be able to change the delivery status', () => {
+  it('Should be able to change the delivery status', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDeliveryStatus').select("FORWARDED")
     cy.get('[formaction="/update"]').click()
@@ -195,7 +195,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(20) > .col > strong').should('contain', 'FORWARDED')
   });
 
-  it.skip('Should be able to change the remarks', () => {
+  it('Should be able to change the remarks', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairRemarks').clear()
     cy.get('#repairRemarks').clear("Warranty Expired")
@@ -204,7 +204,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(21) > .col > strong').should('contain', 'Warranty Expired')
   });
 
-  it.skip('Should be able to change the return form number', () => {
+  it('Should be able to change the return form number', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairReturnFormNumber').clear()
     cy.get('#repairReturnFormNumber').clear("112")
@@ -213,7 +213,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(22) > .col > strong').should('contain', '112')
   });
 
-  it.skip('Should be not able to change the return form number to a non-number', () => {
+  it('Should be not able to change the return form number to a non-number', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairReturnFormNumber').clear()
     cy.get('#repairReturnFormNumber').clear("a")
@@ -222,7 +222,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(22) > .col > strong').should('contain', '112')
   });
 
-  it.skip('Should be able to change the return date', () => {
+  it('Should be able to change the return date', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDateReturned').clear()
     cy.get('#repairDateReturned').clear("Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)")
@@ -231,7 +231,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(23) > .col > strong').should('contain', 'Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)')
   });
 
-  it.skip('Should not be able to change the return date to something that is of the wrong format', () => {
+  it('Should not be able to change the return date to something that is of the wrong format', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDateReturned').clear()
     cy.get('#repairDateReturned').clear("Saturday Apr 27 2024 9pm")
@@ -240,7 +240,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(23) > .col > strong').should('contain', 'Sat Apr 27 2024 00:00:00 GMT+0800 (Philippine Standard Time)')
   });
 
-  it.skip('Should be able to change the status', () => {
+  it('Should be able to change the status', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairStatus').select("QA")
     cy.get('[formaction="/update"]').click()
@@ -248,7 +248,7 @@ describe('User should be able to edit the items and these edits should reflect i
     cy.get(':nth-child(38) > :nth-child(24) > .col > strong').should('contain', 'QA')
   });
 
-  it.skip('Should be able to change the defect description', () => {
+  it('Should be able to change the defect description', () => {
     cy.get(':nth-child(38) > :nth-child(1) > .col > strong > .idNum').click()
     cy.get('#repairDefect').select("NO POWER")
     cy.get('[formaction="/update"]').click()
