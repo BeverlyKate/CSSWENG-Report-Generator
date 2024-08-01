@@ -6,7 +6,7 @@ export function Graph({ label, graphData }) {
         labels: label,
         datasets: [
             {
-                label: 'PC/S',
+                label: 'Sample Graph',
                 data: graphData,
                 fill: true,
                 backgroundColor: "#FFD26F"

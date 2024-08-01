@@ -9,14 +9,11 @@ import React from 'react'
 export default function Report() {
   const location = useLocation()
   const passedData = location.state
-
   console.log(passedData)
 
   const graphContent = passedData.data
 
   const pageContent = passedData.content
-
-  console.log(graphContent)
 
   const [label, setLabel] = useState([])
 
@@ -102,20 +99,9 @@ export default function Report() {
       setLabel(labelList)
       setData(valueList)
     }else if(pageContent.overlay==="PTPM") {
-      let tempLabel
-      
-      let repairTalliedQuantities = graphContent.repairTalliedQuantities
 
-      let i=0
-
-      let rowNo = repairTalliedQuantities.length/2
-      for(i=0; i<rowNo; i++){
-        finalArr.push({rowLabel: repairTalliedQuantities[i][0], rowData: repairTalliedQuantities[i][1]})
-      }
-
-      console.log("Hi: " + finalArr)
     }
-    
+      
 
     setTableData(finalArr)
   }
