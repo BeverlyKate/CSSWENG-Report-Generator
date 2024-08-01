@@ -20,7 +20,7 @@ const dbController = {
       console.error("update error: " + error);
       res.status(500).json({ message: "Server error", error: error.message });
     }
-    res.render(table);
+    // res.render(table);
   },
 
   //Delete from database
@@ -31,7 +31,7 @@ const dbController = {
     try {
       const result = await repairModel.deleteOne({ repairId: repairId });
       if (result.deletedCount === 0) {
-        res.render(table);
+        // res.render(table);
         return res.status(404).json({ error: "Task not found" });
       }
       console.log(result);
