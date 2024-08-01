@@ -2,8 +2,8 @@ describe('Total Item Quantity Per Item Model Per Technician (TIQPMPT) reports.',
 
   beforeEach(() => {
     cy.visit('http://localhost:3000/')
-    cy.get('#username').type('Admin')
-    cy.get('#password').type('12345678')
+    cy.get('#username').type('Neko Nyan')
+    cy.get('#password').type('catto')
     cy.get('#login').click()
     cy.get('[data-report="TIQPMPT"]').click()
   })
