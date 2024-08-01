@@ -25,21 +25,21 @@ const dbController = {
 
   //Delete from database
   delete: async function (req, res) {
-    const repairId = req.params.repairId; // Extract from req.params
+    const repairId = req.body.repairId;
     console.log(repairId);
 
-    try {
-      const result = await repairModel.deleteOne({ repairId: repairId });
-      if (result.deletedCount === 0) {
-        res.render(table);
-        return res.status(404).json({ error: "Task not found" });
-      }
-      console.log(result);
-      return res.status(200).json({ message: "Task deleted successfully" });
-    } catch (error) {
-      console.log("delete error: " + error);
-      return res.status(500).json({ error: "Internal server error" });
-    }
+    await repairModel
+      .deleteOne({ repairId: repairId })
+      .then((repair) => {
+        console.log(repair);
+      })
+      .catch((error) => {
+        console.log("delete error: " + error);
+        const errorMessage = "delete error";
+        res.render("table", { error: errorMessage });
+      });
+
+    res.render("table");
   },
 };
 

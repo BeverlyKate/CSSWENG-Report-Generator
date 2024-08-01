@@ -43,11 +43,9 @@ app.post(
 );
 //Average working days per technician
 app.post("/AWDPTpost", repairController.getAverageWorkingDaysPerTechnician);
-
 //Update from db
 app.post("/update", dbController.update);
 // app.post('/update', dbController.update);
-
 //Delete from db
 app.post("/delete", dbController.delete);
 // app.post("/delete", dbController.delete);
