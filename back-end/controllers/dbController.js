@@ -81,14 +81,13 @@ const dbController = {
             repairStatus: repairStatus,
             repairDefect: repairDefect
         }).then(repair => {
+            res.redirect("/table");
             // console.log(repair);
         }).catch(error => {
             console.log("update error: " + error);
             const errorMessage = "update error";
             res.render("table", {error: errorMessage});
         });
-
-        res.render("table");
     },
 
     //Delete from database
@@ -98,13 +97,12 @@ const dbController = {
 
         await repairModel.deleteOne({repairId: repairId}).then(repair => {
             console.log(repair)
+            res.redirect("/table");
         }).catch(error => {
             console.log("delete error: " + error);
             const errorMessage = "delete error";
             res.render("table", {error: errorMessage});
         });
-         
-        res.render("table");
     },
 };
 
