@@ -11,7 +11,7 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
     const [repairStatus, setRepairStatus] = useState("")
     const [itemCategory, setItemCategory] = useState("default")
     const [modelCategory, setModelCategory] = useState("default")
-    const [formData, setFormData] = useState({overlay: id, date: "", status: "", item: ""})
+    const [formData, setFormData] = useState({overlay: id, dateFrom: "", category1: ""})
     const navigate = useNavigate()
 
     function getDate(date) {
@@ -37,51 +37,52 @@ export function ReportFilter({ toggleOverlay, reportName, id }){
 
         if(dateRange === "") return console.log("invalid date")
         
-        formData.date = dateRange
+        formData.dateFrom = dateRange
         
         //console.log(dateRange)
 
         if(id === "TDPM" || id === "PTPM"){
             if(repairStatus==="") return console.log("please select status")
 
-            formData.status = repairStatus
+            formData.taskType = repairStatus
 
-            formData.model = modelCategory
+            formData.itemModel = modelCategory
         }
 
         if(itemCategory !== "default" && modelCategory != "default") return console.log("Select 1 category only")
 
-        formData.item = itemCategory
+        formData.category1 = itemCategory
 
-        console.log(formData)
+        //console.log(formData)
 
         apiClient
-        .post(`/${formData.overlay}post`, {
+        .post(`/${formData.overlay}post`, formData, {
             headers: {
-                host: 'localhost:3000',
-                connection: 'keep-alive',
-                'content-length': '16852305',
-                'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-                accept: '*/*',
-                'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
-                'x-requested-with': 'XMLHttpRequest',
-                'sec-ch-ua-mobile': '?0',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                'sec-ch-ua-platform': '"Windows"',
-                origin: 'http://localhost:3000',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-dest': 'empty',
-                referer: 'http://localhost:3000/import',
-                'accept-encoding': 'gzip, deflate, br, zstd',
-                'accept-language': 'en-US,en;q=0.9,tl;q=0.8',
+                // host: 'localhost:3000',
+                // connection: 'keep-alive',
+                // 'content-length': '16852305',
+                // 'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+                // accept: '*/*',
+                // 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryyjm1HU0NM68qybG8',
+                // 'x-requested-with': 'XMLHttpRequest',
+                // 'sec-ch-ua-mobile': '?0',
+                // 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                // 'sec-ch-ua-platform': '"Windows"',
+                // origin: 'http://localhost:3000',
+                // 'sec-fetch-site': 'same-origin',
+                // 'sec-fetch-mode': 'cors',
+                // 'sec-fetch-dest': 'empty',
+                // referer: 'http://localhost:3000/import',
+                // 'accept-encoding': 'gzip, deflate, br, zstd',
+                // 'accept-language': 'en-US,en;q=0.9,tl;q=0.8',
+                'Content-Type': 'application/json'
               // Add any other headers you need
             }
         })
         .then(
             (response) => {
             console.log(response.data)
-            navigate("/dash/report", {state: response.data})
+            navigate("/dash/report", {state: {data: response.data, content: formData}})
             }
             // navigate("/dash/report", {state: formData})
         )

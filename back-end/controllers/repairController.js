@@ -348,6 +348,7 @@ const repairController = {
         let dateTo;
         let repairTalliedQuantities = [];
         let tempInt = 0;
+        console.log(req.body)
         console.log("I am in tiqpm" + req.body.category1)
 
         if(req.body.dateFrom.length = 4){
@@ -425,7 +426,7 @@ const repairController = {
                     };
                     console.log("tallied = " + repairTalliedQuantities);
                     //Send to hbs template used
-                    res.render("IQPM", {category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
+                    res.json({category: category1, date: req.body.dateFrom, repairItemModel: repairItemModel, repairTalliedQuantities: repairTalliedQuantities});
                 }).catch(error => {
                     console.log("Cannot find Repair Item Model error: " + error);
                     const errorMessage = "Cannot find Repair Item Model error";    
