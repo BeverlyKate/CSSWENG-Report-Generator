@@ -7,7 +7,10 @@ export default function Home({ setReportData }) {
     var reportSelection =[
         {id: 'IQPM', reportName: 'Item Quantity Per Model'}, 
         {id: 'TDPM', reportName: 'Top Defects Per Model'}, 
-        {id: 'PTPM', reportName: 'Pending Tasks Per Model'}
+        {id: 'PTPM', reportName: 'Pending Tasks Per Model'}, 
+        {id: 'TIQPT', reportName: 'Total Item Quantity Per Technician'}, 
+        {id: 'AWDPT', reportName: 'Average Working Days Per Technician'}, 
+        {id: 'TIQPMPT', reportName: 'Total Item Quantity Per Model Per Technician'}
     ]
 
     const [openOverlay, setOpenOverlay] = useState(false)

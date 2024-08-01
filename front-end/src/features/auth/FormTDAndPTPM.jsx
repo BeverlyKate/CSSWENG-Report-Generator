@@ -19,10 +19,10 @@ export function FormTDAndPTPM({ getRepairStatus, getItemCategory, getModelCatego
   return (
     <>
         <div class="popup-subheader">
-            <div class="dashed-line"></div>
-            <div class="popup-text-one">Task type</div>
-            <div class="dashed-line"></div>
-        </div>
+                <div class="dashed-line"></div>
+                <div class="popup-text-one">Technician</div>
+                <div class="dashed-line"></div>
+            </div>
         <StatusSelect setStatus={setStatus}/>
         <div class="popup-subheader">
             <div class="popup-subheader">

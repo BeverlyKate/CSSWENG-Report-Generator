@@ -4,6 +4,23 @@ export function QuarterSelect({ setDate }) {
 
   const [quarterNum, selectQuarterNum] = useState('')
   const [dateFrom, setDateFrom] = useState('')
+  const quartSelection = [
+    {value: "default", label: "(Quarter)"},
+    {value: "first", label: "1st Quarter"},
+    {value: "second", label: "2nd Quarter"},
+    {value: "third", label: "3rd Quarter"},
+    {value: "fourth", label: "4th Quarter"}
+  ]
+
+  const yearSelection = [
+    {value: "default", label: "(Year)"},
+    {value: "2024", label: "2024"},
+    {value: "2023", label: "2023"},
+    {value: "2022", label: "2022"},
+    {value: "2021", label: "2021"},
+    {value: "2020", label: "2020"}
+  ]
+
 
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
@@ -23,19 +40,14 @@ export function QuarterSelect({ setDate }) {
     <div className="date-options">
         <div className="selection selectQuarter">
             <select className="btn-dropdown-mock dropdown-selection quarterSelect" name="quarterNum" value={quarterNum} onChange={handleSelectChange}>
-                <option value="default">(Quarter)</option>
-                <option value="first">1st Quarter</option>
-                <option value="second">2nd Quarter</option>
-                <option value="third">3rd Quarter</option>
-                <option value="fourth">4th Quarter</option>
+              {quartSelection.map(quarter => {
+                return (<option value={quarter.value}>{quarter.label}</option>)
+                })}
             </select>
             <select className="btn-dropdown-mock dropdown-selection quarterSelect" name="dateFrom" value={dateFrom}  onChange={handleSelectChange}>
-                <option value="default">(Year)</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
+                 {yearSelection.map(year => {
+                  return (<option value={year.value}>{year.label}</option>)
+                 })}
             </select>
         </div>
     </div>
