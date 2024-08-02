@@ -30,8 +30,10 @@ tr:hover {
 
 .table-holder {
     margin: 3vh;
-    overflow: scroll;
-    height: 80vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 75vh;
+    width: 95vw;
 }
 
 .overlay-holder {

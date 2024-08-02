@@ -159,8 +159,10 @@ tr:hover {
 
 .table-holder {
 	margin: 3vh;
-	overflow: scroll;
+	overflow-x: scroll;
+	overflow-y: scroll;
 	height: 80vh;
+	width: 95vw;
 }
 
 td {
