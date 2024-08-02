@@ -188,4 +188,6 @@ button:hover {
 	display: block;
 	font-weight: bold;
 	color: rgb(219, 66, 19);
+	display: flex;
+	align-content: center;
 }
