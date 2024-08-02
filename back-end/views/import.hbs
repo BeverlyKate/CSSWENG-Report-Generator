@@ -41,7 +41,10 @@
         </form>
     </div>
     <p id="alert"></p>
-
+    <div class="errorMessage">
+		{{error}}
+    </div>
+        
     <script>
         function blob2file(blobData) {
             const fd = new FormData();
