@@ -190,4 +190,5 @@ button:hover {
 	color: rgb(219, 66, 19);
 	display: flex;
 	align-content: center;
+	text-align: center;
 }
