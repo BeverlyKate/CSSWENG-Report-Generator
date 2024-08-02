@@ -47,6 +47,13 @@ export async function insertRepair(excelValues) {
                     repairDateReturned = new Date(Math.round((excelValues[i+21] - 25569)*86400*1000)).toLocaleDateString();
                     console.log("repair date returned = " + repairDateReturned);
                 };
+
+                try {
+                    repairDateStarted = new Date(Math.round((excelValues[i+12] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1)
+                } catch(error) {
+                    console.log(error);
+                };
+
                 const newRepair = {
                     repairId: newRepairId.idCounter,
                     repairDate: new Date(Math.round((excelValues[i] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
@@ -61,7 +68,7 @@ export async function insertRepair(excelValues) {
                     repairCategory2: parseInt(excelValues[i+9]),
                     repairSerialNumber: parseInt(excelValues[i+10]),
                     repairJobOrderNumber: parseInt(excelValues[i+11]),
-                    repairDateStarted: new Date(Math.round((excelValues[i+12] - 25569)*86400*1000)).toLocaleDateString().split(" ").slice(1),
+                    repairDateStarted: repairDateStarted,
                     repairDateFinished: repairDateFinished,
                     repairTechnician1: excelValues[i+14],
                     repairTechnician2: excelValues[i+15],
