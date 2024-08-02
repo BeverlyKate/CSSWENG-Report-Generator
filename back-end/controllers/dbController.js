@@ -83,10 +83,13 @@ const dbController = {
         }).then(repair => {
             res.redirect("/table");
             // console.log(repair);
-        }).catch(error => {
+        }).catch(async error => {
             console.log("update error: " + error);
             const errorMessage = "update error";
-            res.render("table", {error: errorMessage});
+            await repairModel.find({}).then(repair => {
+                //Send to hbs template used
+                res.render("table", {repair: repair, error: errorMessage});
+            });
         });
     },
 
@@ -98,10 +101,13 @@ const dbController = {
         await repairModel.deleteOne({repairId: repairId}).then(repair => {
             console.log(repair)
             res.redirect("/table");
-        }).catch(error => {
+        }).catch(async error => {
             console.log("delete error: " + error);
             const errorMessage = "delete error";
-            res.render("table", {error: errorMessage});
+            await repairModel.find({}).then(repair => {
+                //Send to hbs template used
+                res.render("table", {repair: repair, error: errorMessage});
+            });
         });
     },
 };
